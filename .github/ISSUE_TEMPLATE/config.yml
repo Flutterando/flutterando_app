@@ -1,0 +1,18 @@
+blank_issues_enabled: false  # Desativa a criação de issues em branco
+
+contact_links:
+  - name: ❓ Perguntas e Suporte
+    url: question.md
+    about: Use o fórum de discussões para dúvidas gerais e suporte. (Need to configure)
+    labels: [question]
+
+issue_templates:
+  - name: 🐛 Bug Report
+    path: bug_report.md
+    about: Relate um problema encontrado no sistema.
+    labels: [bug]
+
+  - name: 🚀 Feature Request
+    path: feature_request.md
+    about: Sugira uma nova funcionalidade ou melhoria.
+    labels: [enhancement]
