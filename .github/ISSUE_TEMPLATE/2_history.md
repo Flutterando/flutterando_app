@@ -29,12 +29,6 @@ Descreva o fluxo de ações que o usuário deve seguir para atingir o objetivo d
 2. O usuário clica em...
 3. O sistema responde com...
 
-#### 📂 Tasks Relacionadas
-Liste as Tasks de usuário associadas a este épico.
-
-- [ ] Task 1: _Breve descrição_
-- [ ] Task 2: _Breve descrição_
-
 #### 🔗 Dependências
 Liste quaisquer dependências externas necessárias para a conclusão desta história.
 

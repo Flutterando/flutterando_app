@@ -25,12 +25,6 @@ Exemplo:
 - [ ] O sistema atende ao objetivo do épico sem regressões.
 - [ ] Testes e validações foram realizados com sucesso.
 
-#### 📂 Histórias Relacionadas
-Liste as histórias de usuário associadas a este épico.
-
-- [ ] História 1: _Breve descrição_
-- [ ] História 2: _Breve descrição_
-
 
 #### 🔄 Dependências
 Liste outras tarefas, épicos ou componentes necessários para a conclusão deste épico.
