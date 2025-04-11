@@ -20,35 +20,32 @@ ThemeData get darkTheme {
       onSurface: colors.blackBackground,
     ),
     textTheme: TextTheme(
-      headlineLarge: textStyles.headlineLarge.copyWith(
+      headlineLarge: textStyles.headlineL40Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      headlineSmall: textStyles.headlineSmall.copyWith(
+      headlineSmall: textStyles.headlineS32Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      bodyMedium: textStyles.bodyMedium.copyWith(
+      bodyMedium: textStyles.bodyM14Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      bodySmall: textStyles.bodySmall.copyWith(
+      bodySmall: textStyles.bodyS12Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      labelLarge: textStyles.labelLarge.copyWith(
+      labelLarge: textStyles.labelL16Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      labelMedium: textStyles.labelMedium.copyWith(
+      labelMedium: textStyles.labelM12Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      labelSmall: textStyles.labelSmall.copyWith(
+      labelSmall: textStyles.labelS8Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      displayLarge: textStyles.displayLarge.copyWith(
+      displayLarge: textStyles.displayL64Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
     ),
-    extensions: const [
-      AppColors(),
-      AppTextStyles(),
-    ],
+    extensions: const [AppColors(), AppTextStyles()],
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: const TextStyle(color: Colors.blue),
       hintStyle: const TextStyle(
@@ -69,25 +66,17 @@ ThemeData get darkTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: Color(0xffC7C7C7),
-          width: 2.0,
-        ),
+        borderSide: const BorderSide(color: Color(0xffC7C7C7), width: 2.0),
       ),
     ),
-    iconTheme: const IconThemeData(
-      color: Colors.blue,
-      size: 16,
-    ),
+    iconTheme: const IconThemeData(color: Colors.blue, size: 16),
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
         padding: WidgetStateProperty.all(const EdgeInsets.all(18.0)),
         backgroundColor: WidgetStateProperty.all(const Color(0xffC22445)),
         foregroundColor: WidgetStateProperty.all(Colors.white),
         shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
         overlayColor: WidgetStateProperty.all(
           Colors.white.withValues(alpha: 0.2),
@@ -97,20 +86,18 @@ ThemeData get darkTheme {
     cardTheme: CardTheme(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
-        side: const BorderSide(
-          color: Color(0xff333333),
-        ),
+        side: const BorderSide(color: Color(0xff333333)),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         minimumSize: WidgetStateProperty.all(const Size(double.infinity, 48)),
         backgroundColor: WidgetStateProperty.all(colors.red),
-        padding: WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 16)),
+        padding: WidgetStateProperty.all(
+          const EdgeInsets.symmetric(vertical: 16),
+        ),
         shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         ),
       ),
     ),
