@@ -20,10 +20,18 @@ class AppBarWidget extends AppBar {
          actions: [
            if (onNotification != null)
              IconButton(
-               icon: const Icon(Iconsax.add_square, size: 20),
+               icon: Icon(
+                 Iconsax.add_square,
+                 size: 20,
+                 color: const AppColors().greyThree,
+               ),
                onPressed: onNotification,
              ),
-           const Icon(Iconsax.notification, size: 20),
+           Icon(
+             Iconsax.notification,
+             size: 20,
+             color: const AppColors().greyThree,
+           ),
            const SizedBox(width: 16),
            CircleAvatar(
              child: Text(name, style: const AppTextStyles().labelL16Bold),
