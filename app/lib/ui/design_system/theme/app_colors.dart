@@ -8,7 +8,9 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color greyTwo;
   final Color greyThree;
   final Color successColor;
+  final Color successLightColor;
   final Color errorColor;
+  final Color errorLightColor;
   final Color alert;
   final Color errorSupportColor;
   final Color focusColor;
@@ -26,7 +28,9 @@ class AppColors extends ThemeExtension<AppColors> {
     this.greyTwo = const Color(0xFF424242),
     this.greyThree = const Color(0xFFABABAB),
     this.successColor = const Color(0xFF00C933),
+    this.successLightColor = const Color(0xFF34C759),
     this.errorColor = const Color(0xFFFF0004),
+    this.errorLightColor = const Color(0xFFF44549),
     this.alert = const Color(0xFFFFBB00),
     this.errorSupportColor = const Color(0xFFFFE0E1),
     this.focusColor = const Color(0xFF00A0FF),
@@ -47,8 +51,9 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? greyThree,
     Color? successColor,
     Color? errorColor,
+    Color? errorLightColor,
     Color? alert,
-    Color? errorSuportColor,
+    Color? errorSupportColor,
     Color? focusColor,
     Color? disabledColor,
     Color? inputColor,
@@ -63,8 +68,9 @@ class AppColors extends ThemeExtension<AppColors> {
       greyThree: greyThree ?? this.greyThree,
       successColor: successColor ?? this.successColor,
       errorColor: errorColor ?? this.errorColor,
+      errorLightColor: errorLightColor ?? this.errorLightColor,
       alert: alert ?? this.alert,
-      errorSupportColor: errorSuportColor ?? this.errorSupportColor,
+      errorSupportColor: errorSupportColor ?? this.errorSupportColor,
       focusColor: focusColor ?? this.focusColor,
       disabledColor: disabledColor ?? this.disabledColor,
       inputColor: inputColor ?? this.inputColor,
@@ -93,6 +99,10 @@ class AppColors extends ThemeExtension<AppColors> {
       inputColor: Color.lerp(inputColor, other.inputColor, t)!,
       whiteColor: Color.lerp(whiteColor, other.whiteColor, t)!,
       blackColor: Color.lerp(blackColor, other.blackColor, t)!,
+      errorLightColor: Color.lerp(errorLightColor, other.errorLightColor, t)!,
+      successLightColor: Color.lerp(successLightColor, other.successLightColor, t)!,
+      textPrimaryColor: Color.lerp(textPrimaryColor, other.textPrimaryColor, t)!,
+      textSupportColor: Color.lerp(textSupportColor, other.textSupportColor, t)!
     );
   }
 }
