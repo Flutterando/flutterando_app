@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import '../constants/spaces.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_style.dart';
+import 'svg_image_widget.dart';
 
 class AppBarWidget extends AppBar {
   AppBarWidget({
@@ -16,7 +17,7 @@ class AppBarWidget extends AppBar {
          ///This is the number that sets AppBar's height equals to 84px
          toolbarHeight: 55.38,
          key: key,
-         title: SvgPicture.asset('assets/images/logo.svg'),
+         title: SvgImage.logoDefault.image(),
          actions: [
            if (onNotification != null)
              IconButton(
