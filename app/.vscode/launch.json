@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutterando APP (Dev)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": ["--dart-define-from-file", "dev.env"]
+        }
+    ]
+}
