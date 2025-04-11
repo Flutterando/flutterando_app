@@ -20,26 +20,29 @@ ThemeData get darkTheme {
       onSurface: colors.backgroundColor,
     ),
     textTheme: TextTheme(
-      headlineLarge: textStyles.headlineLarge.copyWith(
+      headlineLarge: textStyles.headlineL40Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      headlineSmall: textStyles.headlineSmall.copyWith(
+      headlineSmall: textStyles.headlineS32Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      bodyMedium: textStyles.bodyMedium.copyWith(
+      bodyMedium: textStyles.bodyM14Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      bodySmall: textStyles.bodySmall.copyWith(color: const Color(0xffFFFFFF)),
-      labelLarge: textStyles.labelLarge.copyWith(
+
+      bodySmall: textStyles.bodyS12Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      labelMedium: textStyles.labelMedium.copyWith(
+      labelLarge: textStyles.labelL16Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      labelSmall: textStyles.labelSmall.copyWith(
+      labelMedium: textStyles.labelM12Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
-      displayLarge: textStyles.displayLarge.copyWith(
+      labelSmall: textStyles.labelS8Bold.copyWith(
+        color: const Color(0xffFFFFFF),
+      ),
+      displayLarge: textStyles.displayL64Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
     ),
