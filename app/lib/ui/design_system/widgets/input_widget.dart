@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'theme/app_colors.dart';
-import 'theme/app_text_style.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_text_style.dart';
 
 class InputWidget extends StatefulWidget {
   final String? label;
