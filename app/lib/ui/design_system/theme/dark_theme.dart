@@ -16,7 +16,7 @@ ThemeData get darkTheme {
       onSecondary: colors.greyTwo,
       error: colors.errorColor,
       onError: colors.errorColor,
-      surface: const Color(0xff111111),
+      surface: colors.backgroundColor,
       onSurface: colors.backgroundColor,
     ),
     textTheme: TextTheme(
