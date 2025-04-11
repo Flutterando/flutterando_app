@@ -20,7 +20,7 @@ ThemeData get darkTheme {
       onSurface: colors.blackBackground,
     ),
     textTheme: TextTheme(
-      headlineLarge: textStyles.headlineM36Bold.copyWith(
+      headlineLarge: textStyles.headlineL40Bold.copyWith(
         color: const Color(0xffFFFFFF),
       ),
       headlineSmall: textStyles.headlineS32Bold.copyWith(
