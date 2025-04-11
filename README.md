@@ -8,14 +8,9 @@ O **flutterando_app** é um projeto que tem como objetivo conectar os membros da
 
 - **Feed de Notícias**: Atualizações, novidades e conteúdos exclusivos sobre Flutter e a comunidade.
 - **Publicações**: Permita que os membros criem posts, compartilhem ideias e experiências.
-- **Comentários e Reações**: Incentive a interação através de curtidas, reações e comentários nos posts.
-- **Perfil do Usuário**: Cada membro terá seu próprio perfil com bio, foto e histórico de publicações.
-- **Notificações**: Receba alertas sobre novas postagens, eventos e interações.
-- **Eventos e Lives**: Agenda de eventos, meetups e lives organizadas pela Flutterando.
-- **Mensagens Diretas**: Converse de forma privada com outros membros da comunidade.
+
 
 ## 🛠️ Tecnologias Utilizadas
-
 
 
 ## 🚀 Como Rodar o Projeto
