@@ -11,8 +11,8 @@ class SnackBarWidget {
       message: message,
       backgroundColor: context.colors.successLightColor,
       icon: Iconsax.tick_square,
-      iconColor: context.colors.textSupport,
-      textColor: context.colors.textSupport,
+      iconColor: context.colors.textSupportColor,
+      textColor: context.colors.textSupportColor,
     );
   }
 
@@ -22,8 +22,8 @@ class SnackBarWidget {
       message: message,
       backgroundColor: context.colors.alert,
       icon: Iconsax.danger,
-      iconColor: context.colors.textSupport,
-      textColor: context.colors.textSupport,
+      iconColor: context.colors.textSupportColor,
+      textColor: context.colors.textSupportColor,
     );
   }
 
@@ -33,8 +33,8 @@ class SnackBarWidget {
       message: message,
       backgroundColor: context.colors.errorLightColor,
       icon: Iconsax.danger,
-      iconColor: context.colors.textSupport,
-      textColor: context.colors.textSupport,
+      iconColor: context.colors.textSupportColor,
+      textColor: context.colors.textSupportColor,
     );
   }
 
@@ -65,7 +65,7 @@ class SnackBarWidget {
               child: Text(
                 message,
                 style: context.text.bodyM14Bold.copyWith(
-                  color: context.colors.textSupport,
+                  color: context.colors.textSupportColor,
                 ),
               ),
             ),

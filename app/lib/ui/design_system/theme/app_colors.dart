@@ -18,9 +18,8 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color inputColor;
   final Color whiteColor;
   final Color blackColor;
-
-  final Color textPrimary;
-  final Color textSupport;
+  final Color textPrimaryColor;
+  final Color textSupportColor;
 
   const AppColors({
     this.primaryColor = const Color(0xFFC22546),
@@ -39,8 +38,8 @@ class AppColors extends ThemeExtension<AppColors> {
     this.inputColor = const Color(0xFFF1F1F1),
     this.whiteColor = const Color(0xFFFFFFFF),
     this.blackColor = const Color(0xFF000000),
-    this.textPrimary = const Color(0xFFABABAB),
-    this.textSupport = const Color(0xFF424242),
+    this.textPrimaryColor = const Color(0xFFABABAB),
+    this.textSupportColor = const Color(0xFF424242),
   });
 
   @override
@@ -52,6 +51,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? greyThree,
     Color? successColor,
     Color? errorColor,
+    Color? errorLightColor,
     Color? alert,
     Color? errorSupportColor,
     Color? focusColor,
@@ -59,8 +59,6 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? inputColor,
     Color? whiteColor,
     Color? blackColor,
-    Color? textPrimary,
-    Color? textSupport,
   }) {
     return AppColors(
       primaryColor: primaryColor ?? this.primaryColor,
@@ -70,6 +68,7 @@ class AppColors extends ThemeExtension<AppColors> {
       greyThree: greyThree ?? this.greyThree,
       successColor: successColor ?? this.successColor,
       errorColor: errorColor ?? this.errorColor,
+      errorLightColor: errorLightColor ?? this.errorLightColor,
       alert: alert ?? this.alert,
       errorSupportColor: errorSupportColor ?? this.errorSupportColor,
       focusColor: focusColor ?? this.focusColor,
@@ -77,8 +76,6 @@ class AppColors extends ThemeExtension<AppColors> {
       inputColor: inputColor ?? this.inputColor,
       whiteColor: whiteColor ?? this.whiteColor,
       blackColor: blackColor ?? this.blackColor,
-      textPrimary: textPrimary ?? this.textPrimary,
-      textSupport: textSupport ?? this.textSupport,
     );
   }
 
@@ -102,8 +99,10 @@ class AppColors extends ThemeExtension<AppColors> {
       inputColor: Color.lerp(inputColor, other.inputColor, t)!,
       whiteColor: Color.lerp(whiteColor, other.whiteColor, t)!,
       blackColor: Color.lerp(blackColor, other.blackColor, t)!,
-      textPrimary:  Color.lerp(primaryColor, other.primaryColor, t)!,
-      textSupport:  Color.lerp(textSupport, other.textSupport, t)!,
+      errorLightColor: Color.lerp(errorLightColor, other.errorLightColor, t)!,
+      successLightColor: Color.lerp(successLightColor, other.successLightColor, t)!,
+      textPrimaryColor: Color.lerp(textPrimaryColor, other.textPrimaryColor, t)!,
+      textSupportColor: Color.lerp(textSupportColor, other.textSupportColor, t)!
     );
   }
 }
