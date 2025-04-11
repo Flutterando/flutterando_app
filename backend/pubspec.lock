@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "80.0.0"
+  adaptive_number:
+    dependency: transitive
+    description:
+      name: adaptive_number
+      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -41,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  bcrypt:
+    dependency: transitive
+    description:
+      name: bcrypt
+      sha256: "9dc3f234d5935a76917a6056613e1a6d9b53f7fa56f98e24cd49b8969307764b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -169,6 +185,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+  dart_jsonwebtoken:
+    dependency: transitive
+    description:
+      name: dart_jsonwebtoken
+      sha256: "21ce9f8a8712f741e8d6876a9c82c0f8a257fe928c4378a91d8527b92a3fd413"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   dart_style:
     dependency: transitive
     description:
@@ -177,6 +201,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  ed25519_edwards:
+    dependency: transitive
+    description:
+      name: ed25519_edwards
+      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   equatable:
     dependency: transitive
     description:
@@ -385,6 +417,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.6"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "92aa3841d083cc4b0f4709b5c74fd6409a3e6ba833ffc7dc6a8fee096366acf5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   pool:
     dependency: transitive
     description:
@@ -581,18 +621,26 @@ packages:
     dependency: "direct main"
     description:
       name: vaden
-      sha256: c355847dd0e4c0eb3953be7426ba4e486e0f19418141ba0657d7f999cc7d18f4
+      sha256: "3f0f2f9ba3991334f72705c8aa0b5c0e5ab1f41a46a828695f1b8cadf924bc97"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.9"
   vaden_class_scanner:
     dependency: "direct dev"
     description:
       name: vaden_class_scanner
-      sha256: f7ed7f76c2c22d087e68cb3bf4a136f7b47d1fec7b5a583a9cc2acdc7260cd56
+      sha256: d4d383db768de6aec78e705f1b52224efc610a79cdb5cc6194b75c1cb5a87b7a
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.9"
+  vaden_security:
+    dependency: transitive
+    description:
+      name: vaden_security
+      sha256: bb54995fd8767b257e59aa32d4b1c6a5b9f03216a360454e4705a4a24c426fc3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   watcher:
     dependency: transitive
     description:
