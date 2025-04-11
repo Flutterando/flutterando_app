@@ -9,6 +9,12 @@ extension ThemeDataColorsExtension on ThemeData {
   AppColors get colors => extension<AppColors>()!;
 }
 
+extension ThemeContextExtension on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  AppColors get colors => Theme.of(this).colors;
+  AppTextStyles get text => Theme.of(this).textStyles;
+}
+
 extension ThemeDataTextsExtension on ThemeData {
   AppTextStyles get textStyles => extension<AppTextStyles>()!;
 }

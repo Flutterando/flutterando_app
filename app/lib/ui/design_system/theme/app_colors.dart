@@ -2,70 +2,93 @@ import 'package:flutter/material.dart';
 
 class AppColors extends ThemeExtension<AppColors> {
   //
-  final Color blackBackground;
-
-  final Color grayStrong;
-  final Color grayMedium;
-  final Color grayLight;
-  final Color grayText;
-  final Color grayHint;
-  final Color white;
-  final Color black;
-
-  final Color red;
+  final Color primaryColor;
+  final Color backgroundColor;
+  final Color greyOne;
+  final Color greyTwo;
+  final Color greyThree;
+  final Color successColor;
+  final Color errorColor;
+  final Color alert;
+  final Color errorSupportColor;
+  final Color focusColor;
+  final Color disabledColor;
+  final Color inputColor;
+  final Color whiteColor;
+  final Color blackColor;
 
   const AppColors({
-    this.blackBackground = const Color(0xFF18191B),
-    this.grayStrong = const Color(0xFF28292B),
-    this.grayMedium = const Color(0xFF36373B),
-    this.grayLight = const Color(0xFF898B8C),
-    this.grayText = const Color(0xFF939AA5),
-    this.grayHint = const Color(0xFF898B8C),
-    this.white = const Color(0xffffffff),
-    this.black = const Color(0xff000000),
-    this.red = const Color(0xffC22445),
+    this.primaryColor = const Color(0xFFBA0C2F),
+    this.backgroundColor = const Color(0xFFFFFFFF),
+    this.greyOne = const Color(0xFF232323),
+    this.greyTwo = const Color(0xFF424242),
+    this.greyThree = const Color(0xFFABABAB),
+    this.successColor = const Color(0xFF00C933),
+    this.errorColor = const Color(0xFFFF0004),
+    this.alert = const Color(0xFFFFBB00),
+    this.errorSupportColor = const Color(0xFFFFE0E1),
+    this.focusColor = const Color(0xFF00A0FF),
+    this.disabledColor = const Color(0xFFDBDBDB),
+    this.inputColor = const Color(0xFFF1F1F1),
+    this.whiteColor = const Color(0xFFFFFFFF),
+    this.blackColor = const Color(0xFF000000),
   });
 
   @override
   AppColors copyWith({
-    Color? blackBackground,
-    Color? grayStrong,
-    Color? grayMedium,
-    Color? grayLight,
-    Color? grayText,
-    Color? grayHint,
-    Color? red,
-    Color? white,
-    Color? black,
+    Color? primaryColor,
+    Color? backgroundColor,
+    Color? greyOne,
+    Color? greyTwo,
+    Color? greyThree,
+    Color? successColor,
+    Color? errorColor,
+    Color? alert,
+    Color? errorSuportColor,
+    Color? focusColor,
+    Color? disabledColor,
+    Color? inputColor,
+    Color? whiteColor,
+    Color? blackColor,
   }) {
     return AppColors(
-      blackBackground: blackBackground ?? this.blackBackground,
-      grayStrong: grayStrong ?? this.grayStrong,
-      grayMedium: grayMedium ?? this.grayMedium,
-      grayLight: grayLight ?? this.grayLight,
-      grayText: grayText ?? this.grayText,
-      grayHint: grayHint ?? this.grayHint,
-      red: red ?? this.red,
-      white: white ?? this.white,
-      black: black ?? this.black,
+      primaryColor: primaryColor ?? this.primaryColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      greyOne: greyOne ?? this.greyOne,
+      greyTwo: greyTwo ?? this.greyTwo,
+      greyThree: greyThree ?? this.greyThree,
+      successColor: successColor ?? this.successColor,
+      errorColor: errorColor ?? this.errorColor,
+      alert: alert ?? this.alert,
+      errorSupportColor: errorSuportColor ?? this.errorSupportColor,
+      focusColor: focusColor ?? this.focusColor,
+      disabledColor: disabledColor ?? this.disabledColor,
+      inputColor: inputColor ?? this.inputColor,
+      whiteColor: whiteColor ?? this.whiteColor,
+      blackColor: blackColor ?? this.blackColor,
     );
   }
 
   @override
   AppColors lerp(ThemeExtension<AppColors>? other, double t) {
-    //
     if (other is! AppColors) return this;
 
     return AppColors(
-      blackBackground: Color.lerp(blackBackground, other.blackBackground, t)!,
-      grayStrong: Color.lerp(grayStrong, other.grayStrong, t)!,
-      grayMedium: Color.lerp(grayMedium, other.grayMedium, t)!,
-      grayLight: Color.lerp(grayLight, other.grayLight, t)!,
-      grayText: Color.lerp(grayText, other.grayText, t)!,
-      grayHint: Color.lerp(grayHint, other.grayHint, t)!,
-      red: Color.lerp(red, other.red, t)!,
-      white: Color.lerp(white, other.white, t)!,
-      black: Color.lerp(black, other.black, t)!,
+      primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
+      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t)!,
+      greyOne: Color.lerp(greyOne, other.greyOne, t)!,
+      greyTwo: Color.lerp(greyTwo, other.greyTwo, t)!,
+      greyThree: Color.lerp(greyThree, other.greyThree, t)!,
+      successColor: Color.lerp(successColor, other.successColor, t)!,
+      errorColor: Color.lerp(errorColor, other.errorColor, t)!,
+      alert: Color.lerp(alert, other.alert, t)!,
+      errorSupportColor:
+          Color.lerp(errorSupportColor, other.errorSupportColor, t)!,
+      focusColor: Color.lerp(focusColor, other.focusColor, t)!,
+      disabledColor: Color.lerp(disabledColor, other.disabledColor, t)!,
+      inputColor: Color.lerp(inputColor, other.inputColor, t)!,
+      whiteColor: Color.lerp(whiteColor, other.whiteColor, t)!,
+      blackColor: Color.lerp(blackColor, other.blackColor, t)!,
     );
   }
 }
