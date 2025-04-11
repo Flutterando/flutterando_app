@@ -3,6 +3,7 @@ import 'package:routefly/routefly.dart';
 
 import '../../../app_widget.dart';
 import '../../design_system/widgets/button_widget.dart';
+import '../../design_system/widgets/snack_bar_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,10 @@ class _LoginPageState extends State<LoginPage> {
             Text('Tela de login'),
             ButtonWidget.filledPrimary(
               onPressed: () {
-                Routefly.push(routePaths.auth.recoverPassword.sendEmail);
+                if(context.mounted) {
+                  SnackBarWidget.error(context, 'Você foi cadastrado com sucesso!');
+                }
+//                Routefly.push(routePaths.auth.recoverPassword.sendEmail);
               },
               text: 'Recupear Senha',
             ),
