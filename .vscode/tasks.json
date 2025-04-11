@@ -1,0 +1,56 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flutter Build Prod APK",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "build",
+                "apk",
+                "--release",
+                "--flavor",
+                "prod",
+                "-t",
+                "lib/main.dart"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Build release APK for production flavor"
+        },
+        {
+            "label": "Flutter Build Dev APK",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "build",
+                "apk",
+                "--debug",
+                "--flavor",
+                "dev",
+                "-t",
+                "lib/main.dart"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Build debug APK for development flavor"
+        },
+        {
+            "label": "Flutter Build Prod iOS",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "build",
+                "ios",
+                "--release",
+                "--flavor",
+                "prod",
+                "-t",
+                "lib/main.dart"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Build release iOS app for production flavor"
+        }
+    ]
+}

@@ -1,0 +1,53 @@
+# include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  errors:
+    avoid_redundant_argument_values: error
+    avoid_dynamic_calls: error
+    prefer_typing_uninitialized_variables: error
+    use_setters_to_change_properties: warning
+    avoid_empty_else: warning
+
+  exclude:
+    - build/**
+    - lib/**/*.g.dart
+    - test/**/mocks/**
+
+linter:
+  rules:
+    - avoid_redundant_argument_values
+    - prefer_const_declarations
+    - avoid_empty_else
+    - avoid_returning_null
+    - curly_braces_in_flow_control_structures
+    - prefer_final_fields
+    - prefer_for_elements_to_map_fromIterable
+    - prefer_const_constructors
+    - prefer_typing_uninitialized_variables
+    - avoid_setters_without_getters
+    - avoid_unnecessary_containers
+    - prefer_relative_imports
+    - use_setters_to_change_properties
+    - avoid_dynamic_calls
+    # - avoid_classes_with_only_static_members
+    # - avoid_print
+    - prefer_single_quotes
+    - invariant_booleans
+    - sort_constructors_first: false
+    - unnecessary_null_checks
+    - prefer_const_literals_to_create_immutables
+    - avoid_catches_without_on_clauses
+    - avoid_equals_and_hash_code_on_mutable_classes
+    - avoid_null_checks_in_equality_operators
+    - use_late_for_private_fields_and_variables
+    - no_leading_underscores_for_local_identifiers
+    - unnecessary_lambdas
+    - unnecessary_parenthesis
+    - avoid_positional_boolean_parameters
+    - avoid_void_async
+    - camel_case_extensions
+    - prefer_mixin

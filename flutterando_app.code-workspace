@@ -1,0 +1,80 @@
+{
+	"folders": [
+		{
+			"name": "Root",
+			"path": "."
+		}
+	],
+	"settings": {
+		"[json]": {
+			"editor.tabSize": 2,
+			"editor.insertSpaces": true
+		},
+		"[dart]": {
+			"editor.formatOnSave": true,
+			"editor.tabSize": 2,
+			"editor.insertSpaces": true,
+			"editor.rulers": [
+				140
+			],
+			"editor.codeActionsOnSave": {
+				"source.fixAll": "explicit",
+				"source.organizeImports": "explicit"
+			}
+		},
+		"editor.rulers": [
+			{
+				"column": 140,
+				"color": "#cccc"
+			}
+		],
+		"workbench.colorCustomizations": {
+			"editorRuler.foreground": "#cccc"
+		},
+		"editor.formatOnSave": true,
+		"editor.wordWrapColumn": 140,
+		"files.trimTrailingWhitespace": true,
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
+		"eslint.enable": true,
+		"editor.minimap.enabled": true,
+		"git.autofetch": true,
+		"git.confirmSync": false,
+		"git.enableSmartCommit": true,
+		"editor.comments.ignoreEmptyLines": true,
+		"editor.comments.insertSpace": true,
+		"terminal.integrated.defaultProfile.windows": "Command Prompt",
+		"terminal.integrated.fontSize": 14,
+		"dart.lineLength": 140,
+		"dart.formatOnSave": true,
+		"dart.analysisExcludedFolders": [
+			"**/build",
+			"**/.dart_tool",
+			"**/generated"
+		],
+		"dart.showTodos": true,
+		"dart.completeFunctionCalls": true,
+		"dart.enableSdkFormatter": true,
+		"dart.sortMembers": true,
+		"dart.renameFilesWithClasses": "always",
+		"dart.previewFlutterUiGuides": true,
+		"dart.flutterOutline": true,
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Prod",
+				"request": "launch",
+				"program": "lib/main.dart",
+				"type": "dart",
+			},
+			{
+				"name": "Dev",
+				"request": "launch",
+				"type": "dart",
+				"program": "lib/main.dart",
+			}
+		]
+	},
+}
