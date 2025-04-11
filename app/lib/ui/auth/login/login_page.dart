@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:routefly/routefly.dart';
 
 import '../../../app_widget.dart';
+
 import '../../design_system/widgets/appbar_widget.dart';
+
+import '../../design_system/widgets/button_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,23 +23,23 @@ class _LoginPageState extends State<LoginPage> {
           spacing: 12.0,
           children: [
             const Text('Tela de login'),
-            ElevatedButton(
+            ButtonWidget.filledPrimary(
               onPressed: () {
                 Routefly.push(routePaths.auth.recoverPassword.sendEmail);
               },
-              child: Text('Recupear Senha'),
+              text: 'Recupear Senha',
             ),
-            ElevatedButton(
+            ButtonWidget.filledSecondary(
               onPressed: () {
                 Routefly.push(routePaths.feed);
               },
-              child: Text('Feed'),
+              text: 'Feed',
             ),
-            ElevatedButton(
+            ButtonWidget.outlinePrimary(
               onPressed: () {
                 Routefly.push(routePaths.auth.register.path);
               },
-              child: Text('Cadastro'),
+              text: 'Cadastro',
             ),
           ],
         ),

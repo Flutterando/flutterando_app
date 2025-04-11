@@ -18,8 +18,8 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color blackColor;
 
   const AppColors({
-    this.primaryColor = const Color(0xFFBA0C2F),
-    this.backgroundColor = const Color(0xFFFFFFFF),
+    this.primaryColor = const Color(0xFFC22546),
+    this.backgroundColor = const Color(0xFF121212),
     this.greyOne = const Color(0xFF232323),
     this.greyTwo = const Color(0xFF424242),
     this.greyThree = const Color(0xFFABABAB),

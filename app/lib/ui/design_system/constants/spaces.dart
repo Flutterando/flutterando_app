@@ -1,5 +1,4 @@
 class Spaces {
-
   static const double xxs = 2.0;
   static const double xs = 4.0;
   static const double s = 8.0;
@@ -10,5 +9,4 @@ class Spaces {
   static const double xxxl = 40.0;
   static const double xxxxl = 48.0;
   static const double xxxxxl = 64.0;
-
 }
