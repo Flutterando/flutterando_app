@@ -16,11 +16,7 @@ O **flutterando_app** é um projeto que tem como objetivo conectar os membros da
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Flutter** — Desenvolvimento Mobile
-- **Firebase** — Autenticação, Firestore, Storage e Push Notifications
-- **Riverpod/BLoC** — Gerenciamento de Estado (a definir)
-- **Clean Architecture** — Organização e escalabilidade do projeto
-- **CI/CD** — Automatização de builds e deploys
+
 
 ## 🚀 Como Rodar o Projeto
 
@@ -84,5 +80,5 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-Quer que eu também crie uma primeira *issue* ou uma *roadmap* inicial para organizar o que seria entregue nas primeiras versões? 🎯  
+Quer que eu também crie uma primeira *issue* ou uma *roadmap* inicial para organizar o que seria entregue nas primeiras versões? 🎯
 Posso te ajudar a deixar isso bem bonito! 🚀
