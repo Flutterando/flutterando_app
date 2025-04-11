@@ -3,10 +3,10 @@ import 'package:routefly/routefly.dart';
 
 import '../../../app_widget.dart';
 
+import '../../design_system/widgets/alert_widget.dart';
 import '../../design_system/widgets/appbar_widget.dart';
 
 import '../../design_system/widgets/button_widget.dart';
-import '../../design_system/widgets/snack_bar_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
             ButtonWidget.filledPrimary(
               onPressed: () {
                 if(context.mounted) {
-                  SnackBarWidget.success(context, 'Você foi cadastrado com sucesso!');
+                  AlertWidget.success(context, message: 'Você foi cadastrado com sucesso!');
                 }
 //                Routefly.push(routePaths.auth.recoverPassword.sendEmail);
               },
