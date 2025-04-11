@@ -16,6 +16,8 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color inputColor;
   final Color whiteColor;
   final Color blackColor;
+  final Color textPrimaryColor;
+  final Color textSupportColor;
 
   const AppColors({
     this.primaryColor = const Color(0xFFC22546),
@@ -32,6 +34,8 @@ class AppColors extends ThemeExtension<AppColors> {
     this.inputColor = const Color(0xFFF1F1F1),
     this.whiteColor = const Color(0xFFFFFFFF),
     this.blackColor = const Color(0xFF000000),
+    this.textPrimaryColor = const Color(0xFFABABAB),
+    this.textSupportColor = const Color(0xFF424242),
   });
 
   @override
