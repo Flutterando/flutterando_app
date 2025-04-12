@@ -3,45 +3,53 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../constants/spaces.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_style.dart';
-import 'svg_image_widget.dart';
+import '../theme/theme.dart';
 
-class AppBarWidget extends AppBar {
-  AppBarWidget({
-    Key? key,
-    void Function()? onNotification,
-    Color? backgroundColor,
-    String name = 'F',
-  }) : super(
-         ///This is the number that sets AppBar's height equals to 84px
-         toolbarHeight: 55.38,
-         key: key,
-         title: SvgImage.logoDefault.image(),
-         actions: [
-           if (onNotification != null)
-             IconButton(
-               icon: Icon(
-                 Iconsax.add_square,
-                 size: 20,
-                 color: const AppColors().greyThree,
-               ),
-               onPressed: onNotification,
-             ),
-           Icon(
-             Iconsax.notification,
-             size: 20,
-             color: const AppColors().greyThree,
-           ),
-           const SizedBox(width: 16),
-           CircleAvatar(
-             child: Text(name, style: const AppTextStyles().labelL16Bold),
-             radius: Spaces.l,
-           ),
-         ],
-         backgroundColor: backgroundColor ?? const AppColors().blackColor,
-         centerTitle: false,
-         actionsPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-         titleSpacing: 16,
-       );
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  final void Function()? onNotification;
+  final String username;
+
+  AppBarWidget({super.key, this.onNotification, this.username = 'F'});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: Spaces.xl + 2,
+        horizontal: Spaces.l,
+      ),
+      child: Row(
+        children: [
+          SvgPicture.asset('assets/images/logo.svg', width: 158, height: 32),
+          const Spacer(),
+          Row(
+            spacing: Spaces.l,
+            children: [
+              if (onNotification != null)
+                InkWell(
+                  child: Icon(
+                    Iconsax.add_square,
+                    color: context.theme.colors.greyThree,
+                  ),
+                  onTap: onNotification,
+                ),
+              Icon(Iconsax.notification, color: context.theme.colors.greyThree),
+              CircleAvatar(
+                radius: Spaces.l + 2,
+                child: Text(
+                  username,
+                  style: context.theme.textStyles.bodyL16Bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(84);
+
+
 }
