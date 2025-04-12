@@ -16,7 +16,10 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: AppBarWidget(
+        onNotification: () {},
+        onCreatePost: () {},
+      ),
       body: Column(
         spacing: Spaces.m,
         children: [
