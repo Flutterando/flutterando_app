@@ -6,7 +6,6 @@ import '../../../../app_widget.dart';
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
 import '../../../design_system/widgets/button_widget.dart';
-import '../../../design_system/widgets/input_widget.dart';
 import '../../../design_system/widgets/otp_widget.dart';
 
 class OtpPage extends StatefulWidget {
@@ -22,10 +21,13 @@ class _OtpPageState extends State<OtpPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        leading: Icon(
-          Iconsax.arrow_left_2,
-          size: Spaces.xl,
-          color: context.colors.whiteColor,
+        leading: InkWell(
+          onTap: () => Routefly.pop(context),
+          child: Icon(
+            Iconsax.arrow_left_2,
+            size: Spaces.xl,
+            color: context.colors.whiteColor,
+          ),
         ),
         title: Text(
           'Recuperar senha',

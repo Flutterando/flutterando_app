@@ -21,10 +21,13 @@ class _SendEmailPageState extends State<SendEmailPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        leading: Icon(
-          Iconsax.arrow_left_2,
-          size: Spaces.xl,
-          color: context.colors.whiteColor,
+        leading: InkWell(
+          onTap: () => Routefly.pop(context),
+          child: Icon(
+            Iconsax.arrow_left_2,
+            size: Spaces.xl,
+            color: context.colors.whiteColor,
+          ),
         ),
         title: Text(
           'Recuperar senha',
