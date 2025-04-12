@@ -34,6 +34,7 @@ class LinkPostWidget extends StatelessWidget {
             ),
           ),
           Container(
+            padding: const EdgeInsets.all(Spaces.s),
             decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).colors.greyTwo),
               borderRadius: const BorderRadius.only(
