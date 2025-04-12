@@ -42,16 +42,15 @@ class _PostFeedWidgetState extends State<PostFeedWidget> {
         ),
         const SizedBox(height: Spaces.s - 1),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Spaces.xxxl),
+          padding: const EdgeInsets.symmetric(horizontal: Spaces.s),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: Spaces.m + 2),
               const Text('>_'),
-              const SizedBox(width: Spaces.l + 1),
+              const SizedBox(width: Spaces.l),
               Expanded(
                 child: Column(
-                  spacing: Spaces.s + 3,
+                  spacing: Spaces.l,
                   children: [
                     ExpandableTextFixed3Lines(widget.content),
                     LinkPostWidget(

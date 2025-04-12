@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/spaces.dart';
 import '../../theme/theme.dart';
 
@@ -13,7 +12,8 @@ class ExpandableTextFixed3Lines extends StatefulWidget {
       _ExpandableTextFixed3LinesState();
 }
 
-class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines> {
+class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines>
+    with TickerProviderStateMixin {
   bool _isExpanded = false;
   bool _isOverflowing = false;
 
@@ -36,7 +36,12 @@ class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final textPainter = TextPainter(
-          text: TextSpan(text: widget.text),
+          text: TextSpan(
+            text: widget.text,
+            style: context.theme.textStyles.bodyM14Bold.copyWith(
+              fontWeight: FontWeight.w400,
+            ),
+          ),
           maxLines: _lineLimit,
           textDirection: TextDirection.ltr,
         );
@@ -48,14 +53,25 @@ class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              widget.text,
-              style: context.theme.textStyles.bodyM14Bold.copyWith(
-                fontWeight: FontWeight.w400,
-              ),
-              maxLines: _isExpanded ? null : _lineLimit,
-              overflow:
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: _isExpanded
+                    ? const BoxConstraints()
+                    : BoxConstraints(maxHeight: textPainter.preferredLineHeight * _lineLimit),
+                child: Text(
+                  widget.text,
+                  style: context.theme.textStyles.bodyM14Bold.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
+                  maxLines: _isExpanded ? null : _lineLimit - 1,
+                  softWrap: true,
+                  overflow:
                   _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                ),
+              ),
             ),
             if (_isOverflowing) ...[
               const SizedBox(height: 10),
@@ -64,7 +80,7 @@ class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: Spaces.l,
-                    vertical: (Spaces.m + 1) / 2,
+                    vertical: Spaces.xs,
                   ),
                   child: Text(_isExpanded ? 'Ver menos' : 'Ver mais'),
                   decoration: BoxDecoration(

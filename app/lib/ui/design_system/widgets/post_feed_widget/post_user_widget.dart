@@ -38,51 +38,48 @@ class PostUserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Spaces.xxxl),
-      child: Row(
-        children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(
-              width: Spaces.xxl + 4,
-              height: Spaces.xxl + 4,
-            ),
-            child: CircleAvatar(
-              child: Text(
-                username.substring(0, 1).toUpperCase(),
-                style: context.text.bodyL16Bold,
-              ),
+    return Row(
+      children: [
+        ConstrainedBox(
+          constraints: const BoxConstraints.tightFor(
+            width: Spaces.xxl + 4,
+            height: Spaces.xxl + 4,
+          ),
+          child: CircleAvatar(
+            child: Text(
+              username.substring(0, 1).toUpperCase(),
+              style: context.text.bodyL16Bold,
             ),
           ),
-          const SizedBox(width: Spaces.m - 2),
-          Text(
-            username,
-            style: context.text.bodyL16Bold.copyWith(
-              color: context.theme.colors.whiteColor,
+        ),
+        const SizedBox(width: Spaces.m - 2),
+        Text(
+          username,
+          style: context.text.bodyL16Bold.copyWith(
+            color: context.theme.colors.whiteColor,
+          ),
+        ),
+        const Spacer(),
+        Row(
+          children: [
+            Text(
+              getTimeElapsed(),
+              style: context.text.bodyL16Bold.copyWith(
+                fontWeight: FontWeight.w400,
+                color: context.theme.colors.greyThree.withValues(alpha: 0.75),
+              ),
             ),
-          ),
-          const Spacer(),
-          Row(
-            children: [
-              Text(
-                getTimeElapsed(),
-                style: context.text.bodyL16Bold.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: context.theme.colors.greyThree,
-                ),
+            InkWell(
+              onTap: onShared,
+              child: Icon(
+                Iconsax.send_2,
+                color: context.theme.colors.greyThree.withValues(alpha: 0.75),
               ),
-              InkWell(
-                onTap: onShared,
-                child: Icon(
-                  Iconsax.send_2,
-                  color: context.theme.colors.greyTwo,
-                ),
-              ),
-            ],
-            spacing: Spaces.m - 2,
-          ),
-        ],
-      ),
+            ),
+          ],
+          spacing: Spaces.m - 2,
+        ),
+      ],
     );
   }
 }
