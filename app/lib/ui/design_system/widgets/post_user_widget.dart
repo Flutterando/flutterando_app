@@ -7,11 +7,11 @@ import '../theme/theme.dart';
 class PostUserWidget extends StatelessWidget {
   const PostUserWidget({
     super.key,
-    this.username,
+    this.username = 'F',
     this.timeOfPost = 0,
     this.onShared,
   });
-  final String? username;
+  final String username;
   final int timeOfPost;
   final void Function()? onShared;
 
@@ -48,12 +48,15 @@ class PostUserWidget extends StatelessWidget {
               height: Spaces.xxl + 4,
             ),
             child: CircleAvatar(
-              child: Text(username ?? 'F', style: context.text.bodyL16Bold),
+              child: Text(
+                username.substring(0, 1).toUpperCase(),
+                style: context.text.bodyL16Bold,
+              ),
             ),
           ),
           const SizedBox(width: Spaces.m - 2),
           Text(
-            username ?? 'Profile name',
+            username,
             style: context.text.bodyL16Bold.copyWith(
               color: context.theme.colors.whiteColor,
             ),
