@@ -9,7 +9,7 @@ analyzer:
     avoid_redundant_argument_values: error
     avoid_dynamic_calls: error
     prefer_typing_uninitialized_variables: error
-    use_setters_to_change_properties: warning
+    # use_setters_to_change_properties: warning
     avoid_empty_else: warning
 
   exclude:
@@ -31,7 +31,7 @@ linter:
     - avoid_setters_without_getters
     - avoid_unnecessary_containers
     - prefer_relative_imports
-    - use_setters_to_change_properties
+    # - use_setters_to_change_properties
     - avoid_dynamic_calls
     # - avoid_classes_with_only_static_members
     # - avoid_print
