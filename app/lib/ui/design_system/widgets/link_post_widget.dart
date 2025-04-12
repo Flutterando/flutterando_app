@@ -18,6 +18,7 @@ class LinkPostWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(Spaces.xxl),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             height: 330,
