@@ -58,7 +58,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const InputWidget(label: 'E-mail', hintText: 'Informe seu email'),
+                const InputWidget(
+                  label: 'E-mail',
+                  hintText: 'Informe seu email',
+                ),
                 const InputWidget(
                   label: 'Senha',
                   hintText: 'Informe sua senha',
@@ -66,13 +69,18 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text(
-                      'Forget password   ',
-                      style: context.text.bodyL16Bold.copyWith(
-                        color: context.colors.greyTwo,
-                        height: -0.25,
+                  child: Transform.translate(
+                    offset: const Offset(0, -15),
+                    child: InkWell(
+                      onTap:
+                          () => Routefly.push(
+                            routePaths.auth.recoverPassword.sendEmail,
+                          ),
+                      child: Text(
+                        'Forget password   ',
+                        style: context.text.bodyL16Bold.copyWith(
+                          color: context.colors.greyTwo,
+                        ),
                       ),
                     ),
                   ),
