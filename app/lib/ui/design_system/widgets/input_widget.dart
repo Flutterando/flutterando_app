@@ -17,6 +17,7 @@ class InputWidget extends StatefulWidget {
   final bool enabled;
   final IconData? helperIcon;
   final IconData? prefixIcon;
+  final String? initialValue;
 
   const InputWidget({
     super.key,
@@ -32,6 +33,7 @@ class InputWidget extends StatefulWidget {
     this.enabled = true,
     this.helperIcon,
     this.prefixIcon,
+    this.initialValue,
   });
 
   @override
@@ -68,6 +70,7 @@ class _InputWidgetState extends State<InputWidget> {
             ),
           ),
         TextFormField(
+          initialValue: widget.initialValue,
           controller: widget.controller,
           focusNode: widget.focusNode,
           obscureText: _obscureText,
@@ -212,11 +215,13 @@ class _AuxiliarText extends StatelessWidget {
         spacing: 4,
         children: [
           if (icon != null) Icon(icon, size: 16, color: color),
-          Text(
-            text!,
-            style: appTextStyles.labelM12Bold.copyWith(
-              color: color,
-              fontWeight: FontWeight.w400,
+          Flexible(
+            child: Text(
+              text!,
+              style: appTextStyles.labelM12Bold.copyWith(
+                color: color,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ],
