@@ -18,7 +18,7 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: Routefly.routerConfig(
         routes: routes,
-        initialPath: routePaths.auth.register.pages.feedbackError,
+        initialPath: routePaths.auth.login,
       ),
     );
   }
