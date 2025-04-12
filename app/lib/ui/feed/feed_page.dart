@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../design_system/constants/spaces.dart';
 import '../design_system/widgets/link_post_widget.dart';
+import '../design_system/widgets/post_user_widget.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -19,6 +20,7 @@ class _FeedPageState extends State<FeedPage> {
           spacing: Spaces.m,
           children: [
             Text('Tela do feed'),
+            PostUserWidget(),
             LinkPostWidget(
               postDescription:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur sagittis, nisl nunc egestas nunc, eget lacinia nunc nisl eget nunc.',
