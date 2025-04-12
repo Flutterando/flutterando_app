@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../constants/spaces.dart';
 import '../theme/theme.dart';
+import 'svg_image_widget.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final void Function()? onNotification;
@@ -20,7 +21,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: Row(
         children: [
-          SvgPicture.asset('assets/images/logo.svg', width: 158, height: 32),
+          SvgImage.logoDefault.image(width: 158, height: 32),
           const Spacer(),
           Row(
             spacing: Spaces.l,
