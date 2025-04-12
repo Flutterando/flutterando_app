@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../design_system/constants/spaces.dart';
-import '../design_system/widgets/post_feed_widget.dart';
+import '../design_system/widgets/post_feed_widget/post_feed_widget.dart';
 
 
 class FeedPage extends StatefulWidget {

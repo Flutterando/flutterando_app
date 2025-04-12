@@ -49,11 +49,6 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
         exceptionsListPassword.map((e) => e.code).toList();
   }
 
-  void _submit() {
-    if (formKey.currentState!.validate() && exceptionsPassword.value.isEmpty) {
-      // request to API
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

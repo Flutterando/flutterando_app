@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/spaces.dart';
-import '../theme/theme.dart';
+import '../../constants/spaces.dart';
+import '../../theme/theme.dart';
 
 class LinkPostWidget extends StatelessWidget {
   final String imageUrl;

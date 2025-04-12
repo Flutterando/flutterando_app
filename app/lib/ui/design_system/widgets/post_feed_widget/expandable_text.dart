@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/spaces.dart';
-import '../theme/theme.dart';
+import '../../constants/spaces.dart';
+import '../../theme/theme.dart';
 
 class ExpandableTextFixed3Lines extends StatefulWidget {
   final String text;

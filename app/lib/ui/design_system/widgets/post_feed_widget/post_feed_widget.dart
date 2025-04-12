@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/spaces.dart';
+import '../../constants/spaces.dart';
 import 'link_post_widget.dart';
 import 'post_user_widget.dart';
 import 'expandable_text.dart';

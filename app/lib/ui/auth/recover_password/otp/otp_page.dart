@@ -63,7 +63,7 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   void _verifyCode(String code) {
-    if (code == "1234") {
+    if (code == '1234') {
       // OK
       setState(() {
         _invalidCode = false;
