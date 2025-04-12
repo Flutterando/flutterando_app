@@ -8,10 +8,11 @@ class ButtonWidget extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.loading = false,
-    this.disabled  = false,
+    this.disabled = false,
     this.isOutline = false,
     this.isSecondary = false,
     this.isSimpleText = false,
+    this.padding,
   });
 
   factory ButtonWidget.filledPrimary({
@@ -19,19 +20,28 @@ class ButtonWidget extends StatelessWidget {
     required String text,
     bool loading = false,
     bool disabled = false,
-  }) => ButtonWidget._(onPressed: onPressed, text: text, loading: loading, disabled: disabled,);
+    EdgeInsetsGeometry? padding,
+  }) => ButtonWidget._(
+    onPressed: onPressed,
+    text: text,
+    loading: loading,
+    disabled: disabled,
+    padding: padding,
+  );
 
   factory ButtonWidget.filledSecondary({
     required VoidCallback onPressed,
     required String text,
     bool loading = false,
     bool disabled = false,
+    EdgeInsetsGeometry? padding,
   }) => ButtonWidget._(
     onPressed: onPressed,
     text: text,
     loading: loading,
     disabled: disabled,
     isSecondary: true,
+    padding: padding,
   );
 
   factory ButtonWidget.outlinePrimary({
@@ -39,12 +49,14 @@ class ButtonWidget extends StatelessWidget {
     required String text,
     bool loading = false,
     bool disabled = false,
+    EdgeInsetsGeometry? padding,
   }) => ButtonWidget._(
     onPressed: onPressed,
     text: text,
     loading: loading,
     disabled: disabled,
     isOutline: true,
+    padding: padding,
   );
 
   factory ButtonWidget.outlineSecondary({
@@ -52,6 +64,7 @@ class ButtonWidget extends StatelessWidget {
     required String text,
     bool loading = false,
     bool disabled = false,
+    EdgeInsetsGeometry? padding,
   }) => ButtonWidget._(
     onPressed: onPressed,
     text: text,
@@ -59,6 +72,7 @@ class ButtonWidget extends StatelessWidget {
     disabled: disabled,
     isOutline: true,
     isSecondary: true,
+    padding: padding,
   );
 
   factory ButtonWidget.textPrimary({
@@ -66,12 +80,14 @@ class ButtonWidget extends StatelessWidget {
     required String text,
     bool loading = false,
     bool disabled = false,
+    EdgeInsetsGeometry? padding,
   }) => ButtonWidget._(
     onPressed: onPressed,
     text: text,
     loading: loading,
     disabled: disabled,
     isSimpleText: true,
+    padding: padding,
   );
 
   factory ButtonWidget.textSecondary({
@@ -79,6 +95,7 @@ class ButtonWidget extends StatelessWidget {
     required String text,
     bool loading = false,
     bool disabled = false,
+    EdgeInsetsGeometry? padding,
   }) => ButtonWidget._(
     onPressed: onPressed,
     text: text,
@@ -86,9 +103,11 @@ class ButtonWidget extends StatelessWidget {
     disabled: disabled,
     isSecondary: true,
     isSimpleText: true,
+    padding: padding,
   );
 
   final VoidCallback onPressed;
+  final EdgeInsetsGeometry? padding;
   final bool loading;
   final bool disabled;
   final String text;
@@ -157,11 +176,11 @@ class ButtonWidget extends StatelessWidget {
         side: BorderSide(width: Spaces.xxs, color: borderColor),
       ),
       child: InkWell(
-        onTap: disabled ? null : onPressed,
+        onTap: (disabled || loading) ? null : onPressed,
         splashColor: context.colors.whiteColor.withValues(alpha: 0.1),
         highlightColor: Colors.transparent,
         child: Container(
-          padding: const EdgeInsets.all(Spaces.m),
+          padding: padding != null ? padding : const EdgeInsets.all(Spaces.m),
           width: double.infinity,
           constraints: const BoxConstraints(minHeight: Spaces.xxxl),
           decoration: BoxDecoration(

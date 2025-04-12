@@ -23,7 +23,7 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
               onPressed: () {
                 Routefly.push(routePaths.auth.recoverPassword.feedbackSuccess);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),

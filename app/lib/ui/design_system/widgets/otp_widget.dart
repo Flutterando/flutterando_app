@@ -95,7 +95,7 @@ class _OtpWidgetState extends State<OtpWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(widget.length, (i) {
             final isFocused = _focusNodes[i].hasFocus;
-            final isFilled = _controllers[i].text.isNotEmpty;
+            final _ = _controllers[i].text.isNotEmpty;
 
             Color color;
             if (widget.hasError) {

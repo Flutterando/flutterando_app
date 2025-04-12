@@ -23,7 +23,7 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
               onPressed: () {
                 Routefly.push(routePaths.feed);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),

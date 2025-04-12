@@ -5,7 +5,8 @@ enum SvgImage {
   logoDefault('assets/images/logo.svg'),
   logoWhite('assets/images/logo_white.svg'),
   logoLarge('assets/images/logo_large.svg'),
-  logoIconOnly('assets/images/logo_icon.svg'),;
+  logoIconOnly('assets/images/logo_icon.svg'),
+  bgLogo('assets/images/bg_flutterando.svg');
 
   final String path;
   const SvgImage(this.path);

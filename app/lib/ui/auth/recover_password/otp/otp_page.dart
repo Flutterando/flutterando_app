@@ -18,12 +18,12 @@ class _OtpPageState extends State<OtpPage> {
         child: Column(
           spacing: 12.0,
           children: [
-            Text('Tela de confirmação do codigo otp'),
+            const Text('Tela de confirmação do codigo otp'),
             ElevatedButton(
               onPressed: () {
                 Routefly.push(routePaths.auth.recoverPassword.confirmPassword);
               },
-              child: Text('Confirmar senha'),
+              child: const Text('Confirmar senha'),
             ),
           ],
         ),

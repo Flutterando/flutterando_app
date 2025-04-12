@@ -18,12 +18,12 @@ class _SendEmailPageState extends State<SendEmailPage> {
         child: Column(
           spacing: 12.0,
           children: [
-            Text('Tela de envio de email para recuperar senha'),
+            const Text('Tela de envio de email para recuperar senha'),
             ElevatedButton(
               onPressed: () {
                 Routefly.push(routePaths.auth.recoverPassword.otp);
               },
-              child: Text('Confirmar codigo otp'),
+              child: const Text('Confirmar codigo otp'),
             ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_style.dart';
+import '../theme/theme.dart';
 
 class InputWidget extends StatefulWidget {
   final String? label;
@@ -84,6 +85,10 @@ class _InputWidgetState extends State<InputWidget> {
             }
           },
           validator: widget.validator,
+          style: context.text.bodyM14Bold.copyWith(
+            fontWeight: FontWeight.w400,
+            color: context.colors.textPrimaryColor,
+          ),
           decoration: _InputDecoration.build(
             appColors: appColors,
             appTextStyles: appTextStyles,
