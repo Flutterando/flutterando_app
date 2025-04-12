@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../constants/spaces.dart';
 import '../theme/theme.dart';
-import 'button_widget.dart';
 
 class PostUserWidget extends StatelessWidget {
   const PostUserWidget({
@@ -39,22 +39,23 @@ class PostUserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: const EdgeInsets.symmetric(horizontal: Spaces.xxxl),
       child: Row(
         children: [
           ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(width: 36, height: 36),
+            constraints: const BoxConstraints.tightFor(
+              width: Spaces.xxl + 4,
+              height: Spaces.xxl + 4,
+            ),
             child: CircleAvatar(
               child: Text(username ?? 'F', style: context.text.bodyL16Bold),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: Spaces.m - 2),
           Text(
             username ?? 'Profile name',
-            style: TextStyle(
+            style: context.text.bodyL16Bold.copyWith(
               color: context.theme.colors.whiteColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
             ),
           ),
           const Spacer(),
@@ -62,10 +63,9 @@ class PostUserWidget extends StatelessWidget {
             children: [
               Text(
                 getTimeElapsed(),
-                style: TextStyle(
-                  color: context.theme.colors.greyTwo,
-                  fontSize: 14,
+                style: context.text.bodyL16Bold.copyWith(
                   fontWeight: FontWeight.w400,
+                  color: context.theme.colors.greyThree,
                 ),
               ),
               InkWell(
@@ -76,7 +76,7 @@ class PostUserWidget extends StatelessWidget {
                 ),
               ),
             ],
-            spacing: 10,
+            spacing: Spaces.m - 2,
           ),
         ],
       ),
