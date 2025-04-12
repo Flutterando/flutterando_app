@@ -1,18 +1,9 @@
 import 'package:lucid_validation/lucid_validation.dart';
 
-import '../dto/register_dto.dart';
+import '../dto/recover_password_dto.dart';
 
-class RegisterValidation extends LucidValidator<RegisterDto> {
-  RegisterValidation() {
-    ruleFor((dto) => dto.firstName, key: 'firstName', label: 'Nome') //
-    .notEmpty();
-
-    ruleFor((dto) => dto.lastName, key: 'lastName', label: 'Sobrenome') //
-    .notEmpty();
-
-    ruleFor((dto) => dto.email, key: 'email', label: 'E-mail') //
-    .validEmail();
-
+class RecoverPasswordValidation extends LucidValidator<RecoverPasswordDto> {
+  RecoverPasswordValidation() {
     ruleFor((dto) => dto.password, key: 'password', label: 'Senha') //
         .notEmpty()
         .minLength(8)

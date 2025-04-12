@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lucid_validation/lucid_validation.dart';
 import 'package:routefly/routefly.dart';
 
 import '../../../../app_widget.dart';
+import '../../../../domain/dto/recover_password_dto.dart';
+import '../../../../domain/validators/recover_password_validation.dart';
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
 import '../../../design_system/widgets/button_widget.dart';
@@ -16,6 +19,42 @@ class ConfirmPasswordPage extends StatefulWidget {
 }
 
 class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
+  final formKey = GlobalKey<FormState>();
+  final validator = RecoverPasswordValidation();
+  final credentials = RecoverPasswordDto();
+
+  final isButtonEnabled = ValueNotifier(true);
+  final exceptionsPassword = ValueNotifier<List<String>>([]);
+
+  @override
+  void initState() {
+    super.initState();
+    _updateButtonState();
+    _checkPasswordValidation();
+  }
+
+  void _updateButtonState() {
+    final exceptions = validator.getExceptions(credentials);
+
+    isButtonEnabled.value = exceptions.isNotEmpty;
+  }
+
+  void _checkPasswordValidation() {
+    final exceptionsListPassword = validator.getExceptionsByKey(
+      credentials,
+      'password',
+    );
+
+    exceptionsPassword.value =
+        exceptionsListPassword.map((e) => e.code).toList();
+  }
+
+  void _submit() {
+    if (formKey.currentState!.validate() && exceptionsPassword.value.isEmpty) {
+      // request to API
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,47 +106,56 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                   ),
                 ),
               ),
-              const InputWidget(label: 'Senha', hintText: 'Informe sua senha'),
-              const PasswordRequirements(
-                errors: [
-                  PasswordRequirement.minLength,
-                  PasswordRequirement.upperCase,
-                  PasswordRequirement.lowerCase,
-                  PasswordRequirement.number,
-                  PasswordRequirement.specialChar,
-                ],
+              InputWidget(
+                label: 'Senha',
+                obscureText: true,
+                onChanged: (value) {
+                  credentials.setPassword(value);
+                  _updateButtonState();
+                },
+                validator: (value) {
+                  _checkPasswordValidation();
+                  _updateButtonState();
+
+                  return null;
+                },
+                hintText: 'Informe sua senha',
               ),
-              const InputWidget(
+              ValueListenableBuilder(
+                valueListenable: exceptionsPassword,
+                builder: (context, exceptionsPassword, _) {
+                  return PasswordRequirements(errors: exceptionsPassword);
+                },
+              ),
+              InputWidget(
                 label: 'Repetir senha',
+                obscureText: true,
+                onChanged: (value) {
+                  credentials.setConfirmPassword(value);
+                  _updateButtonState();
+                },
+                validator: validator.byField(credentials, 'confirmPassword'),
                 hintText: 'Repita a sua senha',
-              ),
-              Row(
-                spacing: Spaces.s,
-                children: [
-                  Icon(
-                    Iconsax.info_circle,
-                    size: Spaces.l,
-                    color: context.colors.errorLightColor,
-                  ),
-                  const Text(
-                    'As senhas devem ser iguais',
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                ],
               ),
               Container(
                 margin: const EdgeInsets.only(top: Spaces.xxxl),
                 width: 250,
-                child: ButtonWidget.filledPrimary(
-                  onPressed: () {
-                    Routefly.push(
-                      routePaths.auth.recoverPassword.feedbackSuccess,
+                child: ValueListenableBuilder(
+                    valueListenable: isButtonEnabled,
+                  builder: (context, isButtonEnabled, _) {
+                    return ButtonWidget.filledPrimary(
+                      onPressed: () {
+                        Routefly.push(
+                          routePaths.auth.recoverPassword.feedbackSuccess,
+                        );
+                      },
+                      text: 'Verificar código',
+                      disabled: isButtonEnabled,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Spaces.xl - Spaces.xs,
+                      ),
                     );
-                  },
-                  text: 'Verificar código',
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Spaces.xl - Spaces.xs,
-                  ),
+                  }
                 ),
               ),
             ],
@@ -118,51 +166,44 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
   }
 }
 
-enum PasswordRequirement {
-  minLength,
-  upperCase,
-  lowerCase,
-  number,
-  specialChar,
-}
-
 class PasswordRequirements extends StatelessWidget {
   const PasswordRequirements({super.key, required this.errors});
 
-  final List<PasswordRequirement> errors;
+  final List<String> errors;
 
   @override
   Widget build(BuildContext context) {
-    final Map<PasswordRequirement, String> requirementsMap = {
-      PasswordRequirement.minLength: 'Pelo menos 8 caracteres',
-      PasswordRequirement.upperCase: 'Pelo menos uma letra maiúscula',
-      PasswordRequirement.lowerCase: 'Pelo menos uma letra minúscula',
-      PasswordRequirement.number: 'Pelo menos um número',
-      PasswordRequirement.specialChar:
-          'Pelo menos um caractere especial (@\$!%*#?&)',
+    final Map<String, String> requirementsMap = {
+      Language.code.minLength: 'Pelo menos 8 caracteres',
+      Language.code.mustHaveUppercase: 'Pelo menos uma letra maiúscula',
+      Language.code.mustHaveLowercase: 'Pelo menos uma letra minúscula',
+      Language.code.mustHaveNumber: 'Pelo menos um número',
+      Language.code.mustHaveSpecialCharacter:
+      'Pelo menos um caractere especial (@\$!%*#?&)',
     };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
-          requirementsMap.entries.map((entry) {
-            var colorIcon = context.colors.successLightColor;
+      requirementsMap.entries.map((entry) {
+        var colorIcon = context.colors.successLightColor;
 
-            if (errors.contains(entry.key)) {
-              colorIcon = context.colors.errorLightColor;
-            }
+        if (errors.contains(entry.key)) {
+          colorIcon = context.colors.errorLightColor;
+        }
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: Spaces.xs),
-              child: Row(
-                spacing: Spaces.s,
-                children: [
-                  Icon(Iconsax.info_circle, size: Spaces.l, color: colorIcon),
-                  Text(entry.value, style: context.text.bodyS12Bold),
-                ],
-              ),
-            );
-          }).toList(),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: Spaces.xs),
+          child: Row(
+            spacing: Spaces.s,
+            children: [
+              Icon(Iconsax.info_circle, size: Spaces.l, color: colorIcon),
+              Text(entry.value, style: context.text.bodyS12Bold),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
+
