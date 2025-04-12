@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../theme/theme.dart';
+import 'button_widget.dart';
 
 class PostUserWidget extends StatelessWidget {
-  const PostUserWidget({super.key, this.username, this.timeOfPost = 0});
+  const PostUserWidget({
+    super.key,
+    this.username,
+    this.timeOfPost = 0,
+    this.onShared,
+  });
   final String? username;
   final int timeOfPost;
+  final void Function()? onShared;
 
   String getTimeElapsed() {
     if (timeOfPost < 60) {
@@ -61,7 +68,13 @@ class PostUserWidget extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              Icon(Iconsax.send_2, color: context.theme.colors.greyTwo),
+              InkWell(
+                onTap: onShared,
+                child: Icon(
+                  Iconsax.send_2,
+                  color: context.theme.colors.greyTwo,
+                ),
+              ),
             ],
             spacing: 10,
           ),
