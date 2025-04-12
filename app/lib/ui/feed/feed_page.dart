@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../design_system/widgets/post_user_widget.dart';
+
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
 
@@ -14,9 +16,7 @@ class _FeedPageState extends State<FeedPage> {
       body: SafeArea(
         child: Column(
           spacing: 12.0,
-          children: [
-            Text('Tela do feed'),
-          ],
+          children: [PostUserWidget(), Text('Tela do feed')],
         ),
       ),
     );
