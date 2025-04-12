@@ -1,8 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lucid_validation/lucid_validation.dart';
 import 'package:routefly/routefly.dart';
 
+import '../../../domain/dto/register_dto.dart';
+import '../../../domain/validators/register_validation.dart';
 import '../../design_system/constants/spaces.dart';
 import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/button_widget.dart';
@@ -17,6 +20,42 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
+  final validator = RegisterValidation();
+  final credentials = RegisterDto();
+
+  final isButtonEnabled = ValueNotifier(true);
+  final exceptionsPassword = ValueNotifier<List<String>>([]);
+
+  @override
+  void initState() {
+    super.initState();
+    _updateButtonState();
+    _checkPasswordValidation();
+  }
+
+  void _updateButtonState() {
+    final exceptions = validator.getExceptions(credentials);
+
+    isButtonEnabled.value = exceptions.isNotEmpty;
+  }
+
+  void _checkPasswordValidation() {
+    final exceptionsListPassword = validator.getExceptionsByKey(
+      credentials,
+      'password',
+    );
+
+    exceptionsPassword.value =
+        exceptionsListPassword.map((e) => e.code).toList();
+  }
+
+  void _submit() {
+    if (formKey.currentState!.validate() && exceptionsPassword.value.isEmpty) {
+      // request to API
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,50 +90,67 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const InputWidget(
+                    InputWidget(
                       label: 'Nome',
+                      onChanged: (value) {
+                        credentials.setFirstName(value);
+                        _updateButtonState();
+                      },
+                      validator: validator.byField(credentials, 'firstName'),
                       hintText: 'Informe seu nome',
                     ),
-                    const InputWidget(
+                    InputWidget(
                       label: 'Sobrenome',
+                      onChanged: (value) {
+                        credentials.setLastName(value);
+                        _updateButtonState();
+                      },
+                      validator: validator.byField(credentials, 'lastName'),
                       hintText: 'Informe seu sobrenome',
                     ),
-                    const InputWidget(
+                    InputWidget(
                       label: 'E-mail',
+                      onChanged: (value) {
+                        credentials.setEmail(value);
+                        _updateButtonState();
+                      },
+                      validator: validator.byField(credentials, 'email'),
                       hintText: 'Informe seu email',
                     ),
-                    const InputWidget(
+                    InputWidget(
                       label: 'Senha',
+                      obscureText: true,
+                      onChanged: (value) {
+                        credentials.setPassword(value);
+                        _updateButtonState();
+                      },
+                      validator: (value) {
+                        _checkPasswordValidation();
+                        _updateButtonState();
+
+                        return null;
+                      },
                       hintText: 'Informe sua senha',
                     ),
-                    const PasswordRequirements(
-                      errors: [
-                        PasswordRequirement.minLength,
-                        PasswordRequirement.upperCase,
-                        PasswordRequirement.lowerCase,
-                        PasswordRequirement.number,
-                        PasswordRequirement.specialChar,
-                      ],
+                    ValueListenableBuilder(
+                      valueListenable: exceptionsPassword,
+                      builder: (context, exceptionsPassword, _) {
+                        return PasswordRequirements(errors: exceptionsPassword);
+                      },
                     ),
-                    const InputWidget(
+                    InputWidget(
                       label: 'Repetir senha',
+                      obscureText: true,
+                      onChanged: (value) {
+                        credentials.setConfirmPassword(value);
+                        _updateButtonState();
+                      },
+                      validator: validator.byField(
+                        credentials,
+                        'confirmPassword',
+                      ),
                       hintText: 'Repita a sua senha',
                     ),
-                    Row(
-                      spacing: Spaces.s,
-                      children: [
-                        Icon(
-                          Iconsax.info_circle,
-                          size: Spaces.l,
-                          color: context.colors.errorLightColor,
-                        ),
-                        const Text(
-                          'As senhas devem ser iguais',
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                      ],
-                    ),
-
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: Spaces.xl,
@@ -128,13 +184,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: Spaces.xxxxxl,
                       ),
-                      child: ButtonWidget.filledPrimary(
-                        onPressed: () {},
-                        text: 'Entrar',
-                        disabled: true,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Spaces.xl - Spaces.xs,
-                        ),
+                      child: ValueListenableBuilder(
+                        valueListenable: isButtonEnabled,
+                        builder: (context, isButtonEnabled, _) {
+                          return ButtonWidget.filledPrimary(
+                            onPressed: _submit,
+                            text: 'Entrar',
+                            disabled: isButtonEnabled,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: Spaces.xl - Spaces.xs,
+                            ),
+                          );
+                        },
                       ),
                     ),
                     Padding(
@@ -173,27 +234,19 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-enum PasswordRequirement {
-  minLength,
-  upperCase,
-  lowerCase,
-  number,
-  specialChar,
-}
-
 class PasswordRequirements extends StatelessWidget {
   const PasswordRequirements({super.key, required this.errors});
 
-  final List<PasswordRequirement> errors;
+  final List<String> errors;
 
   @override
   Widget build(BuildContext context) {
-    final Map<PasswordRequirement, String> requirementsMap = {
-      PasswordRequirement.minLength: 'Pelo menos 8 caracteres',
-      PasswordRequirement.upperCase: 'Pelo menos uma letra maiúscula',
-      PasswordRequirement.lowerCase: 'Pelo menos uma letra minúscula',
-      PasswordRequirement.number: 'Pelo menos um número',
-      PasswordRequirement.specialChar:
+    final Map<String, String> requirementsMap = {
+      Language.code.minLength: 'Pelo menos 8 caracteres',
+      Language.code.mustHaveUppercase: 'Pelo menos uma letra maiúscula',
+      Language.code.mustHaveLowercase: 'Pelo menos uma letra minúscula',
+      Language.code.mustHaveNumber: 'Pelo menos um número',
+      Language.code.mustHaveSpecialCharacter:
           'Pelo menos um caractere especial (@\$!%*#?&)',
     };
 

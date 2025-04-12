@@ -37,13 +37,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _updateButtonState() {
-    final emailValid =
-        validator.byField(credentials, 'email')(credentials.email) == null;
-    final passwordValid =
-        validator.byField(credentials, 'password')(credentials.password) ==
-        null;
+    final exceptions = validator.getExceptions(credentials);
 
-    isButtonEnabled.value = !(emailValid && passwordValid);
+    isButtonEnabled.value = exceptions.isNotEmpty;
   }
 
   void _onSubmit() {
@@ -106,18 +102,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Transform.translate(
-                      offset: const Offset(0, -15),
-                      child: InkWell(
-                        onTap:
-                            () => Routefly.push(
-                              routePaths.auth.recoverPassword.sendEmail,
-                            ),
-                        child: Text(
-                          'Forget password   ',
-                          style: context.text.bodyL16Bold.copyWith(
-                            color: context.colors.greyTwo,
+                    child: InkWell(
+                      onTap:
+                          () => Routefly.push(
+                            routePaths.auth.recoverPassword.sendEmail,
                           ),
+                      child: Text(
+                        'Forget password   ',
+                        style: context.text.bodyL16Bold.copyWith(
+                          color: context.colors.greyTwo,
                         ),
                       ),
                     ),

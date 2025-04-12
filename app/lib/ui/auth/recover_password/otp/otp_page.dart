@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:routefly/routefly.dart';
@@ -15,7 +17,72 @@ class OtpPage extends StatefulWidget {
   State<OtpPage> createState() => _OtpPageState();
 }
 
+const secondsDefault = 60;
+
 class _OtpPageState extends State<OtpPage> {
+  final otpCtrl = OtpFieldController();
+  Timer? _timer;
+  int _secondsRemaining = secondsDefault;
+  bool _canResend = false;
+  bool _invalidCode = false;
+  bool isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _secondsRemaining = secondsDefault;
+    _canResend = false;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_secondsRemaining > 0) {
+          _secondsRemaining--;
+        } else {
+          _canResend = true;
+          _timer?.cancel();
+        }
+      });
+    });
+    setState(() {});
+  }
+
+  void _resendCode() {
+    if (_canResend) {
+      // request API to resend Code
+      otpCtrl.clear();
+      setState(() {
+        _invalidCode = false;
+        isButtonEnabled = false;
+      });
+      _startTimer();
+    }
+  }
+
+  void _verifyCode(String code) {
+    if (code == "1234") {
+      // OK
+      setState(() {
+        _invalidCode = false;
+        isButtonEnabled = true;
+      });
+    } else {
+      setState(() {
+        _invalidCode = true;
+        isButtonEnabled = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,25 +136,49 @@ class _OtpPageState extends State<OtpPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Spaces.xl),
-                child: OtpWidget(length: 4, onCompleted: (_) {}),
+                child: OtpWidget(
+                  length: 4,
+                  controller: otpCtrl,
+                  hasError: _invalidCode,
+                  errorMessage: 'Código inválido!',
+                  onCompleted: _verifyCode,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: Spaces.xs,
                 children: [
                   Text(
-                    'Não recebi o código! Reenviar em',
+                    'Não recebi o código! ',
                     style: context.text.bodyM14Bold.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Text(
-                    '59s',
-                    style: context.text.bodyM14Bold.copyWith(
-                      fontWeight: FontWeight.w900,
+                  if (!_canResend) ...[
+                    Text(
+                      'Reenviar em $_secondsRemaining\s',
+                      style: context.text.bodyM14Bold.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
-                  ),
-                  const Icon(Iconsax.refresh, size: Spaces.l),
+                    const Icon(Iconsax.refresh, size: Spaces.l),
+                  ],
+                  if (_canResend)
+                    InkWell(
+                      onTap: _resendCode,
+                      child: Row(
+                        spacing: Spaces.s,
+                        children: [
+                          Text(
+                            'Reenviar',
+                            style: context.text.bodyM14Bold.copyWith(
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          const Icon(Iconsax.refresh, size: Spaces.l),
+                        ],
+                      ),
+                    ),
                 ],
               ),
               Container(
@@ -100,6 +191,7 @@ class _OtpPageState extends State<OtpPage> {
                     );
                   },
                   text: 'Verificar código',
+                  disabled: !isButtonEnabled,
                   padding: const EdgeInsets.symmetric(
                     vertical: Spaces.xl - Spaces.xs,
                   ),
