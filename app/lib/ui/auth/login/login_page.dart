@@ -37,13 +37,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _updateButtonState() {
-    final emailValid =
-        validator.byField(credentials, 'email')(credentials.email) == null;
-    final passwordValid =
-        validator.byField(credentials, 'password')(credentials.password) ==
-        null;
+    final exceptions = validator.getExceptions(credentials);
 
-    isButtonEnabled.value = !(emailValid && passwordValid);
+    isButtonEnabled.value = exceptions.isNotEmpty;
   }
 
   void _onSubmit() {
