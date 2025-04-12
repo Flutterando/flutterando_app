@@ -3,9 +3,11 @@ import 'package:routefly/routefly.dart';
 
 import '../../../app_widget.dart';
 
+import '../../design_system/widgets/alert_widget.dart';
 import '../../design_system/widgets/appbar_widget.dart';
 
 import '../../design_system/widgets/button_widget.dart';
+import '../../design_system/widgets/otp_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,6 +16,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final otpController = OtpFieldController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3)).then((_) {
+      otpController.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +37,10 @@ class _LoginPageState extends State<LoginPage> {
             const Text('Tela de login'),
             ButtonWidget.filledPrimary(
               onPressed: () {
-                Routefly.push(routePaths.auth.recoverPassword.sendEmail);
+                if(context.mounted) {
+                  AlertWidget.success(context, message: 'Você foi cadastrado com sucesso!');
+                }
+//                Routefly.push(routePaths.auth.recoverPassword.sendEmail);
               },
               text: 'Recupear Senha',
             ),
@@ -41,6 +56,11 @@ class _LoginPageState extends State<LoginPage> {
               },
               text: 'Cadastro',
             ),
+            OtpWidget(
+              length: 4,
+              controller: otpController,
+              onCompleted: (value) => print(value),
+            )
           ],
         ),
       ),
