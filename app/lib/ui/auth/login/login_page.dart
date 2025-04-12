@@ -60,6 +60,8 @@ class _LoginPageState extends State<LoginPage> {
               length: 4,
               controller: otpController,
               onCompleted: (value) => print(value),
+              errorMessage: 'Código inválido!',
+              hasError: true,
             )
           ],
         ),

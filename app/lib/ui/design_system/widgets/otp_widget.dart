@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import '../constants/spaces.dart';
+import '../theme/theme.dart';
 
 class OtpFieldController {
   void Function()? _clear;
@@ -104,12 +107,12 @@ class _OtpWidgetState extends State<OtpWidget> {
             }
 
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 6),
+              margin: const EdgeInsets.symmetric(horizontal: Spaces.xxs + Spaces.xs),
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                border: Border.all(color: color, width: 2),
-                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color, width: Spaces.xxs),
+                borderRadius: BorderRadius.circular( Spaces.m),
               ),
               alignment: Alignment.center,
               child: TextField(
@@ -118,7 +121,7 @@ class _OtpWidgetState extends State<OtpWidget> {
                 onChanged: (value) => _onInputChanged(i, value),
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: Spaces.xl -  Spaces.xs,
                   fontWeight: FontWeight.bold,
                 ),
                 keyboardType: TextInputType.number,
@@ -133,18 +136,17 @@ class _OtpWidgetState extends State<OtpWidget> {
             );
           }),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: Spaces.m),
         if (widget.hasError && widget.errorMessage != null)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, color: Colors.redAccent, size: 16),
-              const SizedBox(width: 6),
+               Icon(Iconsax.info_circle, color: context.colors.errorLightColor, size: Spaces.xl),
+              const SizedBox(width: Spaces.m),
               Text(
                 widget.errorMessage!,
-                style: const TextStyle(
-                  color: Colors.redAccent,
-                  fontSize: 14,
+                style: context.text.bodyM14Bold.copyWith(
+                  color: context.colors.errorLightColor,
                 ),
               ),
             ],
