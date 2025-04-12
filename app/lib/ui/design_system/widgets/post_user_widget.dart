@@ -53,7 +53,14 @@ class PostUserWidget extends StatelessWidget {
           const Spacer(),
           Row(
             children: [
-              Text(getTimeElapsed()),
+              Text(
+                getTimeElapsed(),
+                style: TextStyle(
+                  color: context.theme.colors.greyTwo,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               Icon(Iconsax.send_2, color: context.theme.colors.greyTwo),
             ],
             spacing: 10,
