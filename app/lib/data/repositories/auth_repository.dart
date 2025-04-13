@@ -2,9 +2,11 @@ import 'package:result_dart/result_dart.dart';
 
 import '../../core/extensions/validator_extension.dart';
 import '../../domain/dto/credentials_login_dto.dart';
+import '../../domain/dto/register_dto.dart';
 import '../../domain/entities/session_entity.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/validators/credentials_login_validator.dart';
+import '../../domain/validators/register_validation.dart';
 import '../adapters/user_adapter.dart';
 import '../services/api/auth_api.dart';
 import '../services/api/client_http/rest_client_response.dart';
@@ -36,4 +38,16 @@ class AuthRepository {
       refreshToken: response.data['refreshToken'],
     );
   }
+
+    AsyncResult<Unit> register(RegisterDto dto) async {
+    final validator = RegisterValidation();
+
+    return validator
+        .validateResult(dto) //
+        .flatMap(authApi.register)
+        .pure(unit);
+        
+  }
+
+
 }
