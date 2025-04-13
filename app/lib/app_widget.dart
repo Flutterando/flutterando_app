@@ -18,7 +18,7 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: Routefly.routerConfig(
         routes: routes,
-        initialPath: routePaths.feed,
+        initialPath: routePaths.splash,
       ),
     );
   }

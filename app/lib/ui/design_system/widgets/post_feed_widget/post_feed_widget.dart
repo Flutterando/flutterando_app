@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/spaces.dart';
+import '../../theme/theme.dart';
 import 'link_post_widget.dart';
 import 'post_user_widget.dart';
 import 'expandable_text.dart';
@@ -46,7 +47,12 @@ class _PostFeedWidgetState extends State<PostFeedWidget> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('>_'),
+              Text(
+                '>_',
+                style: context.text.bodyM14Bold.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               const SizedBox(width: Spaces.l),
               Expanded(
                 child: Column(

@@ -2,16 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:routefly/routefly.dart';
 
+import '../../../main.dart';
 import '../../../app_widget.dart';
+
+import '../../../config/dependencies.dart';
 import '../../../domain/dto/credentials_login_dto.dart';
 import '../../../domain/validators/credentials_login_validator.dart';
-import '../../../main.dart';
+
 import '../../design_system/constants/spaces.dart';
 import '../../design_system/theme/theme.dart';
-
+import '../../design_system/widgets/alert_widget.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
 import '../../design_system/widgets/svg_image_widget.dart';
+
+import 'login_viewmodel.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +26,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final viewModel = injector.get<LoginViewmodel>();
+
   final formKey = GlobalKey<FormState>();
   final validator = CredentialsLoginValidator();
   final credentials =
@@ -34,18 +41,33 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _updateButtonState();
+    viewModel.loginCommand.addListener(listener);
+  }
+
+  void listener() {
+    if (viewModel.loginCommand.isFailure && context.mounted) {
+      AlertWidget.error(context, message: 'Error ao efetuar o login');
+    }
+    if (viewModel.loginCommand.isSuccess) {
+      Routefly.push(routePaths.feed);
+    }
   }
 
   void _updateButtonState() {
     final exceptions = validator.getExceptions(credentials);
-
     isButtonEnabled.value = exceptions.isNotEmpty;
   }
 
   void _onSubmit() {
     if (formKey.currentState!.validate()) {
-      /// request to API
+      viewModel.loginCommand.execute(credentials);
     }
+  }
+
+  @override
+  void dispose() {
+    viewModel.loginCommand.removeListener(listener);
+    super.dispose();
   }
 
   @override
@@ -159,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                             vertical: Spaces.xl - Spaces.xs,
                           ),
                         );
-                      }
+                      },
                     ),
                   ),
                   Padding(

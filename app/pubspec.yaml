@@ -44,6 +44,8 @@ dependencies:
   flutter_svg: ^2.0.17
   iconsax: ^0.0.8
   lucid_validation: ^1.2.5
+  shared_preferences: ^2.5.3
+  result_command: ^1.3.0
 
 dev_dependencies:
   flutter_test:
