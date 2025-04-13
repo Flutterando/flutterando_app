@@ -1,9 +1,7 @@
 import 'package:result_dart/result_dart.dart';
-
 import '../../../core/logger/logger_mixin.dart';
 import '../../../domain/dto/credentials_login_dto.dart';
 import '../../../domain/dto/register_dto.dart';
-
 import 'client_http/i_rest_client.dart';
 import 'client_http/rest_client_request.dart';
 import 'client_http/rest_client_response.dart';
@@ -17,7 +15,7 @@ class AuthApi with LoggerMixin {
   AsyncResult<RestClientResponse> login(CredentialsLoginDto credentials) async {
     final logger = log.forMethod()..logInfo(data: credentials);
 
-    // Original Code
+    // TODO Original Code
     // return await client
     //     .post(
     //       RestClientRequest(path: '/auth/login', data: credentials.toJson()),
@@ -40,13 +38,25 @@ class AuthApi with LoggerMixin {
 
   AsyncResult<RestClientResponse> register(RegisterDto credentials) async {
     final logger = log.forMethod()..logInfo(data: credentials);
+    //Mock Code
+    return Success(
+      RestClientResponse(
+        request: RestClientRequest(
+          path: '/auth/register',
+          data: credentials.toJson(),
+        ),
+        data: '',
+        statusCode: 200,
+      ),
+    );
 
-    return await client
+    // TODO Original Code
+    /*return await client
         .post(
           RestClientRequest(path: '/auth/register', data: credentials.toJson()),
         )
         .onSuccess(logger.fromSuccess)
-        .onFailure(logger.fromException);
+        .onFailure(logger.fromException);*/
   }
 
   AsyncResult<RestClientResponse> getRefreshToken(String refreshToken) async {
