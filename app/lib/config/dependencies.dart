@@ -8,6 +8,9 @@ import '../data/services/api/client_http/i_rest_client.dart';
 import '../data/services/storage/auth_storage.dart';
 import '../data/services/storage/local_storage/local_storage.dart';
 import '../ui/auth/login/login_viewmodel.dart';
+import '../ui/auth/recover_password/confirm_password/confirm_password_viewmodel.dart';
+import '../ui/auth/recover_password/otp/opt_viewmodel.dart';
+import '../ui/auth/recover_password/send_email/send_email_viewmodel.dart';
 import '../ui/auth/register/register_viewmodel.dart';
 
 final injector = AutoInjector();
@@ -23,6 +26,9 @@ void setupInjector() {
 
   injector.addSingleton<LoginViewmodel>(LoginViewmodel.new);
   injector.addSingleton<RegisterViewmodel>(RegisterViewmodel.new);
+  injector.addSingleton<SendEmailViewmodel>(SendEmailViewmodel.new);
+  injector.addSingleton<OptViewmodel>(OptViewmodel.new);
+  injector.addSingleton<ConfirmPasswordViewmodel>(ConfirmPasswordViewmodel.new);
 
   injector.commit();
 }

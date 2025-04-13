@@ -10,7 +10,6 @@ import '../../../domain/dto/register_dto.dart';
 import '../../../domain/validators/register_validation.dart';
 import '../../design_system/constants/spaces.dart';
 import '../../design_system/theme/theme.dart';
-import '../../design_system/widgets/alert_widget.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
 import '../../design_system/widgets/svg_image_widget.dart';
@@ -41,12 +40,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void listener() {
     if (viewmodel.registerCommand.isFailure) {
-      AlertWidget.error(context, message: 'Erro ao realizar o cadastro.');
+      Routefly.push(routePaths.auth.register.pages.feedbackError);
       return;
     }
     if (viewmodel.registerCommand.isSuccess) {
-      AlertWidget.success(context, message: 'Por favor, realizar o login.');
-      Routefly.push(routePaths.auth.login);
+      Routefly.push(routePaths.auth.register.pages.feedbackSuccess);
       return;
     }
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:routefly/routefly.dart';
 
+import '../../../../app_widget.dart';
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
 import '../../../design_system/widgets/button_widget.dart';
@@ -54,7 +56,7 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
               width: 250,
               margin: const EdgeInsets.only(top: Spaces.l),
               child: ButtonWidget.filledPrimary(
-                onPressed: () {},
+                onPressed: () => Routefly.push(routePaths.feed),
                 text: 'Começar',
                 padding: const EdgeInsets.symmetric(
                   vertical: Spaces.xl - Spaces.xs,
