@@ -1,4 +1,4 @@
-import '../../../core/exceptions/exceptions.dart';
+import '../../../../core/exceptions/exceptions.dart';
 import 'rest_client_http_message.dart';
 import 'rest_client_response.dart';
 

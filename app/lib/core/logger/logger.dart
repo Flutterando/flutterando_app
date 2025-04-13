@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:logger/logger.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+import '../../data/services/api/client_http/rest_client_response.dart';
 import '../../main.dart';
-import '../../data/services/client_http/client_http.dart';
 import '../constants/env.dart';
 
 const JsonEncoder _encoder = JsonEncoder.withIndent('  ');
@@ -17,18 +17,13 @@ Object? prettyJson(Object? data) {
   }
 }
 
-
 class Log {
   late Logger logger;
   String context = '';
 
   Log(String className) {
     context = className;
-    logger = Logger(
-      printer: PrettyPrinter(
-        methodCount: 0,
-      ),
-    );
+    logger = Logger(printer: PrettyPrinter(methodCount: 0));
   }
 
   ScopedLog forMethod({String? methodName}) {
@@ -47,15 +42,14 @@ class Log {
     }
     final caller = forceMethod ?? _getCallerFunctionName();
 
-    final content = message != null && message.isNotEmpty
-        ? ' $message ${data != null ? ' ${jsonEncode(data)}' : ''}'
-        : data != null
+    final content =
+        message != null && message.isNotEmpty
+            ? ' $message ${data != null ? ' ${jsonEncode(data)}' : ''}'
+            : data != null
             ? ': ${jsonEncode(data)}'
             : '';
 
-    logger.i(
-      '[INFO] [${forceContext ?? context}] [$caller]$content',
-    );
+    logger.i('[INFO] [${forceContext ?? context}] [$caller]$content');
   }
 
   void logError({
@@ -69,15 +63,14 @@ class Log {
     }
     final caller = forceMethod ?? _getCallerFunctionName();
 
-    final content = message != null && message.isNotEmpty
-        ? ' $message - ${jsonEncode(data)}'
-        : data != null
+    final content =
+        message != null && message.isNotEmpty
+            ? ' $message - ${jsonEncode(data)}'
+            : data != null
             ? ' ${jsonEncode(data)}'
             : '';
 
-    logger.e(
-      '[ERROR] [$context] [$caller]$content',
-    );
+    logger.e('[ERROR] [$context] [$caller]$content');
 
     if (error != null) {
       logger.e('[ERROR] [$context] [$caller]\nDetails: $error');
@@ -108,11 +101,7 @@ class ScopedLog {
   ScopedLog(this._log, this._methodName);
 
   void logInfo({String? message, Object? data}) {
-    _log.logInfo(
-      message: message,
-      data: data,
-      forceMethod: _methodName,
-    );
+    _log.logInfo(message: message, data: data, forceMethod: _methodName);
   }
 
   void logError({String? message, Object? data, Object? error}) {
@@ -128,9 +117,8 @@ class ScopedLog {
     _log.logDebug(message);
   }
 
-  void fromException(Exception exception) => logError(
-        message: exception.toString(),
-      );
+  void fromException(Exception exception) =>
+      logError(message: exception.toString());
 
   void fromSuccess(Object? data) {
     if (data case RestClientResponse(:final data, :final statusCode)) {
@@ -141,8 +129,6 @@ class ScopedLog {
       return;
     }
 
-    logInfo(
-      message: 'Success \n${data != null ? prettyJson(data) : ''}',
-    );
+    logInfo(message: 'Success \n${data != null ? prettyJson(data) : ''}');
   }
 }

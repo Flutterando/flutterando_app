@@ -1,4 +1,4 @@
-import '../../../../core/constants/env.dart';
+import '../../../../../core/constants/env.dart';
 import 'client_interceptor_dio_impl.dart';
 import 'dio_adapter.dart';
 import '../i_client_interceptor.dart';
@@ -28,8 +28,9 @@ class RestClientDioImpl implements IRestClient {
 
   @override
   void addInterceptors(IClientInterceptor interceptor) {
-    _interceptors[interceptor] =
-        ClientInterceptorDioImpl(interceptor: interceptor);
+    _interceptors[interceptor] = ClientInterceptorDioImpl(
+      interceptor: interceptor,
+    );
     _dio.interceptors.add(_interceptors[interceptor]!);
   }
 
@@ -54,10 +55,7 @@ class RestClientDioImpl implements IRestClient {
 
     try {
       Dio dio = Dio(baseOptions);
-      final response = await dio.put(
-        multipart.path,
-        data: formData,
-      );
+      final response = await dio.put(multipart.path, data: formData);
 
       return Success(DioAdapter.toClientResponse(response));
     } on DioException catch (e) {
@@ -72,9 +70,7 @@ class RestClientDioImpl implements IRestClient {
         request.path,
         data: request.data,
         queryParameters: request.queryParameters,
-        options: Options(
-          headers: request.headers,
-        ),
+        options: Options(headers: request.headers),
       );
       return Success(DioAdapter.toClientResponse(response));
     } on DioException catch (e) {
@@ -88,9 +84,7 @@ class RestClientDioImpl implements IRestClient {
       final response = await _dio.get(
         request.path,
         queryParameters: request.queryParameters,
-        options: Options(
-          headers: request.headers,
-        ),
+        options: Options(headers: request.headers),
         cancelToken: request.cancelRequest?.token,
       );
       return Success(DioAdapter.toClientResponse(response));
@@ -106,9 +100,7 @@ class RestClientDioImpl implements IRestClient {
         request.path,
         data: request.data,
         queryParameters: request.queryParameters,
-        options: Options(
-          headers: request.headers,
-        ),
+        options: Options(headers: request.headers),
       );
       return Success(DioAdapter.toClientResponse(response));
     } on DioException catch (e) {
@@ -123,9 +115,7 @@ class RestClientDioImpl implements IRestClient {
         request.path,
         data: request.data,
         queryParameters: request.queryParameters,
-        options: Options(
-          headers: request.headers,
-        ),
+        options: Options(headers: request.headers),
       );
       return Success(DioAdapter.toClientResponse(response));
     } on DioException catch (e) {
@@ -140,9 +130,7 @@ class RestClientDioImpl implements IRestClient {
         request.path,
         data: request.data,
         queryParameters: request.queryParameters,
-        options: Options(
-          headers: request.headers,
-        ),
+        options: Options(headers: request.headers),
       );
       return Success(DioAdapter.toClientResponse(response));
     } on DioException catch (e) {
