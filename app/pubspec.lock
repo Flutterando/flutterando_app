@@ -260,10 +260,10 @@ packages:
     dependency: "direct main"
     description:
       name: lucid_validation
-      sha256: "9a8bc5b42e6df62ac5b87d2b7a2dbcd9d216c530a5027b9e724346fac84ab92d"
+      sha256: a102ae75939aaf2d5f3cb13f2cd1d277f5be864d0550d9d5ce2fad1732c6ad1d
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.5"
+    version: "1.2.7"
   matcher:
     dependency: transitive
     description:
@@ -472,6 +472,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
