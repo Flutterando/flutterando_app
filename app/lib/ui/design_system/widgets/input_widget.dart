@@ -20,6 +20,7 @@ class InputWidget extends StatefulWidget {
   final String? initialValue;
   final int? minLines;
   final int? maxLines;
+  final AutovalidateMode? autovalidateMode;
 
   const InputWidget({
     super.key,
@@ -38,6 +39,7 @@ class InputWidget extends StatefulWidget {
     this.initialValue,
     this.minLines,
     this.maxLines,
+    this.autovalidateMode,
   });
 
   @override

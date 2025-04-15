@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/dto/post_dto.dart';
+import '../../../domain/validators/post_validator.dart';
 import '../../design_system/constants/spaces.dart';
 import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/button_widget.dart';
@@ -13,6 +15,10 @@ class NewPostPage extends StatefulWidget {
 }
 
 class _NewPostPageState extends State<NewPostPage> {
+  final _validator = PostValidator();
+  final _postDto = PostDto.fromEmpty();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,29 +50,38 @@ class _NewPostPageState extends State<NewPostPage> {
                   color: Theme.of(context).colors.greyThree,
                 ),
               ),
-
               Expanded(
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     spacing: Spaces.l,
                     children: [
-                      const InputWidget(
+                      InputWidget(
+                        onChanged: _postDto.setDescription,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: _validator.byField(_postDto, 'description'),
                         label: 'Publicação',
                         hintText: 'Digite a sua publicação',
+                        minLines: 5,
                       ),
-                      const InputWidget(
+                      InputWidget(
+                        onChanged: _postDto.setImage,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: _validator.byField(_postDto, 'image'),
                         label: 'Link da imagem',
                         hintText: 'Ex: https://flutterando.com/exemplo',
                       ),
-                      const InputWidget(
+                      InputWidget(
+                        onChanged: _postDto.setImageSubtitle,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: _validator.byField(_postDto, 'subtitle'),
                         label: 'Legenda da Imagem',
                         hintText: 'Informe uma descrição',
                       ),
-                      const InputWidget(
-                        label: 'Legenda da Imagem',
-                        hintText: 'Informe uma descrição',
-                      ),
-                      const InputWidget(
+                      InputWidget(
+                        onChanged: _postDto.setLink,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: _validator.byField(_postDto, 'link'),
                         label: 'Link da ação',
                         hintText: 'Ex: https://flutterando.com/exemplo',
                       ),
