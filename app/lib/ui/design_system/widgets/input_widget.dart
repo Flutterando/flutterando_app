@@ -18,6 +18,8 @@ class InputWidget extends StatefulWidget {
   final IconData? helperIcon;
   final IconData? prefixIcon;
   final String? initialValue;
+  final int? minLines;
+  final int? maxLines;
 
   const InputWidget({
     super.key,
@@ -34,6 +36,8 @@ class InputWidget extends StatefulWidget {
     this.helperIcon,
     this.prefixIcon,
     this.initialValue,
+    this.minLines,
+    this.maxLines,
   });
 
   @override
@@ -70,6 +74,8 @@ class _InputWidgetState extends State<InputWidget> {
             ),
           ),
         TextFormField(
+          maxLines: widget.maxLines,
+          minLines: widget.minLines,
           initialValue: widget.initialValue,
           controller: widget.controller,
           focusNode: widget.focusNode,
