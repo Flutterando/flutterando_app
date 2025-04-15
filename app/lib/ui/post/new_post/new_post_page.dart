@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routefly/routefly.dart';
 
 import '../../../domain/dto/post_dto.dart';
 import '../../../domain/validators/post_validator.dart';
@@ -25,9 +26,14 @@ class _NewPostPageState extends State<NewPostPage> {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
-        leading: Icon(
-          Icons.cancel_outlined,
-          color: Theme.of(context).colors.greyThree,
+        leading: InkWell(
+          onTap: () {
+            Routefly.pop(context);
+          },
+          child: Icon(
+            Icons.cancel_outlined,
+            color: Theme.of(context).colors.greyThree,
+          ),
         ),
         title: Text(
           'Nova Publicaçao',
