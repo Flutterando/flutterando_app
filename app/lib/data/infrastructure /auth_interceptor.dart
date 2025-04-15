@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:result_dart/result_dart.dart';
-import 'package:routefly/routefly.dart';
 
-import '../../app_widget.dart';
 import '../repositories/auth_repository.dart';
 import '../services/api/client_http/i_client_interceptor.dart';
 import '../services/api/client_http/i_rest_client.dart';
@@ -21,6 +20,7 @@ class AuthInterceptor implements IClientInterceptor {
   final AuthStorage authStorage;
   final AuthRepository authRepository;
   final IRestClient client;
+  final VoidCallback? onErrorRefreshToken;
 
   final int maxRetries;
   late int attempt = 0;
@@ -30,11 +30,13 @@ class AuthInterceptor implements IClientInterceptor {
     required this.authRepository,
     required this.client,
     this.maxRetries = 1,
+    this.onErrorRefreshToken,
   });
 
   @override
   Future<RestClientRequest> onRequest(RestClientRequest request) async {
-    if (request.path.contains('login') || request.path.contains('refresh')) return request;
+    if (request.path.contains('login') || request.path.contains('refresh'))
+      return request;
 
     final newRequest = await authStorage
         .getToken() //
@@ -105,7 +107,7 @@ class AuthInterceptor implements IClientInterceptor {
           );
         }
       }
-      Routefly.navigate(routePaths.auth.login);
+      onErrorRefreshToken?.call();
     }
     attempt = 0;
     return error;

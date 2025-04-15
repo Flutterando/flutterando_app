@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:routefly/routefly.dart';
 
 import '../../../../config/dependencies.dart';
 import '../../../../main.dart';
+import '../../../app_widget.dart';
 import '../../../core/constants/env.dart';
 import '../../../data/infrastructure /auth_interceptor.dart';
 import '../../../data/repositories/auth_repository.dart';
@@ -36,6 +38,9 @@ class _InterceptorConfigState extends State<InterceptorProvider> {
         client: client,
         authRepository: authRepository,
         authStorage: authStorage,
+        onErrorRefreshToken: () {
+          Routefly.navigate(routePaths.auth.login);
+        },
       ),
     );
 
