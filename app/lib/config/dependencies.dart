@@ -12,7 +12,7 @@ import '../ui/auth/recover_password/confirm_password/confirm_password_viewmodel.
 import '../ui/auth/recover_password/otp/opt_viewmodel.dart';
 import '../ui/auth/recover_password/send_email/send_email_viewmodel.dart';
 import '../ui/auth/register/register_viewmodel.dart';
-import '../ui/feed/feed_viewmodel.dart';
+import '../ui/post/feed/feed_viewmodel.dart';
 
 final injector = AutoInjector();
 

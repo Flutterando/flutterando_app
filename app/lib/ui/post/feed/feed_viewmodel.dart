@@ -1,6 +1,6 @@
 import 'package:result_command/result_command.dart';
 
-import '../../data/repositories/auth_repository.dart';
+import '../../../data/repositories/auth_repository.dart';
 
 class FeedViewmodel {
   final AuthRepository _authRepository;

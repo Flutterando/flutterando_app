@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:routefly/routefly.dart';
 
-import '../../app_widget.dart';
-import '../../config/dependencies.dart';
-import '../design_system/constants/spaces.dart';
-import '../design_system/theme/theme.dart';
-import '../design_system/widgets/appbar_widget.dart';
-import '../design_system/widgets/post_feed_widget/post_feed_skeleton_widget.dart';
-import '../design_system/widgets/post_feed_widget/post_feed_widget.dart';
+import '../../../app_widget.dart';
+import '../../../config/dependencies.dart';
+import '../../design_system/constants/spaces.dart';
+import '../../design_system/theme/theme.dart';
+import '../../design_system/widgets/appbar_widget.dart';
+import '../../design_system/widgets/post_feed_widget/post_feed_skeleton_widget.dart';
+import '../../design_system/widgets/post_feed_widget/post_feed_widget.dart';
 import 'feed_viewmodel.dart';
 
 class FeedPage extends StatefulWidget {
@@ -54,7 +54,9 @@ class _FeedPageState extends State<FeedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        onCreatePost: () {},
+        onCreatePost: () {
+          Routefly.push(routePaths.post.newPost);
+        },
         onNotification: () {},
         onLogout: viewmodel.logoutCommand.execute,
       ),

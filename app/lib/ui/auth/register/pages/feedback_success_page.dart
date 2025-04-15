@@ -56,7 +56,7 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
               width: 250,
               margin: const EdgeInsets.only(top: Spaces.l),
               child: ButtonWidget.filledPrimary(
-                onPressed: () => Routefly.push(routePaths.feed),
+                onPressed: () => Routefly.push(routePaths.post.feed),
                 text: 'Começar',
                 padding: const EdgeInsets.symmetric(
                   vertical: Spaces.xl - Spaces.xs,
