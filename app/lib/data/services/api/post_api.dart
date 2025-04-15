@@ -1,3 +1,3 @@
 import '../../../core/logger/logger_mixin.dart';
 
-class FeedApi with LoggerMixin {}
+class PostApi with LoggerMixin {}
