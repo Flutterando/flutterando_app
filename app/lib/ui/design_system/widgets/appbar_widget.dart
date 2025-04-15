@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:routefly/routefly.dart';
 
+import '../../../app_widget.dart';
 import '../constants/spaces.dart';
 import '../theme/theme.dart';
 import 'svg_image_widget.dart';
@@ -49,11 +51,33 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   onTap: onNotification,
                 ),
-              CircleAvatar(
-                radius: Spaces.l + 2,
-                child: Text(
-                  username,
-                  style: context.theme.textStyles.bodyL16Bold,
+              MenuAnchor(
+                builder: (context, controller, child) {
+                  return GestureDetector(
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                    child: child,
+                  );
+                },
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () {
+                      Routefly.navigate(routePaths.auth.login);
+                    },
+                    child: Text('Sair', style: context.text.bodyM14Bold),
+                  ),
+                ],
+                child: CircleAvatar(
+                  radius: Spaces.l + 2,
+                  child: Text(
+                    username,
+                    style: context.theme.textStyles.bodyL16Bold,
+                  ),
                 ),
               ),
             ],

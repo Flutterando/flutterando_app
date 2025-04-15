@@ -5,10 +5,14 @@ import 'package:iconsax/iconsax.dart';
 import 'package:routefly/routefly.dart';
 
 import '../../../../app_widget.dart';
+import '../../../../config/dependencies.dart';
+import '../../../../domain/dto/recover_password_send_email_dto.dart';
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
+import '../../../design_system/widgets/alert_widget.dart';
 import '../../../design_system/widgets/button_widget.dart';
 import '../../../design_system/widgets/otp_widget.dart';
+import 'opt_viewmodel.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});
@@ -20,6 +24,8 @@ class OtpPage extends StatefulWidget {
 const secondsDefault = 60;
 
 class _OtpPageState extends State<OtpPage> {
+  final viewmodel = injector.get<OptViewmodel>();
+
   final otpCtrl = OtpFieldController();
   Timer? _timer;
   int _secondsRemaining = secondsDefault;
@@ -27,10 +33,37 @@ class _OtpPageState extends State<OtpPage> {
   bool _invalidCode = false;
   bool isButtonEnabled = false;
 
+  String userEmail = '';
+
   @override
   void initState() {
     super.initState();
     _startTimer();
+
+    userEmail = Routefly.query.arguments as String;
+
+    viewmodel.confirmOtpPasswordCommand.addListener(listener);
+  }
+
+  void listener() {
+    if (viewmodel.confirmOtpPasswordCommand.isSuccess) {
+      setState(() {
+        _invalidCode = false;
+        isButtonEnabled = true;
+      });
+
+      Routefly.pop(context);
+      Routefly.push(routePaths.auth.recoverPassword.confirmPassword);
+      return;
+    }
+    if (viewmodel.confirmOtpPasswordCommand.isFailure) {
+      AlertWidget.error(context, message: 'Por favor tente novamente');
+      setState(() {
+        _invalidCode = true;
+        isButtonEnabled = false;
+      });
+      return;
+    }
   }
 
   void _startTimer() {
@@ -52,34 +85,28 @@ class _OtpPageState extends State<OtpPage> {
 
   void _resendCode() {
     if (_canResend) {
-      // request API to resend Code
+      final dto = RecoverPasswordSendEmailDto(email: userEmail);
+      viewmodel.requestToRecoverPasswordCommand.execute(dto);
+
       otpCtrl.clear();
+
       setState(() {
         _invalidCode = false;
         isButtonEnabled = false;
       });
+
       _startTimer();
     }
   }
 
   void _verifyCode(String code) {
-    if (code == "1234") {
-      // OK
-      setState(() {
-        _invalidCode = false;
-        isButtonEnabled = true;
-      });
-    } else {
-      setState(() {
-        _invalidCode = true;
-        isButtonEnabled = false;
-      });
-    }
+    viewmodel.confirmOtpPasswordCommand.execute(code);
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    viewmodel.confirmOtpPasswordCommand.removeListener(listener);
     super.dispose();
   }
 
@@ -164,37 +191,53 @@ class _OtpPageState extends State<OtpPage> {
                     const Icon(Iconsax.refresh, size: Spaces.l),
                   ],
                   if (_canResend)
-                    InkWell(
-                      onTap: _resendCode,
-                      child: Row(
-                        spacing: Spaces.s,
-                        children: [
-                          Text(
-                            'Reenviar',
-                            style: context.text.bodyM14Bold.copyWith(
-                              fontWeight: FontWeight.w900,
-                            ),
+                    ValueListenableBuilder(
+                      valueListenable:
+                          viewmodel.requestToRecoverPasswordCommand,
+                      builder: (context, _, _) {
+                        final isRunning =
+                            viewmodel.requestToRecoverPasswordCommand.isRunning;
+
+                        return InkWell(
+                          onTap: isRunning ? null : _resendCode,
+                          child: Row(
+                            spacing: Spaces.s,
+                            children: [
+                              Text(
+                                'Reenviar',
+                                style: context.text.bodyM14Bold.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              const Icon(Iconsax.refresh, size: Spaces.l),
+                            ],
                           ),
-                          const Icon(Iconsax.refresh, size: Spaces.l),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                 ],
               ),
               Container(
                 margin: const EdgeInsets.only(top: Spaces.xxxl),
                 width: 250,
-                child: ButtonWidget.filledPrimary(
-                  onPressed: () {
-                    Routefly.push(
-                      routePaths.auth.recoverPassword.confirmPassword,
+                child: ValueListenableBuilder(
+                  valueListenable: viewmodel.confirmOtpPasswordCommand,
+                  builder: (context, _, _) {
+                    return ButtonWidget.filledPrimary(
+                      onPressed: () {
+                        Routefly.push(
+                          routePaths.auth.recoverPassword.confirmPassword,
+                        );
+                      },
+                      text: 'Verificar código',
+                      disabled:
+                          !isButtonEnabled ||
+                          viewmodel.confirmOtpPasswordCommand.isRunning,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Spaces.xl - Spaces.xs,
+                      ),
                     );
                   },
-                  text: 'Verificar código',
-                  disabled: !isButtonEnabled,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Spaces.xl - Spaces.xs,
-                  ),
                 ),
               ),
             ],
