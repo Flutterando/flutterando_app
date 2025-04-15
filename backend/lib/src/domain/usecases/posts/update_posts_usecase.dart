@@ -35,11 +35,11 @@ class UpdatePosts {
       Posts post, UpdatePostsDTO dto) async {
     final newDTO = UpdatePostsDTO(
       id: dto.id,
-      title: dto.title != post.title ? dto.title : null,
-      subtitle: dto.subtitle != post.subtitle ? dto.subtitle : null,
       description: dto.description != post.description ? dto.description : null,
       link: dto.link != post.link ? dto.link : null,
       image: dto.image != post.image ? dto.image : null,
+      imageSubtitle:
+          dto.imageSubtitle != post.imageSubtitle ? dto.imageSubtitle : null,
     );
     return Success(newDTO);
   }

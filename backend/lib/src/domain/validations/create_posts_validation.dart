@@ -8,20 +8,18 @@ class CreatePostsValidation implements Validator<PostsCreateDTO> {
   LucidValidator<PostsCreateDTO> validate(
       ValidatorBuilder<PostsCreateDTO> builder) {
     builder //
-        .ruleFor((p) => p.title, key: 'title')
+        .ruleFor((p) => p.description, key: 'description')
         .notEmptyOrNull();
-
-    builder //
-        .ruleFor((p) => p.subtitle, key: 'subtitle');
-
-    builder //
-        .ruleFor((p) => p.description, key: 'description');
+    ;
 
     builder //
         .ruleFor((p) => p.link, key: 'link');
 
     builder //
         .ruleFor((p) => p.image, key: 'image');
+
+    builder //
+        .ruleFor((p) => p.imageSubtitle, key: 'imageSubtitle');
 
     return builder;
   }

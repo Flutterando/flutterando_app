@@ -37,6 +37,10 @@ class PostsController {
   )
   @Get()
   Future<PostsVO> getUser(@Query('page') int? page) async {
+    if (page != null && page <= 0) {
+      throw ResponseException.badRequest('Invalid page');
+    }
+
     return await _getPosts(page ?? 1).getOrThrow();
   }
 

@@ -92,11 +92,10 @@ class PostsRepositoryImpl implements PostsRepository {
 
     return Posts(
       id: map['id'],
-      title: map['title'],
-      subtitle: map['subtitle'],
       description: map['description'],
       link: map['link'],
       image: map['image'],
+      imageSubtitle: map['image_subtitle'],
       author: author,
       createdAt: map['created_at'],
       updatedAt: map['updated_at'],

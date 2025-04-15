@@ -12,12 +12,6 @@ class UpdatePostsValidation implements Validator<UpdatePostsDTO> {
         .isNotNull();
 
     builder //
-        .ruleFor((p) => p.title, key: 'title');
-
-    builder //
-        .ruleFor((p) => p.subtitle, key: 'subtitle');
-
-    builder //
         .ruleFor((p) => p.description, key: 'description');
 
     builder //
@@ -25,6 +19,9 @@ class UpdatePostsValidation implements Validator<UpdatePostsDTO> {
 
     builder //
         .ruleFor((p) => p.image, key: 'image');
+
+    builder //
+        .ruleFor((p) => p.imageSubtitle, key: 'imageSubtitle');
 
     return builder;
   }

@@ -2,29 +2,25 @@ import 'package:vaden/vaden.dart';
 
 @DTO()
 class PostsCreateDTO {
-  final String title;
-  final String? subtitle;
-  final String? description;
+  final String description;
   final String? link;
   final String? image;
-
+  final String? imageSubtitle;
   SignedPostsCreateDTO signed(int author) {
     return SignedPostsCreateDTO(
       author: author,
-      title: title,
-      subtitle: subtitle,
       description: description,
       link: link,
       image: image,
+      imageSubtitle: imageSubtitle,
     );
   }
 
   PostsCreateDTO({
-    required this.title,
-    this.subtitle,
-    this.description,
+    required this.description,
     this.link,
     this.image,
+    this.imageSubtitle,
   });
 }
 
@@ -32,20 +28,18 @@ class SignedPostsCreateDTO extends PostsCreateDTO {
   final int author;
   SignedPostsCreateDTO({
     required this.author,
-    required super.title,
-    super.subtitle,
-    super.description,
+    required super.description,
     super.link,
     super.image,
+    super.imageSubtitle,
   });
 
   Map<String, dynamic> toMapQuery() {
     return {
-      'title': title,
-      'subtitle': subtitle,
       'description': description,
       'link': link,
       'image': image,
+      'image_subtitle': imageSubtitle,
       'users': author,
     };
   }

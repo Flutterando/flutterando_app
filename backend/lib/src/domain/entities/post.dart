@@ -5,11 +5,10 @@ import 'user.dart';
 @DTO()
 class Posts {
   final int id;
-  final String title;
-  final String? subtitle;
-  final String? description;
+  final String description;
   final String? link;
   final String? image;
+  final String? imageSubtitle;
   final User author;
   @UseParse(DateTimeParse)
   final DateTime createdAt;
@@ -17,11 +16,10 @@ class Posts {
   final DateTime updatedAt;
   Posts({
     required this.id,
-    required this.title,
-    this.subtitle,
-    this.description,
+    required this.description,
     this.link,
     this.image,
+    this.imageSubtitle,
     required this.author,
     required this.createdAt,
     required this.updatedAt,
