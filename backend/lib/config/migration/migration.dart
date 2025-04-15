@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:backend/config/postgres/query_adapter.dart';
 import 'package:postgres/postgres.dart';
 
 class Migration {
@@ -12,6 +13,7 @@ class Migration {
       final migrationInDB = await connection.execute(
         'select migration_file from sys_migration',
       );
+
       List<String> migrationFile =
           migrationInDB.map((rows) => rows.first as String).toList();
       await _executeMigration(migrationFile);
@@ -27,15 +29,13 @@ class Migration {
   }
 
   Future<void> _executeMigration([List<String> migrationIds = const []]) async {
-    List<FileSystemEntity> migrationsToRun =
-        _getMigrationFiles()
-            .where(
-              (file) =>
-                  !migrationIds.contains(
-                    file.path.split(Platform.pathSeparator).last,
-                  ),
-            )
-            .toList();
+    List<FileSystemEntity> migrationsToRun = _getMigrationFiles()
+        .where(
+          (file) => !migrationIds.contains(
+            file.path.split(Platform.pathSeparator).last,
+          ),
+        )
+        .toList();
 
     if (migrationsToRun.isEmpty) return;
 
@@ -66,14 +66,13 @@ class Migration {
           await session.execute(query);
         }
 
-        String query =
-            'INSERT INTO sys_migration'
-            ' (migration_file, migration_content, migration_description)'
-            ' VALUES ('
-            '\'${readMigration['file']}\', '
-            '\'${readMigration['title'] ?? ''}\', '
-            '\'${readMigration['description'] ?? ''}\');';
-        await session.execute(query);
+        final insertMap = {
+          'migration_file': readMigration['file'],
+          'migration_content': readMigration['title'],
+          'migration_description': readMigration['description']
+        };
+
+        await session.execute(insertMap.insertQuery('sys_migration'));
       });
     } catch (e) {
       print('Migration ${file.path} error: $e');

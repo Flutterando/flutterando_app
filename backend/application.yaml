@@ -30,6 +30,14 @@ postgres:
   ssl: disable
   maxConnectionCount: 5
 
+security:
+  secret: AisuSijfdiflkDkldkeokdokDKodk
+  tokenValidity: 3600
+  refreshTokenValidity: 604800
+  issuer: "vaden"
+  audiences:
+    - "vaden"
+
 env:
   mode: debug
   migrationPath: './migrations'
