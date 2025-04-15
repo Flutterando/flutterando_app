@@ -35,8 +35,9 @@ class AuthInterceptor implements IClientInterceptor {
 
   @override
   Future<RestClientRequest> onRequest(RestClientRequest request) async {
-    if (request.path.contains('login') || request.path.contains('refresh'))
+    if (request.path.contains('login') || request.path.contains('refresh')) {
       return request;
+    }
 
     final newRequest = await authStorage
         .getToken() //
