@@ -54,9 +54,15 @@ class AuthRepository {
 
   AsyncResult<Unit> logout() => storage.clear();
 
+  AsyncResult<String> getRefreshToken() async {
+    return storage.getRefreshToken()
+        .flatMap(authApi.getRefreshToken)
+        .map(_toSessionEntity)
+        .map((session) => session.token);
+  }
+
   AsyncResult<Unit> requestToRecoverPassword(
-    RecoverPasswordSendEmailDto dto,
-  ) async {
+      RecoverPasswordSendEmailDto dto,) async {
     final validator = RecoverPasswordSendEmailValidation();
 
     return validator

@@ -80,20 +80,20 @@ class AuthInterceptor implements IClientInterceptor {
 
         try {
           attempt++;
-          // final result =
-          //     await authRepository
-          //         .getRefreshToken() //
-          //         .map(
-          //           (token) => (request: request, token: token, client: client),
-          //         )
-          //         .flatMap(retry)
-          //         .getOrThrow();
-          //
-          // if (result is RestClientException) {
-          //   continue;
-          // }
-          //
-          // return result;
+          final result =
+              await authRepository
+                  .getRefreshToken() //
+                  .map(
+                    (token) => (request: request, token: token, client: client),
+                  )
+                  .flatMap(retry)
+                  .getOrThrow();
+
+          if (result is RestClientException) {
+            continue;
+          }
+
+          return result;
         } on Exception catch (e, t) {
           return RestClientException(
             e.toString(),

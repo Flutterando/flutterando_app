@@ -47,8 +47,20 @@ class AuthApi with LoggerMixin {
     final logger = log.forMethod()..logInfo(data: credentials);
 
     return await client
-        .post(
-          RestClientRequest(path: '/user', data: credentials.toJson()),
+        .post(RestClientRequest(path: '/user', data: credentials.toJson()))
+        .onSuccess(logger.fromSuccess)
+        .onFailure(logger.fromException);
+  }
+
+  AsyncResult<RestClientResponse> getRefreshToken(String refreshToken) async {
+    final logger = log.forMethod()..logInfo(data: refreshToken);
+
+    return await client
+        .get(
+          RestClientRequest(
+            path: '/auth/refresh',
+            headers: {'Authorization': 'Bearer $refreshToken'},
+          ),
         )
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
