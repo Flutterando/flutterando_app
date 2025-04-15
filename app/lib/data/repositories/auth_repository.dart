@@ -13,6 +13,7 @@ import '../../domain/validators/recover_password_send_email_validation.dart';
 import '../../domain/validators/recover_password_validation.dart';
 import '../../domain/validators/register_validation.dart';
 import '../adapters/session_adapter.dart';
+import '../adapters/user_adapter.dart';
 import '../services/api/auth_api.dart';
 import '../services/api/client_http/rest_client_response.dart';
 import '../services/storage/auth_storage.dart';
@@ -31,7 +32,9 @@ class AuthRepository {
         .flatMap(authApi.login)
         .map(_toSessionEntity)
         .flatMap(storage.saveSession)
-        .map((session) => session.user);
+        .flatMap((_) => authApi.getLoggedUser())
+        .map(_toLoggedUserEntity)
+        .flatMap(storage.saveUser);
   }
 
   AsyncResult<Unit> register(RegisterDto dto) async {
@@ -42,7 +45,7 @@ class AuthRepository {
         .flatMap(authApi.register)
         .pure(dto)
         .map(_toCredentialsLoginDto)
-        .flatMap(authApi.login)
+        .flatMap(this.login)
         .mapError((e) => e as LoginException)
         .pure(unit);
   }
@@ -75,6 +78,9 @@ class AuthRepository {
 
   Session _toSessionEntity(RestClientResponse response) =>
       SessionAdapter.fromJson(response.data);
+
+  LoggedUser _toLoggedUserEntity(RestClientResponse response) =>
+      LoggedUserAdapter.fromJson(response.data);
 
   CredentialsLoginDto _toCredentialsLoginDto(RegisterDto dto) =>
       CredentialsLoginDto(email: dto.email, password: dto.password);
