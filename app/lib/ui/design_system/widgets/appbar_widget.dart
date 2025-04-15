@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:routefly/routefly.dart';
 
-import '../../../app_widget.dart';
 import '../constants/spaces.dart';
 import '../theme/theme.dart';
 import 'svg_image_widget.dart';
@@ -10,12 +8,14 @@ import 'svg_image_widget.dart';
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final void Function()? onCreatePost;
   final void Function()? onNotification;
+  final void Function() onLogout;
   final String username;
 
   AppBarWidget({
     super.key,
     this.onCreatePost,
     this.onNotification,
+    required this.onLogout,
     this.username = 'F',
   });
 
@@ -66,9 +66,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 },
                 menuChildren: [
                   MenuItemButton(
-                    onPressed: () {
-                      Routefly.navigate(routePaths.auth.login);
-                    },
+                    onPressed: onLogout,
                     child: Text('Sair', style: context.text.bodyM14Bold),
                   ),
                 ],

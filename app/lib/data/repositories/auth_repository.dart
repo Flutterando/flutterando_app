@@ -52,6 +52,8 @@ class AuthRepository {
 
   AsyncResult<LoggedUser> getLoggedUser() async => storage.getUser();
 
+  AsyncResult<Unit> logout() => storage.clear();
+
   AsyncResult<Unit> requestToRecoverPassword(
     RecoverPasswordSendEmailDto dto,
   ) async {
