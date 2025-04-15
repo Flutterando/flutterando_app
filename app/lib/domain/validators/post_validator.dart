@@ -11,16 +11,15 @@ class PostValidator extends LucidValidator<PostDto> {
 
     ruleFor((c) => c.image, key: 'image', label: 'Imagem') //
         .when((c) => c.image != null) //
-        .notEmpty() //
         .validUrl();
+
+    ruleFor((c) => c.imageSubtitle, key: 'subtitle', label: 'SubTitulo') //
+        .when((c) => c.imageSubtitle != null && c.imageSubtitle!.isNotEmpty) //
+        .minLength(1)
+        .maxLength(100);
 
     ruleFor((c) => c.link, key: 'link', label: 'Link') //
         .when((c) => c.link != null) //
         .validUrl();
-
-    ruleFor((c) => c.imageSubtitle, key: 'subtitle', label: 'SubTitulo') //
-        .when((c) => c.imageSubtitle != null) //
-        .notEmpty() //
-        .maxLength(100);
   }
 }

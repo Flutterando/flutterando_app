@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:routefly/routefly.dart';
 
+import '../../../config/dependencies.dart';
 import '../../../domain/dto/post_dto.dart';
 import '../../../domain/validators/post_validator.dart';
 import '../../design_system/constants/spaces.dart';
 import '../../design_system/theme/theme.dart';
+import '../../design_system/widgets/alert_widget.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
+import 'new_post_viewmodel.dart';
 
 class NewPostPage extends StatefulWidget {
   const NewPostPage({super.key});
@@ -16,9 +19,41 @@ class NewPostPage extends StatefulWidget {
 }
 
 class _NewPostPageState extends State<NewPostPage> {
+  final viewmodel = injector.get<NewPostViewmodel>();
+
   final _validator = PostValidator();
   final _postDto = PostDto.fromEmpty();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    viewmodel.createPostCommand.addListener(listener);
+  }
+
+  void listener() {
+    if (viewmodel.createPostCommand.isSuccess) {
+      AlertWidget.success(context, message: 'Post criado com sucesso.');
+      Routefly.pop(context);
+    }
+
+    if (viewmodel.createPostCommand.isFailure) {
+      AlertWidget.error(context, message: 'Não conseguimos criar seu post.');
+      Routefly.pop(context);
+    }
+  }
+
+  void _onSubmit() {
+    if (_formKey.currentState!.validate()) {
+      viewmodel.createPostCommand.execute(_postDto);
+    }
+  }
+
+  @override
+  void dispose() {
+    viewmodel.createPostCommand.removeListener(listener);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +130,15 @@ class _NewPostPageState extends State<NewPostPage> {
                         alignment: Alignment.centerRight,
                         child: FractionallySizedBox(
                           widthFactor: 0.7,
-                          child: ButtonWidget.filledPrimary(
-                            disabled: true,
-                            text: 'Publicar',
-                            onPressed: () {},
+                          child: ValueListenableBuilder(
+                            valueListenable: viewmodel.createPostCommand,
+                            builder: (context, _, _) {
+                              return ButtonWidget.filledPrimary(
+                                text: 'Publicar',
+                                loading: viewmodel.createPostCommand.isRunning,
+                                onPressed: _onSubmit,
+                              );
+                            },
                           ),
                         ),
                       ),
