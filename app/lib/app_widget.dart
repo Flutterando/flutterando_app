@@ -16,6 +16,7 @@ class AppWidget extends StatelessWidget {
       theme: darkTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
       builder: InterceptorProvider.instance,
       routerConfig: Routefly.routerConfig(
         routes: routes,

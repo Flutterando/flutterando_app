@@ -46,26 +46,12 @@ class AuthApi with LoggerMixin {
   AsyncResult<RestClientResponse> register(RegisterDto credentials) async {
     final logger = log.forMethod()..logInfo(data: credentials);
 
-    // TODO Original Code
-    /*
-      return await client
+    return await client
         .post(
-          RestClientRequest(path: '/auth/register', data: credentials.toJson()),
+          RestClientRequest(path: '/user', data: credentials.toJson()),
         )
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
-    */
-    //Mock Code
-    return Success(
-      RestClientResponse(
-        request: RestClientRequest(
-          path: '/auth/register',
-          data: credentials.toJson(),
-        ),
-        data: '',
-        statusCode: 201,
-      ),
-    );
   }
 
   AsyncResult<RestClientResponse> requestToRecoverPassword(

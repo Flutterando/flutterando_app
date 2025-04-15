@@ -50,6 +50,8 @@ class AuthRepository {
         .pure(unit);
   }
 
+  AsyncResult<LoggedUser> getLoggedUser() async => storage.getUser();
+
   AsyncResult<Unit> requestToRecoverPassword(
     RecoverPasswordSendEmailDto dto,
   ) async {
