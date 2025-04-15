@@ -21,7 +21,14 @@ class LoggedUserAdapter {
     return LoggedUser(
       firstName: body['firstName'],
       lastName: body['lastName'],
-      email: body['email'],
+      email: body['username'],
     );
   }
+
+  static Map<String, dynamic> toJson(LoggedUser body) => //
+      {
+    'firstName': body.firstName,
+    'lastName': body.lastName,
+    'username': body.email,
+  };
 }

@@ -7,9 +7,11 @@ import '../../../core/logger/logger_mixin.dart';
 import '../../../domain/entities/session_entity.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../adapters/session_adapter.dart';
+import '../../adapters/user_adapter.dart';
 import 'local_storage/local_storage.dart';
 
 const _sessionKey = 'sessionKey';
+const _userKey = 'userKey';
 
 class AuthStorage with LoggerMixin {
   final LocalStorage _localStorage;
@@ -25,13 +27,21 @@ class AuthStorage with LoggerMixin {
         .pure(session);
   }
 
+  AsyncResult<LoggedUser> saveUser(LoggedUser user) {
+    final logger = log.forMethod();
+
+    return _localStorage //
+        .save(_userKey, jsonEncode(LoggedUserAdapter.toJson(user)))
+        .onFailure(logger.fromException)
+        .pure(user);
+  }
+
   AsyncResult<LoggedUser> getUser() {
     final logger = log.forMethod();
 
     return _localStorage //
-        .get(_sessionKey)
-        .map(_toSession)
-        .map((session) => session.user)
+        .get(_userKey)
+        .map(_toUserEntity)
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
   }
@@ -41,7 +51,7 @@ class AuthStorage with LoggerMixin {
 
     return _localStorage //
         .get(_sessionKey)
-        .map(_toSession)
+        .map(_toSessionEntity)
         .map((session) => session.token)
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
@@ -52,7 +62,7 @@ class AuthStorage with LoggerMixin {
 
     return _localStorage //
         .get(_sessionKey)
-        .map(_toSession)
+        .map(_toSessionEntity)
         .map((session) => session.refreshToken)
         .onFailure(logger.fromException);
   }
@@ -62,9 +72,13 @@ class AuthStorage with LoggerMixin {
 
     return _localStorage //
         .remove(_sessionKey)
+        .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
   }
 
-  Session _toSession(String json) => //
+  Session _toSessionEntity(String json) => //
       SessionAdapter.fromJson(jsonDecode(json));
+
+  LoggedUser _toUserEntity(String json) => //
+      LoggedUserAdapter.fromJson(jsonDecode(json));
 }

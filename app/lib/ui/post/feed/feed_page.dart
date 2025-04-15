@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:routefly/routefly.dart';
 
+import '../../../app_widget.dart';
+import '../../../config/dependencies.dart';
 import '../../design_system/constants/spaces.dart';
 import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/appbar_widget.dart';
 import '../../design_system/widgets/post_feed_widget/post_feed_skeleton_widget.dart';
 import '../../design_system/widgets/post_feed_widget/post_feed_widget.dart';
+import 'feed_viewmodel.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -14,6 +18,7 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
+  final viewmodel = injector.get<FeedViewmodel>();
   final isLoading = ValueNotifier(true);
 
   @override
@@ -23,6 +28,15 @@ class _FeedPageState extends State<FeedPage> {
     Future.delayed(const Duration(seconds: 1)).then((_) {
       isLoading.value = false;
     });
+
+    viewmodel.logoutCommand.addListener(listenerLogout);
+  }
+
+  listenerLogout() {
+    if (viewmodel.logoutCommand.isSuccess ||
+        viewmodel.logoutCommand.isFailure) {
+      Routefly.navigate(routePaths.auth.login);
+    }
   }
 
   Future<void> _onRefresh() async {
@@ -31,9 +45,19 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   @override
+  void dispose() {
+    viewmodel.logoutCommand.removeListener(listenerLogout);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(onCreatePost: () {}, onNotification: () {}),
+      appBar: AppBarWidget(
+        onCreatePost: () {},
+        onNotification: () {},
+        onLogout: viewmodel.logoutCommand.execute,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(bottom: Spaces.xxxxl),
         child: RefreshIndicator(

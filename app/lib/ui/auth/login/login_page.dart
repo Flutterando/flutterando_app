@@ -183,9 +183,9 @@ class _LoginPageState extends State<LoginPage> {
                             return ButtonWidget.filledPrimary(
                               onPressed: _onSubmit,
                               text: 'Entrar',
+                              loading: viewModel.loginCommand.isRunning,
                               disabled:
-                                  isButtonEnabled.value ||
-                                  viewModel.loginCommand.isRunning,
+                                  isButtonEnabled.value,
                               padding: const EdgeInsets.symmetric(
                                 vertical: Spaces.xl - Spaces.xs,
                               ),
