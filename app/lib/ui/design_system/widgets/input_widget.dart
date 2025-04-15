@@ -74,8 +74,8 @@ class _InputWidgetState extends State<InputWidget> {
             ),
           ),
         TextFormField(
-          maxLines: widget.maxLines,
-          minLines: widget.minLines,
+          maxLines: widget.obscureText ? 1 : widget.maxLines,
+          minLines: widget.obscureText ? 1 : widget.minLines,
           initialValue: widget.initialValue,
           controller: widget.controller,
           focusNode: widget.focusNode,

@@ -53,7 +53,6 @@ class _NewPostPageState extends State<NewPostPage> {
                       const InputWidget(
                         label: 'Publicação',
                         hintText: 'Digite a sua publicação',
-                        minLines: 5,
                       ),
                       const InputWidget(
                         label: 'Link da imagem',

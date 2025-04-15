@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../design_system/constants/spaces.dart';
-import '../design_system/theme/theme.dart';
-import '../design_system/widgets/appbar_widget.dart';
-import '../design_system/widgets/post_feed_widget/post_feed_skeleton_widget.dart';
-import '../design_system/widgets/post_feed_widget/post_feed_widget.dart';
+import '../../design_system/constants/spaces.dart';
+import '../../design_system/theme/theme.dart';
+import '../../design_system/widgets/appbar_widget.dart';
+import '../../design_system/widgets/post_feed_widget/post_feed_skeleton_widget.dart';
+import '../../design_system/widgets/post_feed_widget/post_feed_widget.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -74,7 +74,6 @@ class _FeedPageState extends State<FeedPage> {
                             ),
                             child: PostFeedSkeletonWidget(),
                           ),
-
                         ],
                       ),
                     ),

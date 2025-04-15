@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       AlertWidget.error(context, message: 'Error ao efetuar o login');
     }
     if (viewModel.loginCommand.isSuccess) {
-      Routefly.push(routePaths.feed);
+      Routefly.push(routePaths.post.feed);
     }
   }
 
@@ -158,7 +158,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               TextSpan(
-                                recognizer: TapGestureRecognizer()..onTap = () {},
+                                recognizer:
+                                    TapGestureRecognizer()..onTap = () {},
                                 text: 'termos de uso',
                                 style: context.text.bodyM14Bold.copyWith(
                                   color: context.colors.whiteColor,

@@ -13,7 +13,8 @@ import 'ui/auth/recover_password/send_email/send_email_page.dart' as a3;
 import 'ui/auth/register/pages/feedback_error_page.dart' as a7;
 import 'ui/auth/register/pages/feedback_success_page.dart' as a6;
 import 'ui/auth/register/register_page.dart' as a5;
-import 'ui/feed/feed_page.dart' as a9;
+import 'ui/post/feed/feed_page.dart' as a9;
+import 'ui/post/new_post/new_post_page.dart' as a10;
 import 'ui/splash/splash_page.dart' as a0;
 
 Route b0Builder(BuildContext ctx, RouteSettings settings) =>
@@ -36,3 +37,5 @@ Route b8Builder(BuildContext ctx, RouteSettings settings) =>
     Routefly.defaultRouteBuilder(ctx, settings, const a8.LoginPage());
 Route b9Builder(BuildContext ctx, RouteSettings settings) =>
     Routefly.defaultRouteBuilder(ctx, settings, const a9.FeedPage());
+Route b10Builder(BuildContext ctx, RouteSettings settings) =>
+    Routefly.defaultRouteBuilder(ctx, settings, const a10.NewPostPage());

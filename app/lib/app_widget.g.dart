@@ -9,51 +9,61 @@ List<RouteEntity> get routes => [
     routeBuilder: b0Builder,
   ),
   RouteEntity(
+    key: '/post/feed',
+    uri: Uri.parse('/post/feed'),
+    routeBuilder: b1Builder,
+  ),
+  RouteEntity(
+    key: '/post/new_post',
+    uri: Uri.parse('/post/new_post'),
+    routeBuilder: b2Builder,
+  ),
+  RouteEntity(
     key: '/auth/recover_password/otp',
     uri: Uri.parse('/auth/recover_password/otp'),
-    routeBuilder: b1Builder,
+    routeBuilder: b3Builder,
   ),
   RouteEntity(
     key: '/auth/recover_password/feedback_success',
     uri: Uri.parse('/auth/recover_password/feedback_success'),
-    routeBuilder: b2Builder,
+    routeBuilder: b4Builder,
   ),
   RouteEntity(
     key: '/auth/recover_password/send_email',
     uri: Uri.parse('/auth/recover_password/send_email'),
-    routeBuilder: b3Builder,
+    routeBuilder: b5Builder,
   ),
   RouteEntity(
     key: '/auth/recover_password/confirm_password',
     uri: Uri.parse('/auth/recover_password/confirm_password'),
-    routeBuilder: b4Builder,
+    routeBuilder: b6Builder,
   ),
   RouteEntity(
     key: '/auth/register',
     uri: Uri.parse('/auth/register'),
-    routeBuilder: b5Builder,
+    routeBuilder: b7Builder,
   ),
   RouteEntity(
     key: '/auth/register/pages/feedback_success',
     uri: Uri.parse('/auth/register/pages/feedback_success'),
-    routeBuilder: b6Builder,
+    routeBuilder: b8Builder,
   ),
   RouteEntity(
     key: '/auth/register/pages/feedback_error',
     uri: Uri.parse('/auth/register/pages/feedback_error'),
-    routeBuilder: b7Builder,
+    routeBuilder: b9Builder,
   ),
   RouteEntity(
     key: '/auth/login',
     uri: Uri.parse('/auth/login'),
-    routeBuilder: b8Builder,
+    routeBuilder: b10Builder,
   ),
-  RouteEntity(key: '/feed', uri: Uri.parse('/feed'), routeBuilder: b9Builder),
 ];
 
 const routePaths = (
   path: '/',
   splash: '/splash',
+  post: (path: '/post', feed: '/post/feed', newPost: '/post/new_post'),
   auth: (
     path: '/auth',
     recoverPassword: (
@@ -73,5 +83,4 @@ const routePaths = (
     ),
     login: '/auth/login',
   ),
-  feed: '/feed',
 );
