@@ -54,7 +54,9 @@ class _FeedPageState extends State<FeedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        onCreatePost: () {},
+        onCreatePost: () {
+          Routefly.push(routePaths.post.newPost);
+        },
         onNotification: () {},
         onLogout: viewmodel.logoutCommand.execute,
       ),

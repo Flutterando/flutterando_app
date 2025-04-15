@@ -3,39 +3,39 @@
 import 'package:flutter/widgets.dart';
 import 'package:routefly/routefly.dart';
 
-import 'ui/auth/login/login_page.dart' as a8;
+import 'ui/auth/login/login_page.dart' as a10;
 import 'ui/auth/recover_password/confirm_password/confirm_password_page.dart'
-    as a4;
+    as a6;
 import 'ui/auth/recover_password/feedback_success/feedback_success_page.dart'
-    as a2;
-import 'ui/auth/recover_password/otp/otp_page.dart' as a1;
-import 'ui/auth/recover_password/send_email/send_email_page.dart' as a3;
-import 'ui/auth/register/pages/feedback_error_page.dart' as a7;
-import 'ui/auth/register/pages/feedback_success_page.dart' as a6;
-import 'ui/auth/register/register_page.dart' as a5;
-import 'ui/post/feed/feed_page.dart' as a9;
-import 'ui/post/new_post/new_post_page.dart' as a10;
+    as a4;
+import 'ui/auth/recover_password/otp/otp_page.dart' as a3;
+import 'ui/auth/recover_password/send_email/send_email_page.dart' as a5;
+import 'ui/auth/register/pages/feedback_error_page.dart' as a9;
+import 'ui/auth/register/pages/feedback_success_page.dart' as a8;
+import 'ui/auth/register/register_page.dart' as a7;
+import 'ui/post/feed/feed_page.dart' as a1;
+import 'ui/post/new_post/new_post_page.dart' as a2;
 import 'ui/splash/splash_page.dart' as a0;
 
 Route b0Builder(BuildContext ctx, RouteSettings settings) =>
     Routefly.defaultRouteBuilder(ctx, settings, const a0.SplashPage());
 Route b1Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a1.OtpPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a1.FeedPage());
 Route b2Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a2.FeedbackSuccessPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a2.NewPostPage());
 Route b3Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a3.SendEmailPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a3.OtpPage());
 Route b4Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a4.ConfirmPasswordPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a4.FeedbackSuccessPage());
 Route b5Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a5.RegisterPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a5.SendEmailPage());
 Route b6Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a6.FeedbackSuccessPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a6.ConfirmPasswordPage());
 Route b7Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a7.FeedbackErrorPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a7.RegisterPage());
 Route b8Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a8.LoginPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a8.FeedbackSuccessPage());
 Route b9Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a9.FeedPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a9.FeedbackErrorPage());
 Route b10Builder(BuildContext ctx, RouteSettings settings) =>
-    Routefly.defaultRouteBuilder(ctx, settings, const a10.NewPostPage());
+    Routefly.defaultRouteBuilder(ctx, settings, const a10.LoginPage());
