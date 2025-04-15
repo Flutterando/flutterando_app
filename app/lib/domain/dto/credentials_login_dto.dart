@@ -5,7 +5,7 @@ class CredentialsLoginDto {
   CredentialsLoginDto({this.email = '', this.password = ''});
 
   factory CredentialsLoginDto.withTestUser() =>
-      CredentialsLoginDto(email: "jacobinho@gmail.com", password: "Teste@1234");
+      CredentialsLoginDto(email: 'jacobinho@gmail.com', password: 'Teste@1234');
 
   void setEmail(String value) => email = value;
 

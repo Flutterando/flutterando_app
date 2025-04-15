@@ -4,6 +4,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:lucid_validation/lucid_validation.dart';
 import 'package:routefly/routefly.dart';
 
+import '../../../app_widget.dart';
+import '../../../config/dependencies.dart';
 import '../../../domain/dto/register_dto.dart';
 import '../../../domain/validators/register_validation.dart';
 import '../../design_system/constants/spaces.dart';
@@ -11,6 +13,7 @@ import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
 import '../../design_system/widgets/svg_image_widget.dart';
+import 'register_viewmodel.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
   final validator = RegisterValidation();
   final credentials = RegisterDto();
-
+  final viewmodel = injector.get<RegisterViewmodel>();
   final isButtonEnabled = ValueNotifier(true);
   final exceptionsPassword = ValueNotifier<List<String>>([]);
 
@@ -32,6 +35,18 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
     _updateButtonState();
     _checkPasswordValidation();
+    viewmodel.registerCommand.addListener(listener);
+  }
+
+  void listener() {
+    if (viewmodel.registerCommand.isFailure) {
+      Routefly.push(routePaths.auth.register.pages.feedbackError);
+      return;
+    }
+    if (viewmodel.registerCommand.isSuccess) {
+      Routefly.push(routePaths.auth.register.pages.feedbackSuccess);
+      return;
+    }
   }
 
   void _updateButtonState() {
@@ -52,8 +67,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _submit() {
     if (formKey.currentState!.validate() && exceptionsPassword.value.isEmpty) {
-      // request to API
+      viewmodel.registerCommand.execute(credentials);
     }
+  }
+
+  @override
+  void dispose() {
+    viewmodel.registerCommand.removeListener(listener);
+    super.dispose();
   }
 
   @override
@@ -69,161 +90,169 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Spaces.xl),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  spacing: Spaces.xl,
-                  children: [
-                    Text(
-                      'Bem-vindo de volta à',
-                      style: context.text.bodyL16Bold.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: context.colors.whiteColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SvgImage.logoLarge.image(),
-                    Text(
-                      'A maior comunidade de Flutter\n da América latina',
-                      style: context.text.bodyL16Bold.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: context.colors.whiteColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    InputWidget(
-                      label: 'Nome',
-                      onChanged: (value) {
-                        credentials.setFirstName(value);
-                        _updateButtonState();
-                      },
-                      validator: validator.byField(credentials, 'firstName'),
-                      hintText: 'Informe seu nome',
-                    ),
-                    InputWidget(
-                      label: 'Sobrenome',
-                      onChanged: (value) {
-                        credentials.setLastName(value);
-                        _updateButtonState();
-                      },
-                      validator: validator.byField(credentials, 'lastName'),
-                      hintText: 'Informe seu sobrenome',
-                    ),
-                    InputWidget(
-                      label: 'E-mail',
-                      onChanged: (value) {
-                        credentials.setEmail(value);
-                        _updateButtonState();
-                      },
-                      validator: validator.byField(credentials, 'email'),
-                      hintText: 'Informe seu email',
-                    ),
-                    InputWidget(
-                      label: 'Senha',
-                      obscureText: true,
-                      onChanged: (value) {
-                        credentials.setPassword(value);
-                        _updateButtonState();
-                      },
-                      validator: (value) {
-                        _checkPasswordValidation();
-                        _updateButtonState();
-
-                        return null;
-                      },
-                      hintText: 'Informe sua senha',
-                    ),
-                    ValueListenableBuilder(
-                      valueListenable: exceptionsPassword,
-                      builder: (context, exceptionsPassword, _) {
-                        return PasswordRequirements(errors: exceptionsPassword);
-                      },
-                    ),
-                    InputWidget(
-                      label: 'Repetir senha',
-                      obscureText: true,
-                      onChanged: (value) {
-                        credentials.setConfirmPassword(value);
-                        _updateButtonState();
-                      },
-                      validator: validator.byField(
-                        credentials,
-                        'confirmPassword',
-                      ),
-                      hintText: 'Repita a sua senha',
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spaces.xl,
-                        vertical: Spaces.l,
-                      ),
-                      child: Text.rich(
-                        textAlign: TextAlign.center,
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text:
-                                  'Ao tocar no botão “Cadastrar” você concorda com os ',
-                              style: context.text.bodyM14Bold.copyWith(
-                                color: context.colors.greyThree,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            TextSpan(
-                              recognizer: TapGestureRecognizer()..onTap = () {},
-                              text: 'termos de uso',
-                              style: context.text.bodyM14Bold.copyWith(
-                                color: context.colors.whiteColor,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: Spaces.xl,
+                    children: [
+                      Text(
+                        'Bem-vindo de volta à',
+                        style: context.text.bodyL16Bold.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: context.colors.whiteColor,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spaces.xxxxxl,
+                      SvgImage.logoLarge.image(),
+                      Text(
+                        'A maior comunidade de Flutter\n da América latina',
+                        style: context.text.bodyL16Bold.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: context.colors.whiteColor,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      child: ValueListenableBuilder(
-                        valueListenable: isButtonEnabled,
-                        builder: (context, isButtonEnabled, _) {
-                          return ButtonWidget.filledPrimary(
-                            onPressed: _submit,
-                            text: 'Entrar',
-                            disabled: isButtonEnabled,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: Spaces.xl - Spaces.xs,
-                            ),
-                          );
+                      InputWidget(
+                        label: 'Nome',
+                        onChanged: (value) {
+                          credentials.setFirstName(value);
+                          _updateButtonState();
+                        },
+                        validator: validator.byField(credentials, 'firstName'),
+                        hintText: 'Informe seu nome',
+                      ),
+                      InputWidget(
+                        label: 'Sobrenome',
+                        onChanged: (value) {
+                          credentials.setLastName(value);
+                          _updateButtonState();
+                        },
+                        validator: validator.byField(credentials, 'lastName'),
+                        hintText: 'Informe seu sobrenome',
+                      ),
+                      InputWidget(
+                        label: 'E-mail',
+                        onChanged: (value) {
+                          credentials.setEmail(value);
+                          _updateButtonState();
+                        },
+                        validator: validator.byField(credentials, 'email'),
+                        hintText: 'Informe seu email',
+                      ),
+                      InputWidget(
+                        label: 'Senha',
+                        obscureText: true,
+                        onChanged: (value) {
+                          credentials.setPassword(value);
+                          _updateButtonState();
+                        },
+                        validator: (value) {
+                          _checkPasswordValidation();
+                          _updateButtonState();
+                  
+                          return null;
+                        },
+                        hintText: 'Informe sua senha',
+                      ),
+                      ValueListenableBuilder(
+                        valueListenable: exceptionsPassword,
+                        builder: (context, exceptionsPassword, _) {
+                          return PasswordRequirements(errors: exceptionsPassword);
                         },
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spaces.xxxxxl,
-                        vertical: Spaces.xxl,
-                      ),
-                      child: Text.rich(
-                        textAlign: TextAlign.center,
-                        TextSpan(
-                          text: 'Já tenho uma conta? ',
-                          children: [
-                            TextSpan(
-                              recognizer:
-                                  TapGestureRecognizer()
-                                    ..onTap = () => Routefly.pop(context),
-                              text: 'Entrar',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
+                      InputWidget(
+                        label: 'Repetir senha',
+                        obscureText: true,
+                        onChanged: (value) {
+                          credentials.setConfirmPassword(value);
+                          _updateButtonState();
+                        },
+                        validator: validator.byField(
+                          credentials,
+                          'confirmPassword',
                         ),
-                        style: const TextStyle(color: Colors.white54),
+                        hintText: 'Repita a sua senha',
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spaces.xl,
+                          vertical: Spaces.l,
+                        ),
+                        child: Text.rich(
+                          textAlign: TextAlign.center,
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                    'Ao tocar no botão “Cadastrar” você concorda com os ',
+                                style: context.text.bodyM14Bold.copyWith(
+                                  color: context.colors.greyThree,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()..onTap = () {},
+                                text: 'termos de uso',
+                                style: context.text.bodyM14Bold.copyWith(
+                                  color: context.colors.whiteColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spaces.xxxxxl,
+                        ),
+                        child: ListenableBuilder(
+                          listenable: Listenable.merge([
+                            isButtonEnabled,
+                            viewmodel.registerCommand,
+                          ]),
+                          builder: (context, _) {
+                            return ButtonWidget.filledPrimary(
+                              onPressed: _submit,
+                              text: 'Entrar',
+                              disabled:
+                                  isButtonEnabled.value ||
+                                  viewmodel.registerCommand.isRunning,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Spaces.xl - Spaces.xs,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spaces.xxxxxl,
+                          vertical: Spaces.xxl,
+                        ),
+                        child: Text.rich(
+                          textAlign: TextAlign.center,
+                          TextSpan(
+                            text: 'Já tenho uma conta? ',
+                            children: [
+                              TextSpan(
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () => Routefly.pop(context),
+                                text: 'Entrar',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                          style: const TextStyle(color: Colors.white54),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

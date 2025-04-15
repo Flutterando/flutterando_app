@@ -23,3 +23,7 @@ class DataException extends BaseException {
 class StorageException extends DataException {
   StorageException(super.message, [super.stackTrace]);
 }
+
+class LoginException extends DataException {
+  LoginException(super.message, [super.stackTrace]);
+}

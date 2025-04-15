@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:routefly/routefly.dart';
 
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
@@ -58,7 +59,7 @@ class _FeedbackErrorPageState extends State<FeedbackErrorPage> {
               width: 250,
               margin: const EdgeInsets.only(top: Spaces.l),
               child: ButtonWidget.filledPrimary(
-                onPressed: () {},
+                onPressed: () => Routefly.pop(context),
                 text: 'Tentar novamente',
                 padding: const EdgeInsets.symmetric(
                   vertical: Spaces.xl - Spaces.xs,

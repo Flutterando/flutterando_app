@@ -8,6 +8,7 @@ class CredentialsLoginValidator extends LucidValidator<CredentialsLoginDto> {
     .notEmpty().validEmail();
 
     ruleFor((c) => c.password, key: 'password', label: 'Senha') //
-    .notEmpty().minLength(6).maxLength(20);
+        .notEmpty()
+        .minLength(5);
   }
 }
