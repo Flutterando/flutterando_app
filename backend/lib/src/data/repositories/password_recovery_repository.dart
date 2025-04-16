@@ -5,10 +5,10 @@ import 'package:vaden/vaden.dart';
 import '../../domain/repositories/password_recover_repository.dart';
 
 @Repository()
-class PasswordRecoverRepositoryImpl implements PasswordRecoverRepository {
+class PasswordRecoveryRepositoryImpl implements PasswordRecoverRepository {
   final Command _redis;
 
-  PasswordRecoverRepositoryImpl(this._redis);
+  PasswordRecoveryRepositoryImpl(this._redis);
 
   @override
   AsyncResult<String> getCode(int userId) async {
@@ -16,7 +16,8 @@ class PasswordRecoverRepositoryImpl implements PasswordRecoverRepository {
       final String? result =
           await _redis.send_object(["GET", "PasswordRecover:$userId"]);
       if (result == null) {
-        return Failure(Exception('User not registered'));
+        return Failure(
+            ResponseException.badRequest('Password recovery unavailable'));
       }
       return Success(result);
     } catch (e) {
