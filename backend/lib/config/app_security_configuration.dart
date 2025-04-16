@@ -19,6 +19,7 @@ class SecurityConfiguration {
       RequestMatcher('/auth/**').permitAll(),
       RequestMatcher('/docs/**').permitAll(),
       RequestMatcher('/user/**', HttpMethod.post).permitAll(),
+      RequestMatcher('/user/recovery/**').permitAll(),
       AnyRequest().authenticated(),
     ]);
   }

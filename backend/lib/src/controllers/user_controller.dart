@@ -1,9 +1,13 @@
 import 'package:backend/src/domain/entities/user.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:vaden/vaden.dart';
+import 'package:vaden_security/vaden_security.dart';
 
+import '../domain/dto/authentication_via_recovery_dto.dart';
 import '../domain/dto/user_dto.dart';
+import '../domain/usecases/user/authentication_via_recovery_usecase.dart';
 import '../domain/usecases/user/create_user_usecase.dart';
+import '../domain/usecases/user/send_recover_email_usecase.dart';
 import '../domain/usecases/user/update_user_usecase.dart';
 import '../domain/validations/create_user_validation.dart';
 import '../domain/validations/update_user_validation.dart';
@@ -15,12 +19,16 @@ class UserController {
   final UpdateUser _updateUser;
   final CreateUserValidator _createUserValidator;
   final UpdateUserValidation _updateUserValidation;
+  final SendRecoverPasswordEmail _sendRecoverPasswordEmail;
+  final AuthenticationViaRecoveryCode _authenticationViaRecoveryCode;
 
   UserController(
     this._createUser,
     this._updateUser,
     this._createUserValidator,
     this._updateUserValidation,
+    this._sendRecoverPasswordEmail,
+    this._authenticationViaRecoveryCode,
   );
 
   @ApiOperation(summary: 'Get user', description: 'Get user informations')
@@ -73,5 +81,30 @@ class UserController {
     }
 
     return await _updateUser(dto: dto, user: user).getOrThrow();
+  }
+
+  @ApiOperation(
+      summary: 'Password recovery request',
+      description: 'Send an email with a recovery code')
+  @Get('/recovery/<email>')
+  Future<Response> sendRecoveryEmail(@Param('email') String email) async {
+    return await _sendRecoverPasswordEmail(email) //
+        .flatMap((_) => Success(Response(202)))
+        .getOrThrow();
+  }
+
+  @ApiOperation(
+      summary: 'Authentication via recovery',
+      description: 'Authentication using a recovery code')
+  @ApiResponse(
+    200,
+    description: 'Authentication via recovery',
+    content: ApiContent(
+        type: 'application/json', schema: AuthenticationViaRecoveryDTO),
+  )
+  @Post('/recovery')
+  Future<Tokenization> authenticationViaRecovery(
+      @Body() AuthenticationViaRecoveryDTO dto) async {
+    return await _authenticationViaRecoveryCode(dto).getOrThrow();
   }
 }

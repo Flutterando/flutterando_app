@@ -30,6 +30,10 @@ postgres:
   ssl: disable
   maxConnectionCount: 5
 
+redis:
+  host: 0.0.0.0
+  port: 6379
+
 security:
   secret: AisuSijfdiflkDkldkeokdokDKodk
   tokenValidity: 3600
@@ -41,3 +45,4 @@ security:
 env:
   mode: debug
   migrationPath: './migrations'
+  emailToken: emailToken
