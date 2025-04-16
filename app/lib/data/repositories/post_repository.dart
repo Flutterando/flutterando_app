@@ -18,7 +18,7 @@ class PostRepository {
   late final StreamController<List<Post>> _streamPosts =
       StreamController.broadcast();
 
-  Stream<List<Post>> observerListPost() => _streamPosts.stream;
+  Stream<List<Post>> get observerListPost => _streamPosts.stream;
 
   AsyncResult<Unit> createPost(PostDto dto) async {
     final validator = PostValidator();

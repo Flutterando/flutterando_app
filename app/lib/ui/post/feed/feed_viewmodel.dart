@@ -27,7 +27,7 @@ class FeedViewmodel extends ChangeNotifier {
 
   FeedViewmodel(this._authRepository, this._postRepository) {
     subscription = _postRepository //
-        .observerListPost()
+        .observerListPost
         .listen(_updateScreen);
   }
 
