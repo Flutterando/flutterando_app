@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:result_command/result_command.dart';
 import 'package:result_dart/result_dart.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../data/repositories/auth_repository.dart';
 import '../../../data/repositories/post_repository.dart';
@@ -35,6 +37,18 @@ class FeedViewmodel extends ChangeNotifier {
   void _updateScreen(List<Post> value) {
     _posts = value;
     notifyListeners();
+  }
+
+  Future<void> onShared(Post post) async {
+    final text = '''
+      ${post.author.firstName} ${post.author.lastName} compartilhou um post:
+        
+      ${post.description}
+      
+      Baíxe o app da Fluterrando e saíba mais!
+      https://github.com/Flutterando/flutterando_app/releases
+      ''';
+    Share.share(text.trim());
   }
 
   @override

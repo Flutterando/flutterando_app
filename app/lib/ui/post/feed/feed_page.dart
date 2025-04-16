@@ -132,7 +132,8 @@ class _FeedPageState extends State<FeedPage> {
                                 horizontal: Spaces.l,
                               ),
                               child: PostFeedWidget(
-                                onShared: () {},
+                                onShared:
+                                    () => viewmodel.onShared(post),
                                 post: post,
                               ),
                             ),
