@@ -17,14 +17,10 @@ extension ValidatorExtension<T extends Object> on LucidValidator<T> {
 extension UrlValidValidator on SimpleValidationBuilder<String?> {
   SimpleValidationBuilder<String?> validUrl({String label = 'URL'}) {
     return use((value, entity) {
-      final regex = RegExp(
-        r'^(https?:\/\/|ftp:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$',
-        caseSensitive: false,
-      );
       if (value == null || value.isEmpty) {
         return null;
       }
-      if (regex.hasMatch(value)) {
+      if (isValidUrl(value)) {
         return null;
       }
 
@@ -42,4 +38,16 @@ extension UrlValidValidator on SimpleValidationBuilder<String?> {
       );
     });
   }
+}
+
+bool isValidUrl(String text) {
+  final regex = RegExp(
+    r'^(https?:\/\/|ftp:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$',
+    caseSensitive: false,
+  );
+
+  if (regex.hasMatch(text)) {
+    return true;
+  }
+  return false;
 }

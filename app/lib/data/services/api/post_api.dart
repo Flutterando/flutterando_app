@@ -15,7 +15,16 @@ class PostApi with LoggerMixin {
     final logger = log.forMethod()..logInfo(data: dto);
 
     return await client
-        .post(RestClientRequest(path: '/posts', data:  dto.toJson()))
+        .post(RestClientRequest(path: '/posts', data: dto.toJson()))
+        .onSuccess(logger.fromSuccess)
+        .onFailure(logger.fromException);
+  }
+
+  AsyncResult<RestClientResponse> getPosts() async {
+    final logger = log.forMethod();
+
+    return await client
+        .get(RestClientRequest(path: '/posts'))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
   }

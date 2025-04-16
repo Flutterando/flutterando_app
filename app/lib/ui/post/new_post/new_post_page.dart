@@ -33,7 +33,6 @@ class _NewPostPageState extends State<NewPostPage> {
 
   void listener() {
     if (viewmodel.createPostCommand.isSuccess) {
-      AlertWidget.success(context, message: 'Post criado com sucesso.');
       Routefly.pop(context);
     }
 

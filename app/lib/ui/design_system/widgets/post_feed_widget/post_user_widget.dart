@@ -11,6 +11,7 @@ class PostUserWidget extends StatelessWidget {
     this.timeOfPost = 0,
     this.onShared,
   });
+
   final String username;
   final int timeOfPost;
   final void Function()? onShared;
@@ -53,10 +54,16 @@ class PostUserWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: Spaces.m - 2),
-        Text(
-          username,
-          style: context.text.bodyL16Bold.copyWith(
-            color: context.theme.colors.whiteColor,
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: Spaces.xxxxl * 4,
+          ),
+          child: Text(
+            username,
+            overflow: TextOverflow.ellipsis,
+            style: context.text.bodyL16Bold.copyWith(
+              color: context.theme.colors.whiteColor,
+            ),
           ),
         ),
         const Spacer(),

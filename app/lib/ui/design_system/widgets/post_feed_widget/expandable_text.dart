@@ -56,11 +56,14 @@ class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines>
             AnimatedSize(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              alignment: Alignment.topCenter,
               child: ConstrainedBox(
-                constraints: _isExpanded
-                    ? const BoxConstraints()
-                    : BoxConstraints(maxHeight: textPainter.preferredLineHeight * _lineLimit),
+                constraints:
+                    _isExpanded
+                        ? const BoxConstraints()
+                        : BoxConstraints(
+                          maxHeight:
+                              textPainter.preferredLineHeight * _lineLimit,
+                        ),
                 child: Text(
                   widget.text,
                   style: context.theme.textStyles.bodyM14Bold.copyWith(
@@ -69,7 +72,9 @@ class _ExpandableTextFixed3LinesState extends State<ExpandableTextFixed3Lines>
                   maxLines: _isExpanded ? null : _lineLimit - 1,
                   softWrap: true,
                   overflow:
-                  _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                      _isExpanded
+                          ? TextOverflow.visible
+                          : TextOverflow.ellipsis,
                 ),
               ),
             ),
