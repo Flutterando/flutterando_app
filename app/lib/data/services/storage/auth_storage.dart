@@ -72,6 +72,7 @@ class AuthStorage with LoggerMixin {
 
     return _localStorage //
         .remove(_sessionKey)
+        .flatMap((_) => _localStorage.remove(_userKey))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
   }
