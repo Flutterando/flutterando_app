@@ -4,7 +4,6 @@ import 'package:vaden/vaden.dart';
 import 'package:vaden_security/vaden_security.dart';
 
 import '../../dto/authentication_via_recovery_dto.dart';
-import '../../entities/user.dart';
 import '../../repositories/password_recover_repository.dart';
 
 @Component()
@@ -20,19 +19,23 @@ class AuthenticationViaRecoveryCode {
   );
 
   AsyncResult<Tokenization> call(AuthenticationViaRecoveryDTO dto) async {
-    return _validateCode(dto) //
-        .flatMap((user) => Success(_jwtService.generateToken(user)));
+    return _passwordRecoverRepository //
+        .getCode(dto.email)
+        .flatMap((code) => _validateCode(dto, code))
+        .flatMap(_generateToken);
   }
 
-  AsyncResult<User> _validateCode(
-    AuthenticationViaRecoveryDTO dto,
-  ) async {
+  AsyncResult<String> _validateCode(
+      AuthenticationViaRecoveryDTO dto, String code) async {
+    if (code == dto.code) {
+      return Success(dto.email);
+    }
+    return Failure(ResponseException.unauthorized('Invalid code'));
+  }
+
+  AsyncResult<Tokenization> _generateToken(String email) async {
     return _userRepository //
-        .getUser(dto.email)
-        .flatMap((user) => _passwordRecoverRepository //
-            .getCode(user.id)
-            .flatMap((code) => code == dto.code
-                ? Success(user)
-                : Failure(ResponseException.unauthorized('Invalid code'))));
+        .getUser(email)
+        .flatMap((user) => Success(_jwtService.generateToken(user)));
   }
 }

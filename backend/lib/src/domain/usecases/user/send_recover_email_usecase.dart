@@ -22,22 +22,21 @@ class SendRecoverPasswordEmail {
   );
 
   AsyncResult<Unit> call(String email) async {
-    return _userRepository //
-        .getUser(email)
-        .flatMap(_validationRequest)
+    return _validationRequest(email) //
+        .flatMap(_userRepository.getUser)
         .flatMap(_setCode)
         .flatMap(_sendEmail);
   }
 
-  AsyncResult<User> _validationRequest(User user) async {
+  AsyncResult<String> _validationRequest(String email) async {
     return _passwordRecoverRepository //
-        .expireTime(user.id)
+        .expireTime(email)
         .flatMap((time) {
       if (time > 120) {
         return Failure(ResponseException.notAcceptable(
             'The request was sent to fewer than two ministers'));
       }
-      return Success(user);
+      return Success(email);
     });
   }
 
@@ -46,7 +45,7 @@ class SendRecoverPasswordEmail {
         .codeGenerator(4)
         .toAsyncResult()
         .flatMap((code) => _passwordRecoverRepository //
-            .setCode(userId: user.id, code: code)
+            .setCode(username: user.username, code: code)
             .flatMap((_) => Success((code, user))));
   }
 

@@ -11,10 +11,10 @@ class PasswordRecoveryRepositoryImpl implements PasswordRecoverRepository {
   PasswordRecoveryRepositoryImpl(this._redis);
 
   @override
-  AsyncResult<String> getCode(int userId) async {
+  AsyncResult<String> getCode(String username) async {
     try {
       final String? result =
-          await _redis.send_object(["GET", "PasswordRecover:$userId"]);
+          await _redis.send_object(["GET", "PasswordRecover:$username"]);
       if (result == null) {
         return Failure(
             ResponseException.badRequest('Password recovery unavailable'));
@@ -28,10 +28,10 @@ class PasswordRecoveryRepositoryImpl implements PasswordRecoverRepository {
 
   @override
   AsyncResult<String> setCode(
-      {required int userId, required String code}) async {
+      {required String username, required String code}) async {
     try {
-      await _redis.send_object(["SET", "PasswordRecover:$userId", "$code"]);
-      await _redis.send_object(["EXPIRE", "PasswordRecover:$userId", "240"]);
+      await _redis.send_object(["SET", "PasswordRecover:$username", "$code"]);
+      await _redis.send_object(["EXPIRE", "PasswordRecover:$username", "240"]);
       return Success(code);
     } catch (e) {
       print('PasswordRecoverRepositoryImpl erro: $e');
@@ -40,9 +40,10 @@ class PasswordRecoveryRepositoryImpl implements PasswordRecoverRepository {
   }
 
   @override
-  AsyncResult<int> expireTime(int userId) async {
+  AsyncResult<int> expireTime(String username) async {
     try {
-      final ttl = await _redis.send_object(["TTL", "PasswordRecover:$userId"]);
+      final ttl =
+          await _redis.send_object(["TTL", "PasswordRecover:$username"]);
       if (ttl is int && ttl < 0) {
         return Success(0);
       }
