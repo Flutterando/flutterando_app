@@ -41,9 +41,13 @@ class _SendEmailPageState extends State<SendEmailPage> {
       return;
     }
 
-    if (viewmodel.requestToRecoverPasswordCommand.isSuccess && context.mounted) {
+    if (viewmodel.requestToRecoverPasswordCommand.isSuccess &&
+        context.mounted) {
       Routefly.pop(context);
-      Routefly.push(routePaths.auth.recoverPassword.otp, arguments: credentials.email);
+      Routefly.push(
+        routePaths.auth.recoverPassword.otp,
+        arguments: credentials.email,
+      );
     }
   }
 
@@ -54,7 +58,9 @@ class _SendEmailPageState extends State<SendEmailPage> {
   }
 
   _onSubmit() {
-    viewmodel.requestToRecoverPasswordCommand.execute(credentials);
+    if (formKey.currentState!.validate()) {
+      viewmodel.requestToRecoverPasswordCommand.execute(credentials);
+    }
   }
 
   @override
@@ -83,69 +89,72 @@ class _SendEmailPageState extends State<SendEmailPage> {
           ),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
-          child: Column(
-            spacing: Spaces.l,
-            children: [
-              Container(
-                width: Spaces.xxxxl,
-                height: Spaces.xxxxl,
-                margin: const EdgeInsets.only(top: Spaces.xxxl),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Spaces.xxxxl),
-                  border: Border.all(color: context.colors.errorLightColor),
-                ),
-                child: Icon(
-                  Iconsax.sms,
-                  color: context.colors.errorLightColor,
-                  size: Spaces.xl,
-                ),
-              ),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  'Informe o seu e-mail cadastrado, iremos te enviar um código de verificação!',
-                  textAlign: TextAlign.center,
-                  style: context.text.bodyL16Bold.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: context.colors.whiteColor,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              spacing: Spaces.l,
+              children: [
+                Container(
+                  width: Spaces.xxxxl,
+                  height: Spaces.xxxxl,
+                  margin: const EdgeInsets.only(top: Spaces.xxxl),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Spaces.xxxxl),
+                    border: Border.all(color: context.colors.errorLightColor),
+                  ),
+                  child: Icon(
+                    Iconsax.sms,
+                    color: context.colors.errorLightColor,
+                    size: Spaces.xl,
                   ),
                 ),
-              ),
-              InputWidget(
-                label: 'E-mail',
-                hintText: 'Informe seu email',
-                onChanged: (value) {
-                  credentials.setEmail(value);
-                  _updateButtonState();
-                },
-                validator: validator.byField(credentials, 'email'),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: Spaces.xxxl),
-                width: 250,
-                child: ListenableBuilder(
-                  listenable: Listenable.merge([
-                    isButtonEnabled,
-                    viewmodel.requestToRecoverPasswordCommand,
-                  ]),
-                  builder: (context, _) {
-                    return ButtonWidget.filledPrimary(
-                      onPressed: _onSubmit,
-                      disabled:
-                          isButtonEnabled.value ||
-                          viewmodel.requestToRecoverPasswordCommand.isRunning,
-                      text: 'Enviar código',
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Spaces.xl - Spaces.xs,
-                      ),
-                    );
-                  },
+                SizedBox(
+                  width: 250,
+                  child: Text(
+                    'Informe o seu e-mail cadastrado, iremos te enviar um código de verificação!',
+                    textAlign: TextAlign.center,
+                    style: context.text.bodyL16Bold.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: context.colors.whiteColor,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                InputWidget(
+                  label: 'E-mail',
+                  hintText: 'Informe seu email',
+                  onChanged: (value) {
+                    credentials.setEmail(value);
+                    _updateButtonState();
+                  },
+                  validator: validator.byField(credentials, 'email'),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: Spaces.xxxl),
+                  width: 250,
+                  child: ListenableBuilder(
+                    listenable: Listenable.merge([
+                      isButtonEnabled,
+                      viewmodel.requestToRecoverPasswordCommand,
+                    ]),
+                    builder: (context, _) {
+                      return ButtonWidget.filledPrimary(
+                        onPressed: _onSubmit,
+                        disabled:
+                            isButtonEnabled.value ||
+                            viewmodel.requestToRecoverPasswordCommand.isRunning,
+                        text: 'Enviar código',
+                        padding: const EdgeInsets.symmetric(
+                          vertical: Spaces.xl - Spaces.xs,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

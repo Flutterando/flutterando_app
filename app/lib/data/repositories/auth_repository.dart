@@ -4,11 +4,13 @@ import '../../core/exceptions/exceptions.dart';
 import '../../core/extensions/validator_extension.dart';
 import '../../domain/dto/credentials_login_dto.dart';
 import '../../domain/dto/recover_password_dto.dart';
+import '../../domain/dto/recover_password_otp_dto.dart';
 import '../../domain/dto/recover_password_send_email_dto.dart';
 import '../../domain/dto/register_dto.dart';
 import '../../domain/entities/session_entity.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/validators/credentials_login_validator.dart';
+import '../../domain/validators/recover_password_otp_validator.dart';
 import '../../domain/validators/recover_password_send_email_validation.dart';
 import '../../domain/validators/recover_password_validation.dart';
 import '../../domain/validators/register_validation.dart';
@@ -55,14 +57,17 @@ class AuthRepository {
   AsyncResult<Unit> logout() => storage.clear();
 
   AsyncResult<String> getRefreshToken() async {
-    return storage.getRefreshToken()
+    return storage
+        .getRefreshToken()
         .flatMap(authApi.getRefreshToken)
         .map(_toSessionEntity)
+        .flatMap(storage.saveSession)
         .map((session) => session.token);
   }
 
   AsyncResult<Unit> requestToRecoverPassword(
-      RecoverPasswordSendEmailDto dto,) async {
+    RecoverPasswordSendEmailDto dto,
+  ) async {
     final validator = RecoverPasswordSendEmailValidation();
 
     return validator
@@ -71,10 +76,15 @@ class AuthRepository {
         .pure(unit);
   }
 
-  AsyncResult<Unit> confirmOtpPassword(String code) async {
-    if (code.isEmpty) return Failure(Exception('invalid code'));
+  AsyncResult<Unit> confirmOtpPassword(RecoverPasswordOtpDto dto) async {
+    final validator = RecoverPasswordOtpValidator();
 
-    return authApi.confirmOtpPassword(code).pure(unit);
+    return validator
+        .validateResult(dto)
+        .flatMap(authApi.confirmOtpPassword)
+        .map(_toSessionEntity)
+        .flatMap(storage.saveSession)
+        .pure(unit);
   }
 
   AsyncResult<Unit> newPassword(RecoverPasswordDto dto) async {

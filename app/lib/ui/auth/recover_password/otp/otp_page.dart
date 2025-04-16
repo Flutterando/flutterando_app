@@ -6,6 +6,7 @@ import 'package:routefly/routefly.dart';
 
 import '../../../../app_widget.dart';
 import '../../../../config/dependencies.dart';
+import '../../../../domain/dto/recover_password_otp_dto.dart';
 import '../../../../domain/dto/recover_password_send_email_dto.dart';
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
@@ -26,6 +27,8 @@ const secondsDefault = 60;
 class _OtpPageState extends State<OtpPage> {
   final viewmodel = injector.get<OptViewmodel>();
 
+  final credentials = RecoverPasswordOtpDto();
+
   final otpCtrl = OtpFieldController();
   Timer? _timer;
   int _secondsRemaining = secondsDefault;
@@ -41,6 +44,7 @@ class _OtpPageState extends State<OtpPage> {
     _startTimer();
 
     userEmail = Routefly.query.arguments as String;
+    credentials.setEmail(userEmail);
 
     viewmodel.confirmOtpPasswordCommand.addListener(listener);
   }
@@ -100,7 +104,8 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   void _verifyCode(String code) {
-    viewmodel.confirmOtpPasswordCommand.execute(code);
+    credentials.setCode(code);
+    viewmodel.confirmOtpPasswordCommand.execute(credentials);
   }
 
   @override
@@ -130,9 +135,9 @@ class _OtpPageState extends State<OtpPage> {
           ),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
+        child: SingleChildScrollView(
           child: Column(
             spacing: Spaces.l,
             children: [

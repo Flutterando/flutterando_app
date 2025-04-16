@@ -4,6 +4,7 @@ import 'package:result_dart/result_dart.dart';
 import '../../../core/logger/logger_mixin.dart';
 import '../../../domain/dto/credentials_login_dto.dart';
 import '../../../domain/dto/recover_password_dto.dart';
+import '../../../domain/dto/recover_password_otp_dto.dart';
 import '../../../domain/dto/recover_password_send_email_dto.dart';
 import '../../../domain/dto/register_dto.dart';
 import 'client_http/i_rest_client.dart';
@@ -71,75 +72,30 @@ class AuthApi with LoggerMixin {
   ) async {
     final logger = log.forMethod()..logInfo(data: dto);
 
-    // TODO Original Code
-    /*
-      return await client
-        .post(
-          RestClientRequest(path: 'auth/password/change/request', data: dto.toJson()),
-        )
+    return await client
+        .get(RestClientRequest(path: '/user/recovery/${dto.email}'))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
-    */
-    //Mock Code
-    return Success(
-      RestClientResponse(
-        request: RestClientRequest(
-          path: 'auth/password/change/request',
-          data: dto.toJson(),
-        ),
-        data: '',
-        statusCode: 200,
-      ),
-    );
+    ;
   }
 
-  AsyncResult<RestClientResponse> confirmOtpPassword(String code) async {
-    final logger = log.forMethod()..logInfo(data: code);
+  AsyncResult<RestClientResponse> confirmOtpPassword(
+    RecoverPasswordOtpDto dto,
+  ) async {
+    final logger = log.forMethod()..logInfo(data: dto);
 
-    // TODO Original Code
-    /*
-      return await client
-        .post(
-          RestClientRequest(path: 'auth/password/change/validate-otp', data: dto.toJson()),
-        )
+    return await client
+        .post(RestClientRequest(path: '/user/recovery', data: dto.toJson()))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
-    */
-    //Mock Code
-    return Success(
-      RestClientResponse(
-        request: RestClientRequest(
-          path: 'auth/password/change/validate-otp',
-          data: {'otp': code},
-        ),
-        data: '',
-        statusCode: 200,
-      ),
-    );
   }
 
   AsyncResult<RestClientResponse> newPassword(RecoverPasswordDto dto) async {
     final logger = log.forMethod()..logInfo(data: dto);
 
-    // TODO Original Code
-    /*
-      return await client
-        .post(
-          RestClientRequest(path: auth/password/change/confirm', data: dto.toJson()),
-        )
+    return await client
+        .put(RestClientRequest(path: '/user', data: dto.toJson()))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
-    */
-    //Mock Code
-    return Success(
-      RestClientResponse(
-        request: RestClientRequest(
-          path: 'auth/password/change/confirm',
-          data: dto.toJson(),
-        ),
-        data: '',
-        statusCode: 200,
-      ),
-    );
   }
 }

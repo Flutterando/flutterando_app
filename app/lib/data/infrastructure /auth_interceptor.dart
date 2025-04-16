@@ -76,7 +76,7 @@ class AuthInterceptor implements IClientInterceptor {
   FutureOr<RestClientHttpMessage> onError(RestClientException error) async {
     if (error.statusCode == HttpStatus.unprocessableEntity ||
         error.statusCode == HttpStatus.unauthorized ||
-        error.statusCode == HttpStatus.notFound) {
+        error.statusCode == HttpStatus.forbidden) {
       while (attempt < maxRetries) {
         final request = error.response!.request;
         request.headers?.remove('Authorization');

@@ -102,90 +102,92 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
-          child: Form(
-            key: formKey,
-            child: Column(
-              spacing: Spaces.l,
-              children: [
-                Container(
-                  width: Spaces.xxxxl,
-                  height: Spaces.xxxxl,
-                  margin: const EdgeInsets.only(top: Spaces.xxxl),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Spaces.xxxxl),
-                    border: Border.all(color: context.colors.errorLightColor),
-                  ),
-                  child: Icon(
-                    Iconsax.security_safe,
-                    color: context.colors.errorLightColor,
-                    size: Spaces.xl,
-                  ),
-                ),
-                SizedBox(
-                  width: 250,
-                  child: Text(
-                    'Informe o seu e-mail cadastrado, iremos te enviar um código de verificação!',
-                    textAlign: TextAlign.center,
-                    style: context.text.bodyL16Bold.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: context.colors.whiteColor,
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                spacing: Spaces.l,
+                children: [
+                  Container(
+                    width: Spaces.xxxxl,
+                    height: Spaces.xxxxl,
+                    margin: const EdgeInsets.only(top: Spaces.xxxl),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Spaces.xxxxl),
+                      border: Border.all(color: context.colors.errorLightColor),
+                    ),
+                    child: Icon(
+                      Iconsax.security_safe,
+                      color: context.colors.errorLightColor,
+                      size: Spaces.xl,
                     ),
                   ),
-                ),
-                InputWidget(
-                  label: 'Senha',
-                  obscureText: true,
-                  onChanged: (value) {
-                    credentials.setPassword(value);
-                    _updateButtonState();
-                  },
-                  validator: (value) {
-                    _checkPasswordValidation();
-                    _updateButtonState();
-
-                    return null;
-                  },
-                  hintText: 'Informe sua senha',
-                ),
-                ValueListenableBuilder(
-                  valueListenable: exceptionsPassword,
-                  builder: (context, exceptionsPassword, _) {
-                    return PasswordRequirements(errors: exceptionsPassword);
-                  },
-                ),
-                InputWidget(
-                  label: 'Repetir senha',
-                  obscureText: true,
-                  onChanged: (value) {
-                    credentials.setConfirmPassword(value);
-                    _updateButtonState();
-                  },
-                  validator: validator.byField(credentials, 'confirmPassword'),
-                  hintText: 'Repita a sua senha',
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: Spaces.xxxl),
-                  width: 250,
-                  child: ListenableBuilder(
-                    listenable: Listenable.merge([
-                      isButtonEnabled,
-                      viewmodel.newPasswordCommand,
-                    ]),
-                    builder: (context, _) {
-                      return ButtonWidget.filledPrimary(
-                        onPressed: _onSubmit,
-                        text: 'Mudar senha',
-                        disabled:
-                            isButtonEnabled.value ||
-                            viewmodel.newPasswordCommand.isRunning,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Spaces.xl - Spaces.xs,
-                        ),
-                      );
+                  SizedBox(
+                    width: 250,
+                    child: Text(
+                      'Informe o seu e-mail cadastrado, iremos te enviar um código de verificação!',
+                      textAlign: TextAlign.center,
+                      style: context.text.bodyL16Bold.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: context.colors.whiteColor,
+                      ),
+                    ),
+                  ),
+                  InputWidget(
+                    label: 'Senha',
+                    obscureText: true,
+                    onChanged: (value) {
+                      credentials.setPassword(value);
+                      _updateButtonState();
+                    },
+                    validator: (value) {
+                      _checkPasswordValidation();
+                      _updateButtonState();
+            
+                      return null;
+                    },
+                    hintText: 'Informe sua senha',
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: exceptionsPassword,
+                    builder: (context, exceptionsPassword, _) {
+                      return PasswordRequirements(errors: exceptionsPassword);
                     },
                   ),
-                ),
-              ],
+                  InputWidget(
+                    label: 'Repetir senha',
+                    obscureText: true,
+                    onChanged: (value) {
+                      credentials.setConfirmPassword(value);
+                      _updateButtonState();
+                    },
+                    validator: validator.byField(credentials, 'confirmPassword'),
+                    hintText: 'Repita a sua senha',
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: Spaces.xxxl),
+                    width: 250,
+                    child: ListenableBuilder(
+                      listenable: Listenable.merge([
+                        isButtonEnabled,
+                        viewmodel.newPasswordCommand,
+                      ]),
+                      builder: (context, _) {
+                        return ButtonWidget.filledPrimary(
+                          onPressed: _onSubmit,
+                          text: 'Mudar senha',
+                          disabled:
+                              isButtonEnabled.value ||
+                              viewmodel.newPasswordCommand.isRunning,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: Spaces.xl - Spaces.xs,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
