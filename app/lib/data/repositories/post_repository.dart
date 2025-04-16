@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:result_dart/result_dart.dart';
 
+import '../../core/extensions/validator_extension.dart';
 import '../../domain/dto/post_dto.dart';
 import '../../domain/entities/post_entity.dart';
+import '../../domain/validators/post_validator.dart';
 import '../adapters/post_adapter.dart';
 import '../services/api/client_http/rest_client_response.dart';
 import '../services/api/post_api.dart';
@@ -18,11 +20,15 @@ class PostRepository {
 
   Stream<List<Post>> observerListPost() => _streamPosts.stream;
 
-  AsyncResult<Unit> createPost(PostDto dto) => //
-      _postApi //
-      .createPost(dto)
-      .pure(unit)
-      .onSuccess((_) => getPosts());
+  AsyncResult<Unit> createPost(PostDto dto) async {
+    final validator = PostValidator();
+
+    return validator
+        .validateResult(dto)
+        .flatMap(_postApi.createPost)
+        .pure(unit)
+        .onSuccess((_) => getPosts());
+  }
 
   AsyncResult<List<Post>> getPosts() => //
       _postApi //
