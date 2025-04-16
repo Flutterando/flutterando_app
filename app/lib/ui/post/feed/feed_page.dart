@@ -44,8 +44,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   void listenerLogout() {
-    if (viewmodel.logoutCommand.isSuccess ||
-        viewmodel.logoutCommand.isFailure) {
+    if (viewmodel.logoutCommand.isSuccess || viewmodel.logoutCommand.isFailure) {
       Routefly.navigate(routePaths.auth.login);
     }
   }
@@ -65,9 +64,9 @@ class _FeedPageState extends State<FeedPage> {
     return Scaffold(
       appBar: AppBarWidget(
         onCreatePost: () {
-          Routefly.push(routePaths.post.newPost);
+          Routefly.push(routePaths.post.newPost); //TODO tratar as roles
         },
-        onNotification: () {},
+        // onNotification: () {},
         onLogout: viewmodel.logoutCommand.execute,
       ),
       body: Padding(
@@ -76,11 +75,7 @@ class _FeedPageState extends State<FeedPage> {
           onRefresh: _onRefresh,
           edgeOffset: 10,
           child: ListenableBuilder(
-            listenable: Listenable.merge([
-              isLoading,
-              viewmodel,
-              viewmodel.getPostsCommand,
-            ]),
+            listenable: Listenable.merge([isLoading, viewmodel, viewmodel.getPostsCommand]),
             builder: (context, _) {
               if (isLoading.value) {
                 return CustomScrollView(
@@ -88,16 +83,9 @@ class _FeedPageState extends State<FeedPage> {
                     SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          const Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Spaces.l,
-                            ),
-                            child: PostFeedSkeletonWidget(),
-                          ),
+                          const Padding(padding: const EdgeInsets.symmetric(horizontal: Spaces.l), child: PostFeedSkeletonWidget()),
                           Container(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: Spaces.xxl,
-                            ),
+                            margin: const EdgeInsets.symmetric(vertical: Spaces.xxl),
                             width: double.infinity,
                             height: 2,
                             color: context.colors.greyOne,
@@ -107,14 +95,7 @@ class _FeedPageState extends State<FeedPage> {
                     ),
                     const SliverToBoxAdapter(
                       child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Spaces.l,
-                            ),
-                            child: PostFeedSkeletonWidget(),
-                          ),
-                        ],
+                        children: [Padding(padding: const EdgeInsets.symmetric(horizontal: Spaces.l), child: PostFeedSkeletonWidget())],
                       ),
                     ),
                   ],
@@ -128,19 +109,11 @@ class _FeedPageState extends State<FeedPage> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: Spaces.l,
-                              ),
-                              child: PostFeedWidget(
-                                onShared:
-                                    () => viewmodel.onShared(post),
-                                post: post,
-                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
+                              child: PostFeedWidget(onShared: () => viewmodel.onShared(post), post: post),
                             ),
                             Container(
-                              margin: const EdgeInsets.symmetric(
-                                vertical: Spaces.xxl,
-                              ),
+                              margin: const EdgeInsets.symmetric(vertical: Spaces.xxl),
                               width: double.infinity,
                               height: 2,
                               color: context.colors.greyOne,
