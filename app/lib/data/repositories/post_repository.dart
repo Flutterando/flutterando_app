@@ -30,14 +30,12 @@ class PostRepository {
         .onSuccess((_) => getPosts());
   }
 
-  AsyncResult<List<Post>> getPosts() => //
-      _postApi //
-      .getPosts()
-      .map(_toListPostEntity)
-      .onSuccess(_notifyLastPostList);
-
-  void _notifyLastPostList(List<Post> posts) => //
-      _streamPosts.add(posts);
+  AsyncResult<List<Post>> getPosts() {
+    return _postApi //
+        .getPosts()
+        .map(_toListPostEntity)
+        .onSuccess(_notifyLastPostList);
+  }
 
   List<Post> _toListPostEntity(RestClientResponse response) {
     if (response.data['posts'] is! List) return [];
@@ -49,4 +47,6 @@ class PostRepository {
 
     return posts;
   }
+
+  void _notifyLastPostList(List<Post> posts) => _streamPosts.add(posts);
 }
