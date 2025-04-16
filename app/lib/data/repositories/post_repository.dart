@@ -34,19 +34,17 @@ class PostRepository {
       _postApi //
       .getPosts()
       .map(_toListPostEntity)
-      .onSuccess(_notifyLastTaskList);
+      .onSuccess(_notifyLastPostList);
 
-  void _notifyLastTaskList(List<Post> posts) => //
+  void _notifyLastPostList(List<Post> posts) => //
       _streamPosts.add(posts);
 
   List<Post> _toListPostEntity(RestClientResponse response) {
-    if (response.data['posts'] is! List) {
-      return [];
-    }
+    if (response.data['posts'] is! List) return [];
 
     final posts =
         (response.data['posts'] as List)
-            .map((data) => PostAdapter.fromJson(data))
+            .map((data) => PostAdapter.fromJson(data as dynamic))
             .toList();
 
     return posts;
