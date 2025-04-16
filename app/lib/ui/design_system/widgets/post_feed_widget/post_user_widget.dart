@@ -8,37 +8,42 @@ class PostUserWidget extends StatelessWidget {
   const PostUserWidget({
     super.key,
     this.username = 'F',
-    this.timeOfPost = 0,
+    required this.updatedAt,
     this.onShared,
   });
 
   final String username;
-  final int timeOfPost;
+  final DateTime updatedAt;
   final void Function()? onShared;
 
-  String getTimeElapsed() {
-    if (timeOfPost < 60) {
-      return '$timeOfPost segundos atrás';
-    } else if (timeOfPost < 3600) {
-      final minutes = timeOfPost ~/ 60;
-      return '$minutes minutos atrás';
-    } else if (timeOfPost < 86400) {
-      final hours = timeOfPost ~/ 3600;
-      return '$hours horas atrás';
-    } else if (timeOfPost < 2592000) {
-      final days = timeOfPost ~/ 86400;
-      return '$days dias atrás';
-    } else if (timeOfPost < 31536000) {
-      final months = timeOfPost ~/ 2592000;
-      return '$months meses atrás';
-    } else {
-      final years = timeOfPost ~/ 31536000;
-      return '$years anos atrás';
-    }
+  String _getTimeElapsed() {
+    final duration = DateTime.now().difference(updatedAt);
+    final seconds = duration.inSeconds;
+
+    return switch (seconds) {
+      < 60 => '$seconds ${_pluralize("segundo", seconds)} atrás',
+      < 3600 => '${seconds ~/ 60} ${_pluralize("minuto", seconds ~/ 60)} atrás',
+      < 86400 =>
+        '${seconds ~/ 3600} ${_pluralize("hora", seconds ~/ 3600)} atrás',
+      < 2592000 =>
+        '${seconds ~/ 86400} ${_pluralize("dia", seconds ~/ 86400)} atrás',
+      < 31536000 =>
+        '${seconds ~/ 2592000} ${_pluralize("mês", seconds ~/ 2592000)} atrás',
+      _ =>
+        '${seconds ~/ 31536000} ${_pluralize("ano", seconds ~/ 31536000)} atrás',
+    };
+  }
+
+  String _pluralize(String word, int value) {
+    if (value == 1) return word;
+    return word == 'mês' ? 'meses' : '${word}s';
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
+    final textTheme = context.text;
+
     return Row(
       children: [
         ConstrainedBox(
@@ -48,43 +53,45 @@ class PostUserWidget extends StatelessWidget {
           ),
           child: CircleAvatar(
             child: Text(
-              username.substring(0, 1).toUpperCase(),
-              style: context.text.bodyL16Bold,
+              username.isNotEmpty ? username[0].toUpperCase() : '?',
+              style: textTheme.bodyL16Bold,
             ),
           ),
         ),
         const SizedBox(width: Spaces.m - 2),
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: Spaces.xxxxl * 4,
-          ),
+          constraints: const BoxConstraints(maxWidth: Spaces.xxxxl * 4),
           child: Text(
             username,
             overflow: TextOverflow.ellipsis,
-            style: context.text.bodyL16Bold.copyWith(
-              color: context.theme.colors.whiteColor,
+            style: textTheme.bodyL16Bold.copyWith(
+              color: theme.colors.whiteColor,
             ),
           ),
         ),
         const Spacer(),
         Row(
+          spacing: Spaces.s,
           children: [
-            Text(
-              getTimeElapsed(),
-              style: context.text.bodyL16Bold.copyWith(
-                fontWeight: FontWeight.w400,
-                color: context.theme.colors.greyThree.withValues(alpha: 0.75),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: Spaces.xxl * 4),
+              child: Text(
+                _getTimeElapsed(),
+                overflow: TextOverflow.ellipsis,
+                style: textTheme.bodyL16Bold.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: theme.colors.greyThree.withValues(alpha: 0.75),
+                ),
               ),
             ),
             InkWell(
               onTap: onShared,
               child: Icon(
                 Iconsax.send_2,
-                color: context.theme.colors.greyThree.withValues(alpha: 0.75),
+                color: theme.colors.greyThree.withValues(alpha: 0.75),
               ),
             ),
           ],
-          spacing: Spaces.m - 2,
         ),
       ],
     );

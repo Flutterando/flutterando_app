@@ -7,6 +7,7 @@ class Post {
   final String image;
   final String imageSubtitle;
   final User author;
+  final DateTime updateAt;
 
   Post({
     required this.id,
@@ -15,5 +16,6 @@ class Post {
     required this.image,
     required this.imageSubtitle,
     required this.author,
+    required this.updateAt,
   });
 }

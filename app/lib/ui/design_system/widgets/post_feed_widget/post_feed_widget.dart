@@ -12,11 +12,9 @@ class PostFeedWidget extends StatefulWidget {
   const PostFeedWidget({
     super.key,
     required this.post,
-    this.timeOfPost = 0,
     this.onShared,
   });
 
-  final int timeOfPost;
   final void Function()? onShared;
   final Post post;
 
@@ -34,7 +32,7 @@ class _PostFeedWidgetState extends State<PostFeedWidget> {
       children: [
         PostUserWidget(
           onShared: widget.onShared,
-          timeOfPost: widget.timeOfPost,
+          updatedAt: widget.post.updateAt,
           username: widget.post.author.email,
         ),
         const SizedBox(height: Spaces.s - 1),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:routefly/routefly.dart';
 
@@ -51,11 +50,8 @@ class _FeedPageState extends State<FeedPage> {
     }
   }
 
-  Future<void> _onRefresh() async {
-    viewmodel.getPostsCommand.execute();
-    await Future.delayed(const Duration(milliseconds: 800));
-    setState(() {});
-  }
+  Future<void> _onRefresh() async => //
+      await viewmodel.getPostsCommand.execute();
 
   @override
   void dispose() {
@@ -137,7 +133,6 @@ class _FeedPageState extends State<FeedPage> {
                               ),
                               child: PostFeedWidget(
                                 onShared: () {},
-                                timeOfPost: 30000,
                                 post: post,
                               ),
                             ),

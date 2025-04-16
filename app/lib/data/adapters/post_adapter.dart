@@ -9,6 +9,7 @@ class PostAdapter {
       image: body['image'],
       imageSubtitle: body['imageSubtitle'],
       link: body['link'],
+      updateAt: DateTime.tryParse(body['updatedAt']) ?? DateTime.now(),
       author: LoggedUserAdapter.fromJson(body['author']),
     );
   }
