@@ -11,9 +11,9 @@ class UserDetailsServiceImpl implements UserDetailsService {
   UserDetailsServiceImpl(this._userRepository);
 
   @override
-  Future<UserDetails> loadUserByUsername(String username) async {
+  Future<UserDetails?> loadUserByUsername(String username) async {
     return _userRepository //
         .getUser(username)
-        .getOrThrow();
+        .getOrNull();
   }
 }

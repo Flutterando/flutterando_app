@@ -1,31 +1,45 @@
+import 'package:backend/src/domain/entities/user.dart';
 import 'package:dio/dio.dart' as client;
 import 'package:result_dart/result_dart.dart';
 import 'package:vaden/vaden.dart';
 
-import '../../domain/services/send_email_service.dart';
+abstract class OtpSender {
+  AsyncResult<Unit> sendOtp({required User user, required String code});
+}
 
-@Service()
-class SendEmailServiceImpl implements SendEmailService {
+class EmailOtpSender implements OtpSender {
+  final String title;
+  final String fromEmail;
+  final String fromName;
   final ApplicationSettings settings;
   final client.Dio dio;
 
-  SendEmailServiceImpl(this.dio, this.settings);
+  EmailOtpSender({
+    required this.title,
+    required this.fromEmail,
+    required this.fromName,
+    required this.settings,
+    required this.dio,
+  });
 
   @override
-  AsyncResult<Unit> sendEmail(Email email) async {
+  AsyncResult<Unit> sendOtp({required User user, required String code}) async {
     Map<String, dynamic> data = {
       'personalizations': [
         {
           'to': [
-            {'email': email.email, 'name': email.title}
+            {
+              'email': user.username,
+              'name': '${user.firstName} ${user.lastName}'
+            }
           ],
-          'subject': email.title
+          'subject': title
         }
       ],
       'content': [
-        {'type': 'text/plain', 'value': email.content}
+        {'type': 'text/plain', 'value': 'Seu codigo é $code'}
       ],
-      'from': {'email': 'app@flutterando.com.br', 'name': 'App Flutterando'}
+      'from': {'email': fromEmail, 'name': fromName}
     };
 
     try {

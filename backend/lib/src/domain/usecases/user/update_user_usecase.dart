@@ -16,14 +16,14 @@ class UpdateUser {
   }
 
   AsyncResult<UpdateUserDTO> _dtoInspection(User user, UserDTO dto) async {
-    if (dto.email != null) {
+/*     if (dto.email != null) {
       return Failure(ResponseException.badRequest('Email cannot be changed'));
-    }
+    } */
 
     final newDTO = UserDTO(
       firstName: dto.firstName != user.firstName ? dto.firstName : null,
       lastName: dto.lastName != user.lastName ? dto.lastName : null,
-      email: user.username,
+      email: dto.email != user.username ? dto.email : null,
       password: dto.password != user.password ? dto.password : null,
     );
     return Success(newDTO.toUpdateDTO(user.id));
