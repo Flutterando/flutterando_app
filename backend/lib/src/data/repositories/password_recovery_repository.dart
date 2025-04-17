@@ -2,10 +2,10 @@ import 'package:redis/redis.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:vaden/vaden.dart';
 
-import '../../domain/repositories/password_recover_repository.dart';
+import '../../domain/repositories/password_recovery_repository.dart';
 
 @Repository()
-class PasswordRecoveryRepositoryImpl implements PasswordRecoverRepository {
+class PasswordRecoveryRepositoryImpl implements PasswordRecoveryRepository {
   final Command _redis;
 
   PasswordRecoveryRepositoryImpl(this._redis);

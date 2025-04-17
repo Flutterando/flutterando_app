@@ -4,12 +4,12 @@ import 'package:vaden/vaden.dart';
 import 'package:vaden_security/vaden_security.dart';
 
 import '../../dto/authentication_via_recovery_dto.dart';
-import '../../repositories/password_recover_repository.dart';
+import '../../repositories/password_recovery_repository.dart';
 
 @Component()
 class AuthenticationViaRecoveryCode {
   final UserRepository _userRepository;
-  final PasswordRecoverRepository _passwordRecoverRepository;
+  final PasswordRecoveryRepository _passwordRecoverRepository;
   final JwtService _jwtService;
 
   AuthenticationViaRecoveryCode(

@@ -114,7 +114,7 @@ class PostsRepositoryImpl implements PostsRepository {
     } on PgException catch (e) {
       return Failure(e);
     } catch (e) {
-      return Failure(Exception('UserRepository gateway error: $e'));
+      return Failure(Exception('PostsRepository gateway error: $e'));
     }
   }
 }

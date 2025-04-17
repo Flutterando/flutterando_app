@@ -3,14 +3,14 @@ import 'package:result_dart/result_dart.dart';
 import 'package:vaden/vaden.dart';
 
 import '../../entities/user.dart';
-import '../../repositories/password_recover_repository.dart';
+import '../../repositories/password_recovery_repository.dart';
 import '../../services/password_code_generator_service.dart';
 import '../../services/send_email_service.dart';
 
 @Component()
 class SendRecoverPasswordEmail {
   final UserRepository _userRepository;
-  final PasswordRecoverRepository _passwordRecoverRepository;
+  final PasswordRecoveryRepository _passwordRecoverRepository;
   final PasswordCodeGeneratorService _passwordCodeGeneratorService;
   final SendEmailService _emailService;
 
