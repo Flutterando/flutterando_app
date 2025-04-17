@@ -179,6 +179,7 @@ class ButtonWidget extends StatelessWidget {
         onTap: (disabled || loading) ? null : onPressed,
         splashColor: context.colors.whiteColor.withValues(alpha: 0.1),
         highlightColor: Colors.transparent,
+        borderRadius: BorderRadius.circular(Spaces.m),
         child: Container(
           padding: padding != null ? padding : const EdgeInsets.all(Spaces.m),
           width: double.infinity,
