@@ -5,7 +5,7 @@ import '../../../../config/dependencies.dart';
 import '../../../../main.dart';
 import '../../../app_widget.dart';
 import '../../../core/constants/env.dart';
-import '../../../data/infrastructure /auth_interceptor.dart';
+import '../../../data/infrastructure/auth_interceptor.dart';
 import '../../../data/repositories/auth_repository.dart';
 import '../../../data/services/api/client_http/i_rest_client.dart';
 import '../../../data/services/api/client_http/logger/client_interceptor_logger_impl.dart';
