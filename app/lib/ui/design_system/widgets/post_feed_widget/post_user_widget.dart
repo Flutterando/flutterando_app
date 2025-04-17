@@ -12,22 +12,31 @@ class PostUserWidget extends StatelessWidget {
   final void Function()? onShared;
 
   String _getTimeElapsed() {
-    final duration = DateTime.now().difference(updatedAt);
+    final now = DateTime.now();
+    final duration = now.difference(updatedAt);
     final seconds = duration.inSeconds;
 
     return switch (seconds) {
-      < 60 => '$seconds ${_pluralize("segundo", seconds)} atrás',
-      < 3600 => '${seconds ~/ 60} ${_pluralize("minuto", seconds ~/ 60)} atrás',
-      < 86400 => '${seconds ~/ 3600} ${_pluralize("hora", seconds ~/ 3600)} atrás',
-      < 2592000 => '${seconds ~/ 86400} ${_pluralize("dia", seconds ~/ 86400)} atrás',
-      < 31536000 => '${seconds ~/ 2592000} ${_pluralize("mês", seconds ~/ 2592000)} atrás',
-      _ => '${seconds ~/ 31536000} ${_pluralize("ano", seconds ~/ 31536000)} atrás',
+      < 60 => 'Há $seconds ${_pluralize("segundo", seconds)}',
+      < 3600 => 'Há ${seconds ~/ 60} ${_pluralize("minuto", seconds ~/ 60)}',
+      < 86400 => 'Há ${seconds ~/ 3600} ${_pluralize("hora", seconds ~/ 3600)}',
+      < 2592000 => 'Há ${seconds ~/ 86400} ${_pluralize("dia", seconds ~/ 86400)}',
+      < 31536000 => 'Há ${seconds ~/ 2592000} ${_pluralize("mês", seconds ~/ 2592000)}',
+      _ => 'Há ${seconds ~/ 31536000} ${_pluralize("ano", seconds ~/ 31536000)}',
     };
   }
 
   String _pluralize(String word, int value) {
     if (value == 1) return word;
-    return word == 'mês' ? 'meses' : '${word}s';
+    return switch (word) {
+      'segundo' => 'segundos',
+      'minuto' => 'minutos',
+      'mês' => 'meses',
+      'ano' => 'anos',
+      'dia' => 'dias',
+      'hora' => 'horas',
+      _ => '${word}s',
+    };
   }
 
   @override
