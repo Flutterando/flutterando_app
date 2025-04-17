@@ -33,7 +33,7 @@ class _PostFeedWidgetState extends State<PostFeedWidget> {
         PostUserWidget(
           onShared: widget.onShared,
           updatedAt: widget.post.updateAt,
-          username: widget.post.author.email,
+          username: '${widget.post.author.firstName} ${widget.post.author.lastName}',
         ),
         const SizedBox(height: Spaces.s - 1),
         Padding(
