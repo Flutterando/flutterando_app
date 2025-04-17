@@ -22,7 +22,7 @@ class OtpPage extends StatefulWidget {
   State<OtpPage> createState() => _OtpPageState();
 }
 
-const secondsDefault = 60;
+const secondsDefault = 120;
 
 class _OtpPageState extends State<OtpPage> {
   final viewmodel = injector.get<OptViewmodel>();
@@ -37,6 +37,12 @@ class _OtpPageState extends State<OtpPage> {
   bool isButtonEnabled = false;
 
   String userEmail = '';
+
+  String get _timerFormatted {
+    final minutes = _secondsRemaining ~/ 60;
+    final seconds = _secondsRemaining % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
 
   @override
   void initState() {
@@ -188,7 +194,7 @@ class _OtpPageState extends State<OtpPage> {
                   ),
                   if (!_canResend) ...[
                     Text(
-                      'Reenviar em $_secondsRemaining\s',
+                      'Reenviar em ${_timerFormatted}\s',
                       style: context.text.bodyM14Bold.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
