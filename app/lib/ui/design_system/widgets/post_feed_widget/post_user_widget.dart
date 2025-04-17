@@ -43,7 +43,7 @@ class PostUserWidget extends StatelessWidget {
         ),
         const SizedBox(width: Spaces.m - 2),
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: Spaces.xxxxl * 3.5),
+          constraints: const BoxConstraints(maxWidth: Spaces.xxxxl * 2.5),
           child: Text(username, overflow: TextOverflow.ellipsis, style: textTheme.bodyL16Bold.copyWith(color: theme.colors.whiteColor)),
         ),
         const Spacer(),
@@ -51,7 +51,7 @@ class PostUserWidget extends StatelessWidget {
           spacing: Spaces.s,
           children: [
             ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: Spaces.xxl * 4),
+              constraints: const BoxConstraints(maxWidth: Spaces.xxl * 3.5),
               child: Text(
                 _getTimeElapsed(),
                 overflow: TextOverflow.ellipsis,

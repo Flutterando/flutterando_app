@@ -4,6 +4,7 @@ import 'package:routefly/routefly.dart';
 
 import '../../../app_widget.dart';
 import '../../../config/dependencies.dart';
+import '../../../core/constants/env.dart';
 import '../../../domain/dto/credentials_login_dto.dart';
 import '../../../domain/validators/credentials_login_validator.dart';
 import '../../../main.dart';
@@ -86,13 +87,19 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         'Bem-vindo de volta à',
-                        style: context.text.bodyL16Bold.copyWith(fontWeight: FontWeight.w400, color: context.colors.whiteColor),
+                        style: context.text.bodyL16Bold.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: context.colors.whiteColor,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                       SvgImage.logoLarge.image(),
                       Text(
                         'A maior comunidade de Flutter\n da América latina',
-                        style: context.text.bodyL16Bold.copyWith(fontWeight: FontWeight.w400, color: context.colors.whiteColor),
+                        style: context.text.bodyL16Bold.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: context.colors.whiteColor,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                       InputWidget(
@@ -119,57 +126,97 @@ class _LoginPageState extends State<LoginPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          onTap: () => Routefly.pushNavigate(routePaths.auth.recoverPassword.sendEmail),
-                          child: Text('Esqueceu sua senha?', style: context.text.bodyL16Bold.copyWith(color: context.colors.greyTwo)),
+                          onTap:
+                              () => Routefly.pushNavigate(
+                                routePaths.auth.recoverPassword.sendEmail,
+                              ),
+                          child: Text(
+                            'Esqueceu sua senha?',
+                            style: context.text.bodyL16Bold.copyWith(
+                              color: context.colors.greyTwo,
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: Spaces.xl, vertical: Spaces.l),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spaces.xl,
+                          vertical: Spaces.l,
+                        ),
                         child: Text.rich(
                           textAlign: TextAlign.center,
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Ao tocar no botão “Entrar” você concorda com os ',
-                                style: context.text.bodyM14Bold.copyWith(color: context.colors.greyThree, fontWeight: FontWeight.w400),
+                                text:
+                                    'Ao tocar no botão “Entrar” você concorda com os ',
+                                style: context.text.bodyM14Bold.copyWith(
+                                  color: context.colors.greyThree,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                               TextSpan(
-                                recognizer: TapGestureRecognizer()..onTap = () {},
+                                recognizer:
+                                    TapGestureRecognizer()..onTap = () {},
                                 text: 'termos de uso',
-                                style: context.text.bodyM14Bold.copyWith(color: context.colors.whiteColor, fontWeight: FontWeight.w400),
+                                style: context.text.bodyM14Bold.copyWith(
+                                  color: context.colors.whiteColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: Spaces.xxxxxl),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spaces.xxxxxl,
+                        ),
                         child: ListenableBuilder(
-                          listenable: Listenable.merge([isButtonEnabled, viewModel.loginCommand]),
+                          listenable: Listenable.merge([
+                            isButtonEnabled,
+                            viewModel.loginCommand,
+                          ]),
                           builder: (context, _) {
                             return ButtonWidget.filledPrimary(
                               onPressed: _onSubmit,
                               text: 'Entrar',
                               loading: viewModel.loginCommand.isRunning,
                               disabled: isButtonEnabled.value,
-                              padding: const EdgeInsets.symmetric(vertical: Spaces.xl - Spaces.xs),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Spaces.xl - Spaces.xs,
+                              ),
                             );
                           },
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: Spaces.xl, vertical: Spaces.l),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spaces.xl,
+                          vertical: Spaces.l,
+                        ),
                         child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
                                 text: 'Não tenho uma conta! ',
-                                style: context.text.bodyM14Bold.copyWith(color: context.colors.greyThree, fontWeight: FontWeight.w400),
+                                style: context.text.bodyM14Bold.copyWith(
+                                  color: context.colors.greyThree,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                               TextSpan(
-                                recognizer: TapGestureRecognizer()..onTap = () => Routefly.push(routePaths.auth.register.path),
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap =
+                                          () => Routefly.push(
+                                            routePaths.auth.register.path,
+                                          ),
                                 text: 'Cadastrar',
-                                style: context.text.bodyM14Bold.copyWith(color: context.colors.whiteColor, fontWeight: FontWeight.w400),
+                                style: context.text.bodyM14Bold.copyWith(
+                                  color: context.colors.whiteColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ],
                           ),
