@@ -44,7 +44,9 @@ class PostCachedImage extends StatelessWidget {
         cacheKey: cacheKey,
         placeholder: (context, url) => const CircularProgressIndicator(),
         placeholderFadeInDuration: const Duration(milliseconds: 100),
-        errorWidget: (context, url, error) => const Center(child: Text('Erro ao carregar imagem')),
+        errorWidget:
+            (context, url, error) =>
+                Image.asset('assets/images/cached_error_image.png', width: width ?? 330, height: height ?? 330, fit: fit ?? BoxFit.cover),
       ),
     );
   }
