@@ -36,7 +36,7 @@ class _OtpPageState extends State<OtpPage> {
   bool _invalidCode = false;
   bool isButtonEnabled = false;
 
-  String userEmail = '';
+  late final OptArguments arguments;
 
   String get _timerFormatted {
     final minutes = _secondsRemaining ~/ 60;
@@ -47,12 +47,27 @@ class _OtpPageState extends State<OtpPage> {
   @override
   void initState() {
     super.initState();
+    assert(
+      Routefly.query.arguments is OptArguments,
+      'OtpPage espera um argumento do tipo OptArguments via Routefly.query.arguments, mas recebeu: ${Routefly.query.arguments.runtimeType}',
+    );
+    arguments = Routefly.query.arguments as OptArguments;
+
+    credentials.setEmail(arguments.email);
     _startTimer();
 
-    userEmail = Routefly.query.arguments as String;
-    credentials.setEmail(userEmail);
-
     viewmodel.confirmOtpPasswordCommand.addListener(listener);
+    viewmodel.requestToRecoverPasswordCommand.addListener(listenerRecover);
+
+    final dto = RecoverPasswordSendEmailDto(email: arguments.email);
+    viewmodel.requestToRecoverPasswordCommand.execute(dto);
+  }
+
+  void listenerRecover() {
+    if (viewmodel.requestToRecoverPasswordCommand.isFailure && context.mounted) {
+      AlertWidget.error(context, message: 'Não foi possível enviar o código!');
+      return;
+    }
   }
 
   void listener() {
@@ -63,10 +78,10 @@ class _OtpPageState extends State<OtpPage> {
       });
 
       Routefly.pop(context);
-      Routefly.push(routePaths.auth.recoverPassword.confirmPassword);
+      arguments.onSuccess();
       return;
     }
-    if (viewmodel.confirmOtpPasswordCommand.isFailure) {
+    if (viewmodel.confirmOtpPasswordCommand.isFailure && context.mounted) {
       AlertWidget.error(context, message: 'Por favor tente novamente');
       setState(() {
         _invalidCode = true;
@@ -95,7 +110,7 @@ class _OtpPageState extends State<OtpPage> {
 
   void _resendCode() {
     if (_canResend) {
-      final dto = RecoverPasswordSendEmailDto(email: userEmail);
+      final dto = RecoverPasswordSendEmailDto(email: arguments.email);
       viewmodel.requestToRecoverPasswordCommand.execute(dto);
 
       otpCtrl.clear();
@@ -118,6 +133,7 @@ class _OtpPageState extends State<OtpPage> {
   void dispose() {
     _timer?.cancel();
     viewmodel.confirmOtpPasswordCommand.removeListener(listener);
+    viewmodel.requestToRecoverPasswordCommand.removeListener(listenerRecover);
     super.dispose();
   }
 
@@ -135,7 +151,7 @@ class _OtpPageState extends State<OtpPage> {
           ),
         ),
         title: Text(
-          'Recuperar senha',
+          arguments.titlePage,
           style: context.text.bodyXL18Bold.copyWith(
             color: context.colors.whiteColor,
           ),
@@ -257,4 +273,12 @@ class _OtpPageState extends State<OtpPage> {
       ),
     );
   }
+}
+
+class OptArguments {
+  final String titlePage;
+  final String email;
+  final VoidCallback onSuccess;
+
+  OptArguments({required this.titlePage, required this.email, required this.onSuccess});
 }

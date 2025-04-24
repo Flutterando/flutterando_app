@@ -13,6 +13,9 @@ import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
 import '../../design_system/widgets/svg_image_widget.dart';
+import '../../generic_pages/feedback_error_page.dart';
+import '../../generic_pages/feedback_success_page.dart';
+import '../security/otp/otp_page.dart';
 import 'register_viewmodel.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -39,12 +42,32 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void listener() {
-    if (viewmodel.registerCommand.isFailure) {
-      Routefly.push(routePaths.auth.register.pages.feedbackError);
+    if (viewmodel.registerCommand.isFailure && context.mounted) {
+      Routefly.push(
+        routePaths.genericPages.feedbackError,
+        arguments: FeedbackErrorArgument(onRetry: () => Routefly.pop(context)),
+      );
       return;
     }
-    if (viewmodel.registerCommand.isSuccess) {
-      Routefly.push(routePaths.auth.register.pages.feedbackSuccess);
+    if (viewmodel.registerCommand.isSuccess && context.mounted) {
+      Routefly.pop(context);
+
+      void goToSuccessPage() => Routefly.push(
+        routePaths.genericPages.feedbackSuccess,
+        arguments: FeedbackSuccessArgument(
+          onConfirm: () => Routefly.push(routePaths.post.feed),
+        ),
+      );
+
+      Routefly.push(
+        routePaths.auth.security.otp,
+        arguments: OptArguments(
+          titlePage: 'Confirmar email',
+          email: credentials.email,
+          onSuccess: goToSuccessPage,
+        ),
+      );
+
       return;
     }
   }
@@ -150,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: (value) {
                           _checkPasswordValidation();
                           _updateButtonState();
-                  
+
                           return null;
                         },
                         hintText: 'Informe sua senha',
@@ -158,7 +181,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ValueListenableBuilder(
                         valueListenable: exceptionsPassword,
                         builder: (context, exceptionsPassword, _) {
-                          return PasswordRequirements(errors: exceptionsPassword);
+                          return PasswordRequirements(
+                            errors: exceptionsPassword,
+                          );
                         },
                       ),
                       InputWidget(
@@ -192,7 +217,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                               ),
                               TextSpan(
-                                recognizer: TapGestureRecognizer()..onTap = () {},
+                                recognizer:
+                                    TapGestureRecognizer()..onTap = () {},
                                 text: 'termos de uso',
                                 style: context.text.bodyM14Bold.copyWith(
                                   color: context.colors.whiteColor,

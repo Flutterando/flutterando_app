@@ -316,10 +316,10 @@ packages:
     dependency: "direct main"
     description:
       name: lucid_validation
-      sha256: "574b6e3ec401b7232b3bb703893aadeb3b9085468f0f17680d67d175d72e0f90"
+      sha256: "45cb775d8c694483b63c7aeb939aaa53f052b257f0e857c91224b9404860ce14"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   matcher:
     dependency: transitive
     description:

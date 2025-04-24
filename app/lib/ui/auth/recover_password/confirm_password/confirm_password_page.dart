@@ -12,6 +12,7 @@ import '../../../design_system/theme/theme.dart';
 import '../../../design_system/widgets/alert_widget.dart';
 import '../../../design_system/widgets/button_widget.dart';
 import '../../../design_system/widgets/input_widget.dart';
+import '../../../generic_pages/feedback_success_page.dart';
 import 'confirm_password_viewmodel.dart';
 
 class ConfirmPasswordPage extends StatefulWidget {
@@ -40,7 +41,12 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
 
   void listener() {
     if (viewmodel.newPasswordCommand.isSuccess) {
-      Routefly.navigate(routePaths.auth.recoverPassword.feedbackSuccess);
+      Routefly.navigate(
+        routePaths.genericPages.feedbackSuccess,
+        arguments: FeedbackSuccessArgument(
+          onConfirm: () => Routefly.navigate(routePaths.auth.login),
+        ),
+      );
       return;
     }
 
@@ -143,7 +149,7 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                     validator: (value) {
                       _checkPasswordValidation();
                       _updateButtonState();
-            
+
                       return null;
                     },
                     hintText: 'Informe sua senha',
@@ -161,7 +167,10 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                       credentials.setConfirmPassword(value);
                       _updateButtonState();
                     },
-                    validator: validator.byField(credentials, 'confirmPassword'),
+                    validator: validator.byField(
+                      credentials,
+                      'confirmPassword',
+                    ),
                     hintText: 'Repita a sua senha',
                   ),
                   Container(

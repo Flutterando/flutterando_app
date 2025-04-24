@@ -4,7 +4,6 @@ import 'package:routefly/routefly.dart';
 
 import '../../../app_widget.dart';
 import '../../../config/dependencies.dart';
-import '../../../core/constants/env.dart';
 import '../../../domain/dto/credentials_login_dto.dart';
 import '../../../domain/validators/credentials_login_validator.dart';
 import '../../../main.dart';
@@ -210,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                     TapGestureRecognizer()
                                       ..onTap =
                                           () => Routefly.push(
-                                            routePaths.auth.register.path,
+                                            routePaths.auth.register,
                                           ),
                                 text: 'Cadastrar',
                                 style: context.text.bodyM14Bold.copyWith(

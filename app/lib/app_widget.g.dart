@@ -4,83 +4,75 @@ part of 'app_widget.dart';
 
 List<RouteEntity> get routes => [
   RouteEntity(
+    key: '/generic_pages/feedback_success',
+    uri: Uri.parse('/generic_pages/feedback_success'),
+    routeBuilder: b0Builder,
+  ),
+  RouteEntity(
+    key: '/generic_pages/feedback_error',
+    uri: Uri.parse('/generic_pages/feedback_error'),
+    routeBuilder: b1Builder,
+  ),
+  RouteEntity(
     key: '/splash',
     uri: Uri.parse('/splash'),
-    routeBuilder: b0Builder,
+    routeBuilder: b2Builder,
   ),
   RouteEntity(
     key: '/post/feed',
     uri: Uri.parse('/post/feed'),
-    routeBuilder: b1Builder,
+    routeBuilder: b3Builder,
   ),
   RouteEntity(
     key: '/post/new_post',
     uri: Uri.parse('/post/new_post'),
-    routeBuilder: b2Builder,
-  ),
-  RouteEntity(
-    key: '/auth/recover_password/otp',
-    uri: Uri.parse('/auth/recover_password/otp'),
-    routeBuilder: b3Builder,
-  ),
-  RouteEntity(
-    key: '/auth/recover_password/feedback_success',
-    uri: Uri.parse('/auth/recover_password/feedback_success'),
     routeBuilder: b4Builder,
+  ),
+  RouteEntity(
+    key: '/auth/security/otp',
+    uri: Uri.parse('/auth/security/otp'),
+    routeBuilder: b5Builder,
   ),
   RouteEntity(
     key: '/auth/recover_password/send_email',
     uri: Uri.parse('/auth/recover_password/send_email'),
-    routeBuilder: b5Builder,
+    routeBuilder: b6Builder,
   ),
   RouteEntity(
     key: '/auth/recover_password/confirm_password',
     uri: Uri.parse('/auth/recover_password/confirm_password'),
-    routeBuilder: b6Builder,
+    routeBuilder: b7Builder,
   ),
   RouteEntity(
     key: '/auth/register',
     uri: Uri.parse('/auth/register'),
-    routeBuilder: b7Builder,
-  ),
-  RouteEntity(
-    key: '/auth/register/pages/feedback_success',
-    uri: Uri.parse('/auth/register/pages/feedback_success'),
     routeBuilder: b8Builder,
-  ),
-  RouteEntity(
-    key: '/auth/register/pages/feedback_error',
-    uri: Uri.parse('/auth/register/pages/feedback_error'),
-    routeBuilder: b9Builder,
   ),
   RouteEntity(
     key: '/auth/login',
     uri: Uri.parse('/auth/login'),
-    routeBuilder: b10Builder,
+    routeBuilder: b9Builder,
   ),
 ];
 
 const routePaths = (
   path: '/',
+  genericPages: (
+    path: '/generic_pages',
+    feedbackSuccess: '/generic_pages/feedback_success',
+    feedbackError: '/generic_pages/feedback_error',
+  ),
   splash: '/splash',
   post: (path: '/post', feed: '/post/feed', newPost: '/post/new_post'),
   auth: (
     path: '/auth',
+    security: (path: '/auth/security', otp: '/auth/security/otp'),
     recoverPassword: (
       path: '/auth/recover_password',
-      otp: '/auth/recover_password/otp',
-      feedbackSuccess: '/auth/recover_password/feedback_success',
       sendEmail: '/auth/recover_password/send_email',
       confirmPassword: '/auth/recover_password/confirm_password',
     ),
-    register: (
-      path: '/auth/register',
-      pages: (
-        path: '/auth/register/pages',
-        feedbackSuccess: '/auth/register/pages/feedback_success',
-        feedbackError: '/auth/register/pages/feedback_error',
-      ),
-    ),
+    register: '/auth/register',
     login: '/auth/login',
   ),
 );

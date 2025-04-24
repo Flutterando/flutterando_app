@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:routefly/routefly.dart';
 
-import '../../../design_system/constants/spaces.dart';
-import '../../../design_system/theme/theme.dart';
-import '../../../design_system/widgets/button_widget.dart';
+import '../design_system/constants/spaces.dart';
+import '../design_system/theme/theme.dart';
+import '../design_system/widgets/button_widget.dart';
 
 class FeedbackErrorPage extends StatefulWidget {
   const FeedbackErrorPage({super.key});
@@ -14,6 +14,19 @@ class FeedbackErrorPage extends StatefulWidget {
 }
 
 class _FeedbackErrorPageState extends State<FeedbackErrorPage> {
+  late final FeedbackErrorArgument arguments;
+
+  @override
+  void initState() {
+    super.initState();
+    assert(
+      Routefly.query.arguments is FeedbackErrorArgument,
+      'FeedbackErrorPage espera um argumento do tipo FeedbackErrorArgument via Routefly.query.arguments, mas recebeu: ${Routefly.query.arguments.runtimeType}',
+    );
+
+    arguments = Routefly.query.arguments as FeedbackErrorArgument;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +72,7 @@ class _FeedbackErrorPageState extends State<FeedbackErrorPage> {
               width: 250,
               margin: const EdgeInsets.only(top: Spaces.l),
               child: ButtonWidget.filledPrimary(
-                onPressed: () => Routefly.pop(context),
+                onPressed: arguments.onRetry,
                 text: 'Tentar novamente',
                 padding: const EdgeInsets.symmetric(
                   vertical: Spaces.xl - Spaces.xs,
@@ -71,4 +84,10 @@ class _FeedbackErrorPageState extends State<FeedbackErrorPage> {
       ),
     );
   }
+}
+
+class FeedbackErrorArgument {
+  final VoidCallback onRetry;
+
+  FeedbackErrorArgument({required this.onRetry});
 }

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:routefly/routefly.dart';
 
-import '../../../../app_widget.dart';
-import '../../../design_system/constants/spaces.dart';
-import '../../../design_system/theme/theme.dart';
-import '../../../design_system/widgets/button_widget.dart';
+import '../design_system/constants/spaces.dart';
+import '../design_system/theme/theme.dart';
+import '../design_system/widgets/button_widget.dart';
 
 class FeedbackSuccessPage extends StatefulWidget {
   const FeedbackSuccessPage({super.key});
@@ -15,6 +14,19 @@ class FeedbackSuccessPage extends StatefulWidget {
 }
 
 class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
+  late final FeedbackSuccessArgument arguments;
+
+  @override
+  void initState() {
+    super.initState();
+    assert(
+    Routefly.query.arguments is FeedbackSuccessArgument,
+    'FeedbackSuccessPage espera um argumento do tipo FeedbackSuccessArgument via Routefly.query.arguments, mas recebeu: ${Routefly.query.arguments.runtimeType}',
+    );
+
+    arguments = Routefly.query.arguments as FeedbackSuccessArgument;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +68,7 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
               width: 250,
               margin: const EdgeInsets.only(top: Spaces.l),
               child: ButtonWidget.filledPrimary(
-                onPressed: () => Routefly.navigate(routePaths.auth.login),
+                onPressed: arguments.onConfirm,
                 text: 'Começar',
                 padding: const EdgeInsets.symmetric(
                   vertical: Spaces.xl - Spaces.xs,
@@ -68,4 +80,10 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
       ),
     );
   }
+}
+
+class FeedbackSuccessArgument {
+  final VoidCallback onConfirm;
+
+  FeedbackSuccessArgument({required this.onConfirm});
 }
