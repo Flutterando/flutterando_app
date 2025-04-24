@@ -11,8 +11,9 @@ import '../data/services/storage/auth_storage.dart';
 import '../data/services/storage/local_storage/local_storage.dart';
 import '../ui/auth/login/login_viewmodel.dart';
 import '../ui/auth/recover_password/confirm_password/confirm_password_viewmodel.dart';
+import '../ui/auth/recover_password/otp/opt_viewmodel.dart';
+import '../ui/auth/recover_password/send_email/send_email_viewmodel.dart';
 import '../ui/auth/register/register_viewmodel.dart';
-import '../ui/auth/security/otp/opt_viewmodel.dart';
 import '../ui/post/feed/feed_viewmodel.dart';
 import '../ui/post/new_post/new_post_viewmodel.dart';
 import '../ui/splash/splash_viewmodel.dart';
@@ -32,6 +33,7 @@ void setupInjector() {
 
   injector.add<LoginViewmodel>(LoginViewmodel.new);
   injector.add<RegisterViewmodel>(RegisterViewmodel.new);
+  injector.add<SendEmailViewmodel>(SendEmailViewmodel.new);
   injector.add<OptViewmodel>(OptViewmodel.new);
   injector.add<ConfirmPasswordViewmodel>(ConfirmPasswordViewmodel.new);
   injector.add<FeedViewmodel>(FeedViewmodel.new);

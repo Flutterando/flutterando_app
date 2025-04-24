@@ -76,7 +76,6 @@ class AuthApi with LoggerMixin {
         .get(RestClientRequest(path: '/user/recovery/${dto.email}'))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
-    ;
   }
 
   AsyncResult<RestClientResponse> confirmOtpPassword(

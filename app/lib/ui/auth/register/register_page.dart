@@ -13,9 +13,6 @@ import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
 import '../../design_system/widgets/svg_image_widget.dart';
-import '../../generic_pages/feedback_error_page.dart';
-import '../../generic_pages/feedback_success_page.dart';
-import '../security/otp/otp_page.dart';
 import 'register_viewmodel.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -42,32 +39,12 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void listener() {
-    if (viewmodel.registerCommand.isFailure && context.mounted) {
-      Routefly.push(
-        routePaths.genericPages.feedbackError,
-        arguments: FeedbackErrorArgument(onRetry: () => Routefly.pop(context)),
-      );
+    if (viewmodel.registerCommand.isFailure) {
+      Routefly.push(routePaths.genericPages.feedbackError);
       return;
     }
-    if (viewmodel.registerCommand.isSuccess && context.mounted) {
-      Routefly.pop(context);
-
-      void goToSuccessPage() => Routefly.push(
-        routePaths.genericPages.feedbackSuccess,
-        arguments: FeedbackSuccessArgument(
-          onConfirm: () => Routefly.push(routePaths.post.feed),
-        ),
-      );
-
-      Routefly.push(
-        routePaths.auth.security.otp,
-        arguments: OptArguments(
-          titlePage: 'Confirmar email',
-          email: credentials.email,
-          onSuccess: goToSuccessPage,
-        ),
-      );
-
+    if (viewmodel.registerCommand.isSuccess) {
+      Routefly.push(routePaths.genericPages.feedbackSuccess);
       return;
     }
   }
@@ -181,9 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ValueListenableBuilder(
                         valueListenable: exceptionsPassword,
                         builder: (context, exceptionsPassword, _) {
-                          return PasswordRequirements(
-                            errors: exceptionsPassword,
-                          );
+                          return PasswordRequirements(errors: exceptionsPassword);
                         },
                       ),
                       InputWidget(
@@ -210,15 +185,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             children: [
                               TextSpan(
                                 text:
-                                    'Ao tocar no botão “Cadastrar” você concorda com os ',
+                                'Ao tocar no botão “Cadastrar” você concorda com os ',
                                 style: context.text.bodyM14Bold.copyWith(
                                   color: context.colors.greyThree,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               TextSpan(
-                                recognizer:
-                                    TapGestureRecognizer()..onTap = () {},
+                                recognizer: TapGestureRecognizer()..onTap = () {},
                                 text: 'termos de uso',
                                 style: context.text.bodyM14Bold.copyWith(
                                   color: context.colors.whiteColor,
@@ -243,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               onPressed: _submit,
                               text: 'Entrar',
                               disabled:
-                                  isButtonEnabled.value ||
+                              isButtonEnabled.value ||
                                   viewmodel.registerCommand.isRunning,
                               padding: const EdgeInsets.symmetric(
                                 vertical: Spaces.xl - Spaces.xs,
@@ -264,8 +238,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             children: [
                               TextSpan(
                                 recognizer:
-                                    TapGestureRecognizer()
-                                      ..onTap = () => Routefly.pop(context),
+                                TapGestureRecognizer()
+                                  ..onTap = () => Routefly.pop(context),
                                 text: 'Entrar',
                                 style: const TextStyle(
                                   color: Colors.white,
@@ -302,30 +276,30 @@ class PasswordRequirements extends StatelessWidget {
       Language.code.mustHaveLowercase: 'Pelo menos uma letra minúscula',
       Language.code.mustHaveNumber: 'Pelo menos um número',
       Language.code.mustHaveSpecialCharacter:
-          'Pelo menos um caractere especial (@\$!%*#?&)',
+      'Pelo menos um caractere especial (@\$!%*#?&)',
     };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
-          requirementsMap.entries.map((entry) {
-            var colorIcon = context.colors.successLightColor;
+      requirementsMap.entries.map((entry) {
+        var colorIcon = context.colors.successLightColor;
 
-            if (errors.contains(entry.key)) {
-              colorIcon = context.colors.errorLightColor;
-            }
+        if (errors.contains(entry.key)) {
+          colorIcon = context.colors.errorLightColor;
+        }
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: Spaces.xs),
-              child: Row(
-                spacing: Spaces.s,
-                children: [
-                  Icon(Iconsax.info_circle, size: Spaces.l, color: colorIcon),
-                  Text(entry.value, style: context.text.bodyS12Bold),
-                ],
-              ),
-            );
-          }).toList(),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: Spaces.xs),
+          child: Row(
+            spacing: Spaces.s,
+            children: [
+              Icon(Iconsax.info_circle, size: Spaces.l, color: colorIcon),
+              Text(entry.value, style: context.text.bodyS12Bold),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

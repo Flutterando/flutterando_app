@@ -6,9 +6,9 @@ import 'package:routefly/routefly.dart';
 import 'ui/auth/login/login_page.dart' as a9;
 import 'ui/auth/recover_password/confirm_password/confirm_password_page.dart'
     as a7;
+import 'ui/auth/recover_password/otp/otp_page.dart' as a5;
 import 'ui/auth/recover_password/send_email/send_email_page.dart' as a6;
 import 'ui/auth/register/register_page.dart' as a8;
-import 'ui/auth/security/otp/otp_page.dart' as a5;
 import 'ui/generic_pages/feedback_error_page.dart' as a1;
 import 'ui/generic_pages/feedback_success_page.dart' as a0;
 import 'ui/post/feed/feed_page.dart' as a3;

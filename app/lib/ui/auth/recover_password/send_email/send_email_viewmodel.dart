@@ -2,14 +2,10 @@ import 'package:result_command/result_command.dart';
 
 import '../../../../data/repositories/auth_repository.dart';
 
-class OptViewmodel {
+class SendEmailViewmodel {
   final AuthRepository _authRepository;
 
-  OptViewmodel(this._authRepository);
-
-  late final confirmOtpPasswordCommand = Command1(
-    _authRepository.confirmOtpPassword,
-  );
+  SendEmailViewmodel(this._authRepository);
 
   late final requestToRecoverPasswordCommand = Command1(
     _authRepository.requestToRecoverPassword,

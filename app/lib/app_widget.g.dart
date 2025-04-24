@@ -29,8 +29,8 @@ List<RouteEntity> get routes => [
     routeBuilder: b4Builder,
   ),
   RouteEntity(
-    key: '/auth/security/otp',
-    uri: Uri.parse('/auth/security/otp'),
+    key: '/auth/recover_password/otp',
+    uri: Uri.parse('/auth/recover_password/otp'),
     routeBuilder: b5Builder,
   ),
   RouteEntity(
@@ -66,9 +66,9 @@ const routePaths = (
   post: (path: '/post', feed: '/post/feed', newPost: '/post/new_post'),
   auth: (
     path: '/auth',
-    security: (path: '/auth/security', otp: '/auth/security/otp'),
     recoverPassword: (
       path: '/auth/recover_password',
+      otp: '/auth/recover_password/otp',
       sendEmail: '/auth/recover_password/send_email',
       confirmPassword: '/auth/recover_password/confirm_password',
     ),
