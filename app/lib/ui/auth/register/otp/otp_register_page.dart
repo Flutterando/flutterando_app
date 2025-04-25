@@ -6,28 +6,28 @@ import 'package:routefly/routefly.dart';
 
 import '../../../../app_widget.dart';
 import '../../../../config/dependencies.dart';
-import '../../../../domain/dto/recover_password_otp_dto.dart';
-import '../../../../domain/dto/recover_password_send_email_dto.dart';
+import '../../../../domain/dto/register_otp_dto.dart';
 import '../../../design_system/constants/spaces.dart';
 import '../../../design_system/theme/theme.dart';
 import '../../../design_system/widgets/alert_widget.dart';
 import '../../../design_system/widgets/button_widget.dart';
 import '../../../design_system/widgets/otp_widget.dart';
-import 'opt_viewmodel.dart';
+import '../../../generic_pages/feedback_success_page.dart';
+import 'opt_register_viewmodel.dart';
 
-class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+class OtpRegisterPage extends StatefulWidget {
+  const OtpRegisterPage({super.key});
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  State<OtpRegisterPage> createState() => _OtpRegisterPageState();
 }
 
-const secondsDefault = 120;
+const secondsDefault = 4 * 60;
 
-class _OtpPageState extends State<OtpPage> {
-  final viewmodel = injector.get<OptViewmodel>();
+class _OtpRegisterPageState extends State<OtpRegisterPage> {
+  final viewmodel = injector.get<OptRegisterViewmodel>();
 
-  final credentials = RecoverPasswordOtpDto();
+  final credentials = RegisterOtpDto();
 
   final otpCtrl = OtpFieldController();
   Timer? _timer;
@@ -50,23 +50,27 @@ class _OtpPageState extends State<OtpPage> {
     _startTimer();
 
     userEmail = Routefly.query.arguments as String;
-    credentials.setEmail(userEmail);
+    credentials.email = userEmail;
 
-    viewmodel.confirmOtpPasswordCommand.addListener(listener);
+    viewmodel.confirmOtpRegisterCodeCommand.addListener(listener);
   }
 
   void listener() {
-    if (viewmodel.confirmOtpPasswordCommand.isSuccess) {
+    if (viewmodel.confirmOtpRegisterCodeCommand.isSuccess) {
       setState(() {
         _invalidCode = false;
         isButtonEnabled = true;
       });
 
-      Routefly.pop(context);
-      Routefly.push(routePaths.auth.recoverPassword.confirmPassword);
+      Routefly.navigate(
+        routePaths.genericPages.feedbackSuccess,
+        arguments: FeedbackSuccessArgument(
+          onConfirm: () => Routefly.navigate(routePaths.auth.login),
+        ),
+      );
       return;
     }
-    if (viewmodel.confirmOtpPasswordCommand.isFailure) {
+    if (viewmodel.confirmOtpRegisterCodeCommand.isFailure) {
       AlertWidget.error(context, message: 'Por favor tente novamente');
       setState(() {
         _invalidCode = true;
@@ -95,9 +99,6 @@ class _OtpPageState extends State<OtpPage> {
 
   void _resendCode() {
     if (_canResend) {
-      final dto = RecoverPasswordSendEmailDto(email: userEmail);
-      viewmodel.requestToRecoverPasswordCommand.execute(dto);
-
       otpCtrl.clear();
 
       setState(() {
@@ -105,19 +106,19 @@ class _OtpPageState extends State<OtpPage> {
         isButtonEnabled = false;
       });
 
-      _startTimer();
+      Routefly.pop(context);
     }
   }
 
   void _verifyCode(String code) {
-    credentials.setCode(code);
-    viewmodel.confirmOtpPasswordCommand.execute(credentials);
+    credentials.code = code;
+    viewmodel.confirmOtpRegisterCodeCommand.execute(credentials);
   }
 
   @override
   void dispose() {
     _timer?.cancel();
-    viewmodel.confirmOtpPasswordCommand.removeListener(listener);
+    viewmodel.confirmOtpRegisterCodeCommand.removeListener(listener);
     super.dispose();
   }
 
@@ -203,11 +204,10 @@ class _OtpPageState extends State<OtpPage> {
                   ],
                   if (_canResend)
                     ValueListenableBuilder(
-                      valueListenable:
-                      viewmodel.requestToRecoverPasswordCommand,
+                      valueListenable: viewmodel.confirmOtpRegisterCodeCommand,
                       builder: (context, _, _) {
                         final isRunning =
-                            viewmodel.requestToRecoverPasswordCommand.isRunning;
+                            viewmodel.confirmOtpRegisterCodeCommand.isRunning;
 
                         return InkWell(
                           onTap: isRunning ? null : _resendCode,
@@ -215,7 +215,7 @@ class _OtpPageState extends State<OtpPage> {
                             spacing: Spaces.s,
                             children: [
                               Text(
-                                'Reenviar',
+                                'Tentar novamente',
                                 style: context.text.bodyM14Bold.copyWith(
                                   fontWeight: FontWeight.w900,
                                 ),
@@ -232,7 +232,7 @@ class _OtpPageState extends State<OtpPage> {
                 margin: const EdgeInsets.only(top: Spaces.xxxl),
                 width: 250,
                 child: ValueListenableBuilder(
-                  valueListenable: viewmodel.confirmOtpPasswordCommand,
+                  valueListenable: viewmodel.confirmOtpRegisterCodeCommand,
                   builder: (context, _, _) {
                     return ButtonWidget.filledPrimary(
                       onPressed: () {
@@ -242,8 +242,8 @@ class _OtpPageState extends State<OtpPage> {
                       },
                       text: 'Verificar código',
                       disabled:
-                      !isButtonEnabled ||
-                          viewmodel.confirmOtpPasswordCommand.isRunning,
+                          !isButtonEnabled ||
+                          viewmodel.confirmOtpRegisterCodeCommand.isRunning,
                       padding: const EdgeInsets.symmetric(
                         vertical: Spaces.xl - Spaces.xs,
                       ),

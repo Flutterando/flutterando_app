@@ -45,7 +45,7 @@ class _SendEmailPageState extends State<SendEmailPage> {
         context.mounted) {
       Routefly.pop(context);
       Routefly.push(
-        routePaths.auth.recoverPassword.otp,
+        routePaths.auth.recoverPassword.otp.otpRecover,
         arguments: credentials.email,
       );
     }

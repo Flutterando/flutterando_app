@@ -7,6 +7,7 @@ import '../../../domain/dto/recover_password_dto.dart';
 import '../../../domain/dto/recover_password_otp_dto.dart';
 import '../../../domain/dto/recover_password_send_email_dto.dart';
 import '../../../domain/dto/register_dto.dart';
+import '../../../domain/dto/register_otp_dto.dart';
 import 'client_http/i_rest_client.dart';
 import 'client_http/rest_client_request.dart';
 import 'client_http/rest_client_response.dart';
@@ -63,6 +64,17 @@ class AuthApi with LoggerMixin {
             headers: {'Authorization': 'Bearer $refreshToken'},
           ),
         )
+        .onSuccess(logger.fromSuccess)
+        .onFailure(logger.fromException);
+  }
+
+  AsyncResult<RestClientResponse> confirmOtpRegisterCode(
+    RegisterOtpDto dto,
+  ) async {
+    final logger = log.forMethod()..logInfo(data: dto);
+
+    return await client
+        .get(RestClientRequest(path: '/user/verify', data: dto.toJson()))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
   }

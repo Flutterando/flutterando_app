@@ -209,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                     TapGestureRecognizer()
                                       ..onTap =
                                           () => Routefly.push(
-                                            routePaths.auth.register,
+                                            routePaths.auth.register.path,
                                           ),
                                 text: 'Cadastrar',
                                 style: context.text.bodyM14Bold.copyWith(

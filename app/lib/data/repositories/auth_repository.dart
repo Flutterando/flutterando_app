@@ -7,6 +7,7 @@ import '../../domain/dto/recover_password_dto.dart';
 import '../../domain/dto/recover_password_otp_dto.dart';
 import '../../domain/dto/recover_password_send_email_dto.dart';
 import '../../domain/dto/register_dto.dart';
+import '../../domain/dto/register_otp_dto.dart';
 import '../../domain/entities/session_entity.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/validators/credentials_login_validator.dart';
@@ -46,8 +47,6 @@ class AuthRepository {
         .validateResult(dto) //
         .flatMap(authApi.register)
         .pure(dto)
-        .map(_toCredentialsLoginDto)
-        .flatMap(this.login)
         .mapError((e) => e as LoginException)
         .pure(unit);
   }
@@ -63,6 +62,10 @@ class AuthRepository {
         .map(_toSessionEntity)
         .flatMap(storage.saveSession)
         .map((session) => session.token);
+  }
+
+  AsyncResult<Unit> confirmOtpRegisterCode(RegisterOtpDto dto) {
+    return authApi.confirmOtpRegisterCode(dto).pure(unit);
   }
 
   AsyncResult<Unit> requestToRecoverPassword(

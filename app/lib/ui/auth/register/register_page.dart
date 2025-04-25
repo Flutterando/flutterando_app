@@ -13,6 +13,7 @@ import '../../design_system/theme/theme.dart';
 import '../../design_system/widgets/button_widget.dart';
 import '../../design_system/widgets/input_widget.dart';
 import '../../design_system/widgets/svg_image_widget.dart';
+import '../../generic_pages/feedback_error_page.dart';
 import 'register_viewmodel.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
   final validator = RegisterValidation();
-  final credentials = RegisterDto();
+  final credentials = RegisterDto.withTestUser();
   final viewmodel = injector.get<RegisterViewmodel>();
   final isButtonEnabled = ValueNotifier(true);
   final exceptionsPassword = ValueNotifier<List<String>>([]);
@@ -40,11 +41,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void listener() {
     if (viewmodel.registerCommand.isFailure) {
-      Routefly.push(routePaths.genericPages.feedbackError);
+      Routefly.push(routePaths.genericPages.feedbackError,arguments: FeedbackErrorArgument(
+          onRetry: () => Routefly.pop(context),
+        ),);
       return;
     }
     if (viewmodel.registerCommand.isSuccess) {
-      Routefly.push(routePaths.genericPages.feedbackSuccess);
+      Routefly.push(routePaths.auth.register.otp.otpRegister,arguments: credentials.email);
       return;
     }
   }
@@ -214,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ]),
                           builder: (context, _) {
                             return ButtonWidget.filledPrimary(
-                              onPressed: _submit,
+                              onPressed: _submit, 
                               text: 'Entrar',
                               disabled:
                               isButtonEnabled.value ||
