@@ -10,10 +10,19 @@ import 'package:share_plus/share_plus.dart';
 import '../../../data/repositories/auth_repository.dart';
 import '../../../data/repositories/post_repository.dart';
 import '../../../domain/entities/post_entity.dart';
+import '../../../domain/entities/user_entity.dart';
+import '../../../domain/enum/roles.dart';
 
 class FeedViewmodel extends ChangeNotifier {
   final AuthRepository _authRepository;
   final PostRepository _postRepository;
+
+  User _user = User.empty();
+
+  User get user => _user;
+  
+  bool get isCreator =>
+      user.roles.contains(Roles.admin) || user.roles.contains(Roles.creator);
 
   List<Post> _posts = [];
 
@@ -26,15 +35,21 @@ class FeedViewmodel extends ChangeNotifier {
   late final getPostsCommand = Command0(_getPosts);
 
   FeedViewmodel(this._authRepository, this._postRepository) {
+    _authRepository.getLoggedUser().onSuccess(_updateUserOnScreen);
     subscription = _postRepository //
         .observerListPost
-        .listen(_updateScreen);
+        .listen(_updateListPostOnScreen);
+  }
+
+  void _updateUserOnScreen(User user) {
+    _user = user;
+    notifyListeners();
   }
 
   AsyncResult<List<Post>> _getPosts() => //
-      _postRepository.getPosts().onSuccess(_updateScreen);
+      _postRepository.getPosts().onSuccess(_updateListPostOnScreen);
 
-  void _updateScreen(List<Post> value) {
+  void _updateListPostOnScreen(List<Post> value) {
     _posts = value;
     notifyListeners();
   }

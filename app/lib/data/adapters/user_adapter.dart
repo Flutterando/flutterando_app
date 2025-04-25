@@ -1,20 +1,5 @@
 import '../../domain/entities/user_entity.dart';
-
-class UserAdapter {
-  static Map<String, dynamic> toJson(User user) => {
-    'firstName': user.firstName,
-    'lastName': user.lastName,
-    'email': user.email,
-  };
-
-  static User fromJson(Map<String, dynamic> body) {
-    return User(
-      firstName: body['firstName'],
-      lastName: body['lastName'],
-      email: body['email'],
-    );
-  }
-}
+import '../../domain/enum/roles.dart';
 
 class LoggedUserAdapter {
   static LoggedUser fromJson(Map<String, dynamic> body) {
@@ -22,6 +7,7 @@ class LoggedUserAdapter {
       firstName: body['firstName'],
       lastName: body['lastName'],
       email: body['username'],
+      roles: (body['roles'] as List).map((e) => Roles.fromString(e as String)).toList(),
     );
   }
 
@@ -30,5 +16,6 @@ class LoggedUserAdapter {
     'firstName': body.firstName,
     'lastName': body.lastName,
     'username': body.email,
+    'roles': body.roles.map((e) => e.toString()).toList(),
   };
 }

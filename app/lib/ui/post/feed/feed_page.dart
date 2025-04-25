@@ -44,7 +44,8 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   void listenerLogout() {
-    if (viewmodel.logoutCommand.isSuccess || viewmodel.logoutCommand.isFailure) {
+    if (viewmodel.logoutCommand.isSuccess ||
+        viewmodel.logoutCommand.isFailure) {
       Routefly.navigate(routePaths.auth.login);
     }
   }
@@ -61,72 +62,103 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget(
-        onCreatePost: () {
-          Routefly.push(routePaths.post.newPost); //TODO tratar as roles
-        },
-        // onNotification: () {},
-        onLogout: viewmodel.logoutCommand.execute,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: Spaces.xxxxl),
-        child: RefreshIndicator(
-          onRefresh: _onRefresh,
-          edgeOffset: 10,
-          child: ListenableBuilder(
-            listenable: Listenable.merge([isLoading, viewmodel, viewmodel.getPostsCommand]),
-            builder: (context, _) {
-              if (isLoading.value) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          const Padding(padding: const EdgeInsets.symmetric(horizontal: Spaces.l), child: PostFeedSkeletonWidget()),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: Spaces.xxl),
-                            width: double.infinity,
-                            height: 2,
-                            color: context.colors.greyOne,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SliverToBoxAdapter(
-                      child: Column(
-                        children: [Padding(padding: const EdgeInsets.symmetric(horizontal: Spaces.l), child: PostFeedSkeletonWidget())],
-                      ),
-                    ),
-                  ],
-                );
-              }
-
-              return CustomScrollView(
-                slivers:
-                    viewmodel.posts.map((post) {
-                      return SliverToBoxAdapter(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: Spaces.l),
-                              child: PostFeedWidget(onShared: () => viewmodel.onShared(post), post: post),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: Spaces.xxl),
-                              width: double.infinity,
-                              height: 2,
-                              color: context.colors.greyOne,
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-              );
-            },
+    return ListenableBuilder(
+      listenable: viewmodel,
+      builder: (context, child) {
+        return Scaffold(
+          appBar: AppBarWidget(
+            onCreatePost:
+                viewmodel.isCreator
+                    ? () => Routefly.push(routePaths.post.newPost)
+                    : null,
+            // onNotification: () {},
+            onLogout: viewmodel.logoutCommand.execute,
           ),
-        ),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.only(bottom: Spaces.xxxxl),
+            child: RefreshIndicator(
+              onRefresh: _onRefresh,
+              edgeOffset: 10,
+              child: ListenableBuilder(
+                listenable: Listenable.merge([
+                  isLoading,
+                  viewmodel,
+                  viewmodel.getPostsCommand,
+                ]),
+                builder: (context, _) {
+                  if (isLoading.value) {
+                    return CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              const Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Spaces.l,
+                                ),
+                                child: PostFeedSkeletonWidget(),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: Spaces.xxl,
+                                ),
+                                width: double.infinity,
+                                height: 2,
+                                color: context.colors.greyOne,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Spaces.l,
+                                ),
+                                child: PostFeedSkeletonWidget(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+
+                  return CustomScrollView(
+                    slivers:
+                        viewmodel.posts.map((post) {
+                          return SliverToBoxAdapter(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: Spaces.l,
+                                  ),
+                                  child: PostFeedWidget(
+                                    onShared: () => viewmodel.onShared(post),
+                                    post: post,
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: Spaces.xxl,
+                                  ),
+                                  width: double.infinity,
+                                  height: 2,
+                                  color: context.colors.greyOne,
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
