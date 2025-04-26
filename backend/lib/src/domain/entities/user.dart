@@ -1,5 +1,8 @@
+import 'package:backend/src/domain/enums/roles_user_enum.dart';
 import 'package:vaden/vaden.dart';
 import 'package:vaden_security/vaden_security.dart';
+
+import '../dto/user/user_dto.dart';
 
 @DTO()
 class User extends UserDetails {
@@ -15,4 +18,22 @@ class User extends UserDetails {
     required super.password,
     required super.roles,
   });
+
+  List<RolesUser> enumRoles() {
+    return super.roles.map((role) => RolesUser.fromMap(role)).toList();
+  }
+
+  bool isAdmin() => enumRoles().contains(RolesUser.admin);
+  bool isCreator() => enumRoles().contains(RolesUser.creator);
+
+  UserDTO toDto() {
+    return UserDTO(
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: username,
+      password: password,
+      roles: enumRoles(),
+    );
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:vaden/vaden.dart';
 
-import '../../dto/posts_update_dto.dart';
+import '../../dto/posts/posts_update_dto.dart';
 import '../../entities/post.dart';
 import '../../entities/user.dart';
 import '../../repositories/posts_repository.dart';

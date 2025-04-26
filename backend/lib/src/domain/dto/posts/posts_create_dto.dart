@@ -1,7 +1,7 @@
 import 'package:vaden/vaden.dart';
 
 @DTO()
-class PostsCreateDTO {
+class PostsCreateDTO with Validator<PostsCreateDTO> {
   final String description;
   final String? link;
   final String? image;
@@ -22,6 +22,26 @@ class PostsCreateDTO {
     this.image,
     this.imageSubtitle,
   });
+
+  @override
+  LucidValidator<PostsCreateDTO> validate(
+      ValidatorBuilder<PostsCreateDTO> builder) {
+    builder //
+        .ruleFor((p) => p.description, key: 'description')
+        .notEmptyOrNull();
+    ;
+
+    builder //
+        .ruleFor((p) => p.link, key: 'link');
+
+    builder //
+        .ruleFor((p) => p.image, key: 'image');
+
+    builder //
+        .ruleFor((p) => p.imageSubtitle, key: 'imageSubtitle');
+
+    return builder;
+  }
 }
 
 class SignedPostsCreateDTO extends PostsCreateDTO {

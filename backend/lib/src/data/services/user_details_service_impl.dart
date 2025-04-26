@@ -13,7 +13,8 @@ class UserDetailsServiceImpl implements UserDetailsService {
   @override
   Future<UserDetails?> loadUserByUsername(String username) async {
     return _userRepository //
-        .getUser(username)
+        .getUsers(email: username)
+        .flatMap((users) => Success(users.first))
         .getOrNull();
   }
 }

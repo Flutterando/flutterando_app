@@ -9,6 +9,14 @@ class AppControllerAdvice {
 
   @ExceptionHandler(ResponseException)
   Future<Response> handleResponseException(ResponseException e) async {
+    if (e.body is String) {
+      return ResponseException(
+        e.code,
+        {'message': e.body},
+        headers: e.headers,
+      ).generateResponse(_dson);
+    }
+
     return e.generateResponse(_dson);
   }
 

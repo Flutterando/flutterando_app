@@ -1,16 +1,15 @@
 import 'package:vaden/vaden.dart';
 
 @DTO()
-class AuthenticationViaRecoveryDTO
-    with Validator<AuthenticationViaRecoveryDTO> {
+class EmailOtpVerificationDTO with Validator<EmailOtpVerificationDTO> {
   final String email;
   final String code;
 
-  AuthenticationViaRecoveryDTO({required this.email, required this.code});
+  EmailOtpVerificationDTO({required this.email, required this.code});
 
   @override
-  LucidValidator<AuthenticationViaRecoveryDTO> validate(
-      ValidatorBuilder<AuthenticationViaRecoveryDTO> builder) {
+  LucidValidator<EmailOtpVerificationDTO> validate(
+      ValidatorBuilder<EmailOtpVerificationDTO> builder) {
     builder //
         .ruleFor((p) => p.email, key: 'email')
         .notEmpty()

@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:backend/config/otp/otp_sender.dart';
-import 'package:backend/src/domain/entities/user.dart';
 import 'package:redis/redis.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:vaden/vaden.dart';
+
+import '../../src/domain/dto/user/user_dto.dart';
 
 class OtpService {
   final Command redis;
@@ -26,13 +27,13 @@ class OtpService {
 
   AsyncResult<Unit> sendOtp({
     required String context,
-    required User user,
+    required UserDTO userDto,
   }) {
-    final _key = key(context, user.username);
+    final _key = key(context, userDto.email ?? '');
     return _validationRequest(_key) //
         .flatMap((_) => Success(_codeGenerator(4)))
         .flatMap((code) => _setCode(code, _key))
-        .flatMap((code) => sender.sendOtp(user: user, code: code));
+        .flatMap((code) => sender.sendOtp(dto: userDto, code: code));
   }
 
   AsyncResult<Unit> checkOtp({

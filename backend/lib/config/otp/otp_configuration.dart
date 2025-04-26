@@ -1,6 +1,6 @@
+import 'package:backend/config/email/email_service.dart';
 import 'package:backend/config/otp/otp_sender.dart';
 import 'package:backend/config/otp/otp_service.dart';
-import 'package:dio/dio.dart';
 import 'package:redis/redis.dart';
 import 'package:vaden/vaden.dart';
 
@@ -12,12 +12,10 @@ class OtpConfiguration {
   }
 
   @Bean()
-  OtpSender otpSender(Dio dio, ApplicationSettings settings) {
+  OtpSender otpSender(EmailService emailService, ApplicationSettings settings) {
     return EmailOtpSender(
         title: 'Flotterando App código',
-        fromEmail: 'app@flutterando.com.br',
-        fromName: 'Flotterando App',
         settings: settings,
-        dio: dio);
+        emailService: emailService);
   }
 }

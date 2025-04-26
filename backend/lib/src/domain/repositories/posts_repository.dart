@@ -1,7 +1,7 @@
-import 'package:backend/src/domain/dto/posts_update_dto.dart';
+import 'package:backend/src/domain/dto/posts/posts_update_dto.dart';
 import 'package:result_dart/result_dart.dart';
 
-import '../dto/posts_create_dto.dart';
+import '../dto/posts/posts_create_dto.dart';
 import '../entities/post.dart';
 import '../value_objects/posts_vo.dart';
 

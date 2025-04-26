@@ -16,7 +16,8 @@ class SendRecoverPasswordEmail {
     final context = 'RecoverPassword';
     return _otpService //
         .statusOtp(context: context, username: email)
-        .flatMap((_) => _userRepository.getUser(email))
-        .flatMap((user) => _otpService.sendOtp(context: context, user: user));
+        .flatMap((_) => _userRepository.getUsers(email: email))
+        .flatMap((users) => _otpService.sendOtp(
+            context: context, userDto: users.first.toDto()));
   }
 }

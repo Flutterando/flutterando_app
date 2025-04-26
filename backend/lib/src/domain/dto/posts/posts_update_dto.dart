@@ -1,9 +1,30 @@
 import 'package:vaden/vaden.dart';
 
-import '../dto/posts_update_dto.dart';
+@DTO()
+class UpdatePostsDTO with Validator<UpdatePostsDTO> {
+  final int id;
+  final String? description;
+  final String? link;
+  final String? image;
+  final String? imageSubtitle;
+  UpdatePostsDTO({
+    required this.id,
+    this.description,
+    this.link,
+    this.image,
+    this.imageSubtitle,
+  });
 
-@Component()
-class UpdatePostsValidation implements Validator<UpdatePostsDTO> {
+  Map<String, dynamic> toMapQuery() {
+    return {
+      'id': id,
+      'description': description,
+      'link': link,
+      'image': image,
+      'image_subtitle': imageSubtitle
+    };
+  }
+
   @override
   LucidValidator<UpdatePostsDTO> validate(
       ValidatorBuilder<UpdatePostsDTO> builder) {

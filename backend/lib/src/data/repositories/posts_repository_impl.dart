@@ -1,6 +1,6 @@
 import 'package:backend/config/postgres/query_adapter.dart';
-import 'package:backend/src/domain/dto/posts_create_dto.dart';
-import 'package:backend/src/domain/dto/posts_update_dto.dart';
+import 'package:backend/src/domain/dto/posts/posts_create_dto.dart';
+import 'package:backend/src/domain/dto/posts/posts_update_dto.dart';
 import 'package:backend/src/domain/entities/post.dart';
 import 'package:backend/src/domain/entities/user.dart';
 import 'package:backend/src/domain/value_objects/posts_vo.dart';
