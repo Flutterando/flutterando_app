@@ -1,3 +1,4 @@
+import 'package:backend/config/migration/migration.dart';
 import 'package:vaden/vaden.dart';
 
 @Configuration()
@@ -8,17 +9,14 @@ class AppConfiguration {
   }
 
   @Bean()
-  Pipeline globalMiddleware(ApplicationSettings settings) {
+  Pipeline globalMiddleware(
+    ApplicationSettings settings,
+    Migration migration,
+  ) {
+    migration.start();
     return Pipeline() //
         .addMiddleware(cors(allowedOrigins: ['*']))
         .addVadenMiddleware(EnforceJsonContentType())
         .addMiddleware(logRequests());
-  }
-
-  @Bean()
-  ModuleRegister externalModules() {
-    return ModuleRegister([
-      // Add your external modules here
-    ]);
   }
 }

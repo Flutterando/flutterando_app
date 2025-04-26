@@ -15,7 +15,8 @@ class OpenApiConfiguration {
         description: 'Vaden Backend example',
       ),
       servers: [
-        config.localServer,
+        config.localServer.copyWith(
+            url: 'https://api.atmedico.com.br/vaden/', description: 'SandBox'),
       ],
       tags: config.tags,
       paths: config.paths,
@@ -37,4 +38,3 @@ class OpenApiConfiguration {
     );
   }
 }
-

@@ -21,6 +21,28 @@ storage:
     projectId: 'my-project'
     apiKey: 'my_api'
 
+postgres:
+  host: 0.0.0.0
+  database: postgres
+  port: 5432
+  username: postgres
+  password: password
+  ssl: disable
+  maxConnectionCount: 5
+
+redis:
+  host: 0.0.0.0
+  port: 6379
+
+security:
+  secret: AisuSijfdiflkDkldkeokdokDKodk
+  tokenValidity: 3600
+  refreshTokenValidity: 604800
+  issuer: "vaden"
+  audiences:
+    - "vaden"
+
 env:
   mode: debug
-
+  migrationPath: './migrations'
+  emailToken: emailToken
