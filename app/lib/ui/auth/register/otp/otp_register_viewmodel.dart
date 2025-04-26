@@ -1,10 +1,10 @@
 import 'package:result_command/result_command.dart';
 import '../../../../data/repositories/auth_repository.dart';
 
-class OptRegisterViewmodel {
+class OtpRegisterViewmodel {
   final AuthRepository _authRepository;
 
-  OptRegisterViewmodel(this._authRepository);
+  OtpRegisterViewmodel(this._authRepository);
 
   /*late final confirmOtpPasswordCommand = Command1(
     _authRepository.confirmOtpPassword,
@@ -14,6 +14,7 @@ class OptRegisterViewmodel {
     _authRepository.requestToRecoverPassword,
   );*/
 
-  late final confirmOtpRegisterCodeCommand = Command1(_authRepository.confirmOtpRegisterCode);
-
+  late final confirmOtpRegisterCodeCommand = Command1(
+    _authRepository.confirmOtpRegisterCode,
+  );
 }

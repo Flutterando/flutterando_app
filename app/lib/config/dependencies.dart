@@ -13,7 +13,7 @@ import '../ui/auth/login/login_viewmodel.dart';
 import '../ui/auth/recover_password/confirm_password/confirm_password_viewmodel.dart';
 import '../ui/auth/recover_password/otp/opt_recover_viewmodel.dart';
 import '../ui/auth/recover_password/send_email/send_email_viewmodel.dart';
-import '../ui/auth/register/otp/opt_register_viewmodel.dart';
+import '../ui/auth/register/otp/otp_register_viewmodel.dart';
 import '../ui/auth/register/register_viewmodel.dart';
 import '../ui/post/feed/feed_viewmodel.dart';
 import '../ui/post/new_post/new_post_viewmodel.dart';
@@ -40,8 +40,7 @@ void setupInjector() {
   injector.add<FeedViewmodel>(FeedViewmodel.new);
   injector.add<NewPostViewmodel>(NewPostViewmodel.new);
   injector.add<SplashViewmodel>(SplashViewmodel.new);
-  injector.add<OptRegisterViewmodel>(OptRegisterViewmodel.new);
-  
+  injector.add<OtpRegisterViewmodel>(OtpRegisterViewmodel.new);
 
   injector.commit();
 }

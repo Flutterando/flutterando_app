@@ -13,7 +13,7 @@ import '../../../design_system/widgets/alert_widget.dart';
 import '../../../design_system/widgets/button_widget.dart';
 import '../../../design_system/widgets/otp_widget.dart';
 import '../../../generic_pages/feedback_success_page.dart';
-import 'opt_register_viewmodel.dart';
+import 'otp_register_viewmodel.dart';
 
 class OtpRegisterPage extends StatefulWidget {
   const OtpRegisterPage({super.key});
@@ -25,7 +25,7 @@ class OtpRegisterPage extends StatefulWidget {
 const secondsDefault = 4 * 60;
 
 class _OtpRegisterPageState extends State<OtpRegisterPage> {
-  final viewmodel = injector.get<OptRegisterViewmodel>();
+  final viewmodel = injector.get<OtpRegisterViewmodel>();
 
   final credentials = RegisterOtpDto();
 
