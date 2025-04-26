@@ -13,19 +13,19 @@ import '../../../design_system/theme/theme.dart';
 import '../../../design_system/widgets/alert_widget.dart';
 import '../../../design_system/widgets/button_widget.dart';
 import '../../../design_system/widgets/otp_widget.dart';
-import 'opt_viewmodel.dart';
+import 'opt_recover_viewmodel.dart';
 
-class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+class OtpRecoverPage extends StatefulWidget {
+  const OtpRecoverPage({super.key});
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  State<OtpRecoverPage> createState() => _OtpRecoverPageState();
 }
 
 const secondsDefault = 120;
 
-class _OtpPageState extends State<OtpPage> {
-  final viewmodel = injector.get<OptViewmodel>();
+class _OtpRecoverPageState extends State<OtpRecoverPage> {
+  final viewmodel = injector.get<OptRecoverViewmodel>();
 
   final credentials = RecoverPasswordOtpDto();
 
@@ -204,7 +204,7 @@ class _OtpPageState extends State<OtpPage> {
                   if (_canResend)
                     ValueListenableBuilder(
                       valueListenable:
-                      viewmodel.requestToRecoverPasswordCommand,
+                          viewmodel.requestToRecoverPasswordCommand,
                       builder: (context, _, _) {
                         final isRunning =
                             viewmodel.requestToRecoverPasswordCommand.isRunning;
@@ -242,7 +242,7 @@ class _OtpPageState extends State<OtpPage> {
                       },
                       text: 'Verificar código',
                       disabled:
-                      !isButtonEnabled ||
+                          !isButtonEnabled ||
                           viewmodel.confirmOtpPasswordCommand.isRunning,
                       padding: const EdgeInsets.symmetric(
                         vertical: Spaces.xl - Spaces.xs,

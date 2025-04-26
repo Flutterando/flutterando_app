@@ -13,6 +13,14 @@ class RegisterDto {
     this.confirmPassword = '',
   });
 
+  factory RegisterDto.withTestUser() => RegisterDto(
+    email: 'jacobinho3@gmail.com',
+    password: 'Teste@1234',
+    confirmPassword: 'Teste@1234',
+    firstName: 'Jacob',
+    lastName: 'Moura',
+  );
+
   void setFirstName(String value) => firstName = value;
 
   void setLastName(String value) => lastName = value;

@@ -4,75 +4,89 @@ part of 'app_widget.dart';
 
 List<RouteEntity> get routes => [
   RouteEntity(
-    key: '/generic_pages/feedback_success',
-    uri: Uri.parse('/generic_pages/feedback_success'),
+    key: '/auth/login',
+    uri: Uri.parse('/auth/login'),
     routeBuilder: b0Builder,
-  ),
-  RouteEntity(
-    key: '/generic_pages/feedback_error',
-    uri: Uri.parse('/generic_pages/feedback_error'),
-    routeBuilder: b1Builder,
-  ),
-  RouteEntity(
-    key: '/splash',
-    uri: Uri.parse('/splash'),
-    routeBuilder: b2Builder,
-  ),
-  RouteEntity(
-    key: '/post/feed',
-    uri: Uri.parse('/post/feed'),
-    routeBuilder: b3Builder,
-  ),
-  RouteEntity(
-    key: '/post/new_post',
-    uri: Uri.parse('/post/new_post'),
-    routeBuilder: b4Builder,
-  ),
-  RouteEntity(
-    key: '/auth/recover_password/otp',
-    uri: Uri.parse('/auth/recover_password/otp'),
-    routeBuilder: b5Builder,
-  ),
-  RouteEntity(
-    key: '/auth/recover_password/send_email',
-    uri: Uri.parse('/auth/recover_password/send_email'),
-    routeBuilder: b6Builder,
   ),
   RouteEntity(
     key: '/auth/recover_password/confirm_password',
     uri: Uri.parse('/auth/recover_password/confirm_password'),
-    routeBuilder: b7Builder,
+    routeBuilder: b1Builder,
+  ),
+  RouteEntity(
+    key: '/auth/recover_password/otp/otp_recover',
+    uri: Uri.parse('/auth/recover_password/otp/otp_recover'),
+    routeBuilder: b2Builder,
+  ),
+  RouteEntity(
+    key: '/auth/recover_password/send_email',
+    uri: Uri.parse('/auth/recover_password/send_email'),
+    routeBuilder: b3Builder,
+  ),
+  RouteEntity(
+    key: '/auth/register/otp/otp_register',
+    uri: Uri.parse('/auth/register/otp/otp_register'),
+    routeBuilder: b4Builder,
   ),
   RouteEntity(
     key: '/auth/register',
     uri: Uri.parse('/auth/register'),
+    routeBuilder: b5Builder,
+  ),
+  RouteEntity(
+    key: '/generic_pages/feedback_error',
+    uri: Uri.parse('/generic_pages/feedback_error'),
+    routeBuilder: b6Builder,
+  ),
+  RouteEntity(
+    key: '/generic_pages/feedback_success',
+    uri: Uri.parse('/generic_pages/feedback_success'),
+    routeBuilder: b7Builder,
+  ),
+  RouteEntity(
+    key: '/post/feed',
+    uri: Uri.parse('/post/feed'),
     routeBuilder: b8Builder,
   ),
   RouteEntity(
-    key: '/auth/login',
-    uri: Uri.parse('/auth/login'),
+    key: '/post/new_post',
+    uri: Uri.parse('/post/new_post'),
     routeBuilder: b9Builder,
+  ),
+  RouteEntity(
+    key: '/splash',
+    uri: Uri.parse('/splash'),
+    routeBuilder: b10Builder,
   ),
 ];
 
 const routePaths = (
   path: '/',
-  genericPages: (
-    path: '/generic_pages',
-    feedbackSuccess: '/generic_pages/feedback_success',
-    feedbackError: '/generic_pages/feedback_error',
-  ),
-  splash: '/splash',
-  post: (path: '/post', feed: '/post/feed', newPost: '/post/new_post'),
   auth: (
     path: '/auth',
+    login: '/auth/login',
     recoverPassword: (
       path: '/auth/recover_password',
-      otp: '/auth/recover_password/otp',
-      sendEmail: '/auth/recover_password/send_email',
       confirmPassword: '/auth/recover_password/confirm_password',
+      otp: (
+        path: '/auth/recover_password/otp',
+        otpRecover: '/auth/recover_password/otp/otp_recover',
+      ),
+      sendEmail: '/auth/recover_password/send_email',
     ),
-    register: '/auth/register',
-    login: '/auth/login',
+    register: (
+      path: '/auth/register',
+      otp: (
+        path: '/auth/register/otp',
+        otpRegister: '/auth/register/otp/otp_register',
+      ),
+    ),
   ),
+  genericPages: (
+    path: '/generic_pages',
+    feedbackError: '/generic_pages/feedback_error',
+    feedbackSuccess: '/generic_pages/feedback_success',
+  ),
+  post: (path: '/post', feed: '/post/feed', newPost: '/post/new_post'),
+  splash: '/splash',
 );
