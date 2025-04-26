@@ -25,6 +25,8 @@ class AuthRepository {
   final AuthApi authApi;
   final AuthStorage storage;
 
+  RegisterDto? registerDtoCached;
+
   AuthRepository(this.authApi, this.storage);
 
   AsyncResult<LoggedUser> login(CredentialsLoginDto credentials) async {
@@ -42,6 +44,8 @@ class AuthRepository {
 
   AsyncResult<Unit> register(RegisterDto dto) async {
     final validator = RegisterValidation();
+
+    registerDtoCached = dto;
 
     return validator
         .validateResult(dto) //
@@ -65,7 +69,14 @@ class AuthRepository {
   }
 
   AsyncResult<Unit> confirmOtpRegisterCode(RegisterOtpDto dto) {
-    return authApi.confirmOtpRegisterCode(dto).pure(unit);
+    return authApi.confirmOtpRegisterCode(dto).flatMap(tryLogin).pure(unit);
+  }
+
+  AsyncResult<Unit> tryLogin(RestClientResponse _) {
+    if (registerDtoCached != null) {
+      return login(_toCredentialsLoginDto(registerDtoCached!)).pure(unit);
+    }
+    return Future.value(const Success(unit));
   }
 
   AsyncResult<Unit> requestToRecoverPassword(

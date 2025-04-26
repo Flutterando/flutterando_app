@@ -26,7 +26,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
   final validator = RegisterValidation();
-  final credentials = RegisterDto.withTestUser();
+  final credentials = RegisterDto();
   final viewmodel = injector.get<RegisterViewmodel>();
   final isButtonEnabled = ValueNotifier(true);
   final exceptionsPassword = ValueNotifier<List<String>>([]);

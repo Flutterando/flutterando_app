@@ -74,7 +74,7 @@ class AuthApi with LoggerMixin {
     final logger = log.forMethod()..logInfo(data: dto);
 
     return await client
-        .get(RestClientRequest(path: '/user/verify', data: dto.toJson()))
+        .post(RestClientRequest(path: '/user/verify', data: dto.toJson()))
         .onSuccess(logger.fromSuccess)
         .onFailure(logger.fromException);
   }

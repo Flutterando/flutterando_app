@@ -37,7 +37,10 @@ class AuthInterceptor implements IClientInterceptor {
   Future<RestClientRequest> onRequest(RestClientRequest request) async {
     if (request.path.contains('login') ||
         request.path.contains('refresh') ||
-        request.path.contains('verify')) {
+        (request.path == '/user' &&
+            request.method.toLowerCase() == 'post') ||
+        (request.path.contains('/user/verify') &&
+            request.method.toLowerCase() == 'post')) {
       return request;
     }
 

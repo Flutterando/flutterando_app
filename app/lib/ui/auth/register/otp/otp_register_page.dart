@@ -65,7 +65,7 @@ class _OtpRegisterPageState extends State<OtpRegisterPage> {
       Routefly.navigate(
         routePaths.genericPages.feedbackSuccess,
         arguments: FeedbackSuccessArgument(
-          onConfirm: () => Routefly.navigate(routePaths.auth.login),
+          onConfirm: () => Routefly.navigate(routePaths.post.feed),
         ),
       );
       return;
