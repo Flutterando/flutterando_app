@@ -1,3 +1,4 @@
+import 'package:backend/src/domain/parses/date_time_parse.dart';
 import 'package:vaden/vaden.dart';
 
 import 'user.dart';
@@ -24,18 +25,4 @@ class Posts {
     required this.createdAt,
     required this.updatedAt,
   });
-}
-
-class DateTimeParse extends ParamParse<DateTime?, String> {
-  const DateTimeParse();
-
-  @override
-  String toJson(DateTime? param) {
-    return param?.toIso8601String() ?? '';
-  }
-
-  @override
-  DateTime? fromJson(String? json) {
-    return DateTime.tryParse(json ?? '');
-  }
 }

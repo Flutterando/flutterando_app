@@ -23,3 +23,18 @@ enum RolesUser {
     };
   }
 }
+
+@Parse()
+class RolesUserParse extends ParamParse<List<RolesUser>?, List<String>?> {
+  const RolesUserParse();
+
+  @override
+  List<String>? toJson(List<RolesUser>? param) {
+    return param?.map((r) => r.toMap()).toList();
+  }
+
+  @override
+  List<RolesUser>? fromJson(List<String>? json) {
+    return json?.map((r) => RolesUser.fromMap(r)).toList();
+  }
+}
