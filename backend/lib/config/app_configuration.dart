@@ -1,4 +1,3 @@
-import 'package:backend/config/migration/migration.dart';
 import 'package:vaden/vaden.dart';
 
 @Configuration()
@@ -9,11 +8,7 @@ class AppConfiguration {
   }
 
   @Bean()
-  Pipeline globalMiddleware(
-    ApplicationSettings settings,
-    Migration migration,
-  ) {
-    migration.start();
+  Pipeline globalMiddleware(ApplicationSettings settings) {
     return Pipeline() //
         .addMiddleware(cors(allowedOrigins: ['*']))
         .addVadenMiddleware(EnforceJsonContentType())
