@@ -16,7 +16,7 @@ class OtpService {
     required this.sender,
   });
 
-  String key(String context, String username) => 'otp:context:username';
+  String key(String context, String username) => 'otp:$context:$username';
 
   AsyncResult<Unit> statusOtp({
     required String context,

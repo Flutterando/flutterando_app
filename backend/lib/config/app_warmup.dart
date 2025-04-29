@@ -2,7 +2,7 @@ import 'package:vaden/vaden.dart';
 
 import 'migration/migration.dart';
 
-@Component()
+@Component(true)
 class AppWarmup implements ApplicationRunner {
   @override
   Future<void> run(VadenApplication app) async {
@@ -11,7 +11,7 @@ class AppWarmup implements ApplicationRunner {
   }
 }
 
-@Component()
+@Component(true)
 class AppRunner implements CommandLineRunner {
   @override
   Future<void> run(List<String> args) async {}
